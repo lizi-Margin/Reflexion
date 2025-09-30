@@ -5,19 +5,25 @@ Environment: SecretMafia-v0
 """
 
 import textarena as ta
-from agent import LLMAgent
+from src.agent import LLMAgent
 from xushuhang.agents.family import Vito
+import sys
+import io
+import os
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
-MODEL_NAME = "Test LLM agent - Track 1" # Replace with your model name
+
+MODEL_NAME = "Test LLM agent-xsss" # Replace with your model name
 # The name is used to identify your agent in the online arena and leaderboard.
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.
 MODEL_DESCRIPTION = "This agent is for Track 1 - Social Detection (SecretMafia-v0)."
-team_hash = "MG25-XXXXXXXXXX" # Replace with your team hash
+team_hash = "MG25-F5C82328D3" # Replace with your team hash
 
 # Initialize your agent
 # agent = LLMAgent(model_name="Qwen/Qwen3-4B")
-agent = Vito()
+agent = Vito(model_name="test0930-1")
 
 env = ta.make_mgc_online(
     track="Social Detection", 
@@ -35,4 +41,4 @@ while not done:
     action = agent(observation)
     done, step_info = env.step(action=action)
 
-rewards, game_info = env.close() 
+rewards, game_info = env.close()
