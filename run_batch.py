@@ -26,7 +26,7 @@ def run_multiple_games(num_runs=15):
             # 运行 run.py 脚本，不捕获输出以避免编码问题
             result = subprocess.run([sys.executable, "run.py"], 
                                   env=env,
-                                  timeout=300)  # 5分钟超时
+                                  timeout=3000)  # 5分钟超时
             
             if result.returncode == 0:
                 print(f"第 {i+1} 次游戏运行成功!")
@@ -63,8 +63,8 @@ if __name__ == "__main__":
             num_runs = int(sys.argv[1])
         except ValueError:
             print("参数必须是整数，使用默认值15")
-            num_runs = 15
+            num_runs = 13
     else:
-        num_runs = 15
+        num_runs = 13
     
     run_multiple_games(num_runs)

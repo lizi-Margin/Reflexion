@@ -97,27 +97,47 @@ class Vito(LLMAgent):
             "#FINAL:")
 
             bracket_match = re.search(r'\[(\d+)\]', final_output)
-            if "vote" in final_output and bracket_match:
+            if bracket_match:
                 final_output = f"[{bracket_match.group(1)}]"
-        
+            else:
+                patterns = [
+                    r'vote[^\d]{0,10}(\d+)',
+                    r'detect[^\d]{0,10}(\d+)', 
+                    r'eliminate[^\d]{0,10}(\d+)'
+                ]
+                
+                reversed_text = final_output[::-1]
+                
+                found_number = None
+                for pattern in patterns:
+                    reversed_pattern = pattern[::-1]
+                    match = re.search(reversed_pattern, reversed_text)
+                    if match:
+                        found_number = match.group(1)[::-1]
+                        break
+                
+                if found_number:
+                    final_output = f"[{found_number}]"
+
+
             
-            print("Observation:\n")
-            print(observation)
-            print("=" * 20)
-            print("\n\n\n\n\nSYSTEM PROMPT:\n", self.prompt_system())
-            print("=" * 20)
-            print("\n\n\n\n\nANALYSIS PROMPT:\n", self.prompt_analyze(formatted_obs))
-            print("\nANALYSIS RESULT:\n", analysis)
-            print("=" * 20)
-            print("\n\n\n\n\nBELIEF PROMPT:\n", self.prompt_belief(analysis, self.belief))
-            print("\nBELIEF RESULT:\n", self.belief)
-            print("=" * 20)
-            print("\n\n\n\n\nSTRATEGY PROMPT:\n", self.prompt_strategy(analysis, self.belief, self.strategy))
-            print("\nSTRATEGY RESULT:\n", self.strategy)
-            print("=" * 20)
-            print("\n\n\n\n\nTALK PROMPT:\n", self.prompt_talk(self.belief, self.strategy))
+            # print("Observation:\n")
+            # print(observation)
+            # print("=" * 20)
+            # print("\n\n\n\n\nSYSTEM PROMPT:\n", self.prompt_system())
+            # print("=" * 20)
+            # print("\n\n\n\n\nANALYSIS PROMPT:\n", self.prompt_analyze(formatted_obs))
+            # print("\nANALYSIS RESULT:\n", analysis)
+            # print("=" * 20)
+            # print("\n\n\n\n\nBELIEF PROMPT:\n", self.prompt_belief(analysis, self.belief))
+            # print("\nBELIEF RESULT:\n", self.belief)
+            # print("=" * 20)
+            # print("\n\n\n\n\nSTRATEGY PROMPT:\n", self.prompt_strategy(analysis, self.belief, self.strategy))
+            # print("\nSTRATEGY RESULT:\n", self.strategy)
+            print("\n\n\n\n\n" + "=" * 20)
+            print("TALK PROMPT:\n", self.prompt_talk(self.belief, self.strategy))
             print("\nFINAL OUTPUT:\n", final_output)
-            print("=" * 20)
+            print("\n\n\n\n\n" + "=" * 20)
 
 
             return final_output
@@ -601,10 +621,8 @@ class Vito(LLMAgent):
 
     def parse_llm_response(self, response_text, tag_name):
 
-        pattern = rf'#{{0,1}}{re.escape(tag_name)}:\s*(.*?)(?=\n#{{0,1}}\w+:|\Z)'
-        match = re.search(pattern, response_text, re.IGNORECASE | re.DOTALL)
-        
-        if match:
-            return match.group(1).strip()
+        index = response_text.find(tag_name)
+        if index != -1:
+            return response_text[index + len(tag_name):].strip()
         else:
-            return response_text.strip()
+            return response_text

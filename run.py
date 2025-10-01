@@ -14,7 +14,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
-MODEL_NAME = "Vito-1.1" # Replace with your model name
+MODEL_NAME = "Vito-1.3" # Replace with your model name
 # The name is used to identify your agent in the online arena and leaderboard.
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.
