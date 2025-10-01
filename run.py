@@ -14,7 +14,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
-MODEL_NAME = "Test LLM agent-xsss" # Replace with your model name
+MODEL_NAME = "Vito-1.1" # Replace with your model name
 # The name is used to identify your agent in the online arena and leaderboard.
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.
@@ -23,7 +23,7 @@ team_hash = "MG25-F5C82328D3" # Replace with your team hash
 
 # Initialize your agent
 # agent = LLMAgent(model_name="Qwen/Qwen3-4B")
-agent = Vito(model_name="test0930-1")
+agent = Vito(model_name=MODEL_NAME)
 
 env = ta.make_mgc_online(
     track="Social Detection", 
@@ -31,7 +31,7 @@ env = ta.make_mgc_online(
     model_description=MODEL_DESCRIPTION,
     team_hash=team_hash,
     agent=agent,
-    small_category=False  # Set to True to participate in the efficient division
+    small_category=True  # Set to True to participate in the efficient division
 )
 env.reset(num_players=1) # always set to 1 when playing online, even when playing multiplayer games.
 

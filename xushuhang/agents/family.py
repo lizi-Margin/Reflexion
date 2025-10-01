@@ -26,7 +26,7 @@ wwxq_key = os.getenv("WWXQ_API_KEY")
 
 class Vito(LLMAgent):
     def __init__(self, model_name: str):
-        super().__init__()
+        #super().__init__(model_name)
         self.model_name = model_name or "qwen3-8b"
         self.is_initialized = False
         self.init_info = None
@@ -51,36 +51,75 @@ class Vito(LLMAgent):
             # First observation - initialization
             if not self.is_initialized:
                 self.init_info = self.parse_initialization_info(observation)
+                self.init_identity = self.generate_identity_prompt(self.init_info)
                 self.belief = self.generate_belief_prompt(self.init_info)
                 self.strategy = "No strategy set yet. Will develop based on game progress."
                 self.is_initialized = True
-                
-                # For first observation, we might need to act immediately (night phase)
-                formatted_obs = self.parse_observation_events(obs_list) if isinstance(obs_list, list) else observation
-                self.observation_history.append(formatted_obs)
-                
-                # Check if we need to act in night phase
-                if "Night has fallen" in observation or "agree on a victim" in observation:
-                    return self._generate_action(formatted_obs)
+
             
             # Regular observation processing
             formatted_obs = self.parse_observation_events(obs_list) if isinstance(obs_list, list) else observation
             self.observation_history.append(formatted_obs)
             
 
-            #TODO-------------------------------------------------------------------
+
             # Step 1: Analyze new information
-            analysis = self._analyze_information(formatted_obs)
+            analysis = self.parse_llm_response(
+            self.api(input_messages=[
+                {"role": "system", "content": self.prompt_system()},
+                {"role": "user", "content": self.prompt_analyze(formatted_obs)}
+            ]),
+            "#SUMMARY:")
             
             # Step 2: Update beliefs
-            self.belief = self._update_belief(analysis)
+            self.belief = self.parse_llm_response(
+            self.api(input_messages=[
+                {"role": "system", "content": self.prompt_system()},
+                {"role": "user", "content": self.prompt_belief(analysis, self.belief)}
+            ]),
+            "#BELIEF:")
             
             # Step 3: Update strategy
-            self.strategy = self._update_strategy(analysis)
+            self.strategy = self.parse_llm_response(
+            self.api(input_messages=[
+                {"role": "system", "content": self.prompt_system()},
+                {"role": "user", "content": self.prompt_strategy(analysis, self.belief, self.strategy)}
+            ]),
+            "#STRATEGY:")
             
             # Step 4: Generate final action/speech
-            final_output = self._generate_action(formatted_obs)
+            #TODO: [x] format
+            final_output = self.parse_llm_response(
+            self.api(input_messages=[
+                {"role": "system", "content": self.prompt_system()},
+                {"role": "user", "content": self.prompt_talk(self.belief, self.strategy)}
+            ]),
+            "#FINAL:")
+
+            bracket_match = re.search(r'\[(\d+)\]', final_output)
+            if "vote" in final_output and bracket_match:
+                final_output = f"[{bracket_match.group(1)}]"
+        
             
+            print("Observation:\n")
+            print(observation)
+            print("=" * 20)
+            print("\n\n\n\n\nSYSTEM PROMPT:\n", self.prompt_system())
+            print("=" * 20)
+            print("\n\n\n\n\nANALYSIS PROMPT:\n", self.prompt_analyze(formatted_obs))
+            print("\nANALYSIS RESULT:\n", analysis)
+            print("=" * 20)
+            print("\n\n\n\n\nBELIEF PROMPT:\n", self.prompt_belief(analysis, self.belief))
+            print("\nBELIEF RESULT:\n", self.belief)
+            print("=" * 20)
+            print("\n\n\n\n\nSTRATEGY PROMPT:\n", self.prompt_strategy(analysis, self.belief, self.strategy))
+            print("\nSTRATEGY RESULT:\n", self.strategy)
+            print("=" * 20)
+            print("\n\n\n\n\nTALK PROMPT:\n", self.prompt_talk(self.belief, self.strategy))
+            print("\nFINAL OUTPUT:\n", final_output)
+            print("=" * 20)
+
+
             return final_output
 
 
@@ -92,7 +131,92 @@ class Vito(LLMAgent):
 
 
 
-
+    # def log_turn_info(self, observation, formatted_obs, analysis, analysis_response, 
+    #                 belief_response, strategy_response, final_response, final_output):
+    #     """
+    #     将回合信息记录到日志文件中
+    #     """
+    #     # 创建logs目录（如果不存在）
+    #     log_dir = "logs"
+    #     if not os.path.exists(log_dir):
+    #         os.makedirs(log_dir)
+        
+    #     # 生成日志文件名（包含时间戳）
+    #     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    #     player_id = self.init_info['player_id'] if self.init_info and self.init_info['player_id'] else "unknown"
+    #     log_filename = f"{log_dir}/player_{player_id}_turn_{timestamp}.log"
+        
+    #     # 写入日志文件
+    #     with open(log_filename, 'w', encoding='utf-8') as f:
+    #         f.write("=" * 80 + "\n")
+    #         f.write(f"TURN LOG - Player {player_id} - {timestamp}\n")
+    #         f.write("=" * 80 + "\n\n")
+            
+    #         f.write("OBSERVATION:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(observation + "\n\n")
+            
+    #         f.write("FORMATTED OBSERVATION:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(formatted_obs + "\n\n")
+            
+    #         f.write("SYSTEM PROMPT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.prompt_system() + "\n\n")
+            
+    #         f.write("ANALYSIS PROMPT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.prompt_analyze(formatted_obs) + "\n\n")
+            
+    #         f.write("ANALYSIS RAW RESPONSE:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(analysis_response + "\n\n")
+            
+    #         f.write("ANALYSIS RESULT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(analysis + "\n\n")
+            
+    #         f.write("BELIEF PROMPT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.prompt_belief(analysis, self.belief) + "\n\n")
+            
+    #         f.write("BELIEF RAW RESPONSE:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(belief_response + "\n\n")
+            
+    #         f.write("BELIEF RESULT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.belief + "\n\n")
+            
+    #         f.write("STRATEGY PROMPT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.prompt_strategy(analysis, self.belief, self.strategy) + "\n\n")
+            
+    #         f.write("STRATEGY RAW RESPONSE:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(strategy_response + "\n\n")
+            
+    #         f.write("STRATEGY RESULT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.strategy + "\n\n")
+            
+    #         f.write("TALK PROMPT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(self.prompt_talk(self.belief, self.strategy) + "\n\n")
+            
+    #         f.write("TALK RAW RESPONSE:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(final_response + "\n\n")
+            
+    #         f.write("FINAL OUTPUT:\n")
+    #         f.write("-" * 40 + "\n")
+    #         f.write(final_output + "\n\n")
+            
+    #         f.write("=" * 80 + "\n")
+    #         f.write("END OF TURN LOG\n")
+    #         f.write("=" * 80 + "\n")
+        
+    #     print(f"Turn log saved to: {log_filename}")
 
 
 
@@ -215,13 +339,13 @@ class Vito(LLMAgent):
         prompt_parts.append(f"Team: {init_info['team']}")
         prompt_parts.append(f"Description: {init_info['description']}")
 
-        if init_info['teammates'] == "Mafia":
+        if init_info['role'] == "Mafia":
             prompt_parts.append("Goals: Try to deceive other players to conceal yourself and your companions until enough villagers are eliminated.")
-        elif init_info['teammates'] == "A regular villager":
+        elif init_info['role'] == "A regular villager":
             prompt_parts.append("Goals: Try to identify and eliminate all mafia members through discussion and voting.")
-        elif init_info['teammates'] == "Detective":
+        elif init_info['role'] == "Detective":
             prompt_parts.append("Goals: Try to Protect yourself and identify mafia members through investigation and help villagers eliminate them.")
-        elif init_info['teammates'] == "Doctor":
+        elif init_info['role'] == "Doctor":
             prompt_parts.append("Goals: Try to protect key villagers, especially yourself and the detective, from being eliminated by the mafia during the night.")
         
         return "\n".join(prompt_parts)
@@ -312,13 +436,13 @@ class Vito(LLMAgent):
 
 
     
-    def prompt_system(self, observation) -> str:
+    def prompt_system(self) -> str:
         ret = f"""
         You are participating in the game Secret Mafia and playing one of the roles.\n
         The game will start at night and alternate between night and day. At night, Mafia will secretly eliminate players, detectives can investigate a player's identity, and doctors can choose to protect a player from being eliminated by Mafia. During each daytime stage, players will have 3 rounds of discussion and then vote to eliminate the player with the most votes.
         \n\n
         Here are some information about this game:\n
-        {self.generate_identity_prompt(self.parse_initialization_info(observation))}\n
+        {self.init_identity}\n
 
     """
         return ret
@@ -330,7 +454,7 @@ class Vito(LLMAgent):
     Now it is step 1. Analyze newly acquired information.
 
     You got these new information:
-    {self.new_info(observation)}
+    {observation}
 
     Please follow the steps:
     1. What key information do these records reveal?
@@ -338,7 +462,7 @@ class Vito(LLMAgent):
     3. Summarize your analysis results and start with a symbol: "#SUMMARY:"
     """
         return ret
-    
+
 
 
     def prompt_belief(self, analysis, belief) -> str:
@@ -354,9 +478,9 @@ class Vito(LLMAgent):
     {belief}
 
     Please follow the steps:
-    1. Which players' survival status needs to be modified?
+    1. Based on system message, which players' survival status needs to be modified?
     2. Based on your analysis just now, which players' identities can be guessed? Note that identity confirmation can only be set through system messages from Mafia and Detection, otherwise you can only suspect their roles.
-    3. Modify your BELIEF according to the format and generate a new BELIEF, starting with the symbol: "#NEW BELIEF:" 
+    3. Modify your BELIEF and generate a new BELIEF, maintain the format: [player_id: player identity guess | survival status | explanation of identity guess and elimination reason.], starting with the symbol: "#BELIEF:" 
 
     """
         return ret
@@ -388,8 +512,8 @@ class Vito(LLMAgent):
 
 
 
-    def prompt_talk(self) -> str:
-        ret = """
+    def prompt_talk(self, belief, strategy) -> str:
+        ret = f"""
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
     Now it is step 4. Decide on your own speech or action.
 
@@ -399,7 +523,11 @@ class Vito(LLMAgent):
 
     Now, please refer to your beliefs and predetermined strategies to generate your final speech or action goals. Start with a symbol: "#FINAL:".
 
+    # BELIEF:
+    {belief}
 
+    # STRATEGY:
+    {strategy}
 
     """
         return ret
@@ -420,7 +548,7 @@ class Vito(LLMAgent):
             input_messages: Optional[List[Dict]] = None,
             temperature: float = 0.4,
             model: str = 'qwen3-8b',
-            max_tokens: int = 256,
+            max_tokens: int = 1024,
     ):
         if input_messages is None:
             raise ValueError("messages should not be None!")
@@ -455,8 +583,8 @@ class Vito(LLMAgent):
                 res = conn.getresponse()
                 data = res.read()
                 response_json = json.loads(data.decode("utf-8"))
-                print(f"{model} HTTP Status:", res.status)
-                print("==========QWEN Response JSON===========\n", response_json, "=============================================")
+                # print(f"{model} HTTP Status:", res.status)
+                # print("==========QWEN Response JSON===========\n", response_json, "=============================================")
                 conn.close()
                 return response_json["choices"][0]["message"]["content"]
             
@@ -470,3 +598,13 @@ class Vito(LLMAgent):
                     raise Exception(f"Failed to get 'choices' after {MAX_RETRIES} attempts.") from e
                 
 
+
+    def parse_llm_response(self, response_text, tag_name):
+
+        pattern = rf'#{{0,1}}{re.escape(tag_name)}:\s*(.*?)(?=\n#{{0,1}}\w+:|\Z)'
+        match = re.search(pattern, response_text, re.IGNORECASE | re.DOTALL)
+        
+        if match:
+            return match.group(1).strip()
+        else:
+            return response_text.strip()
