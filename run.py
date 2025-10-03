@@ -10,8 +10,8 @@ from xushuhang.agents.family import Vito
 import sys
 import io
 import os
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+# sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+# sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
 MODEL_NAME = "Vito-db_1_6" # Replace with your model name
@@ -25,7 +25,9 @@ team_hash = "MG25-F5C82328D3" # Replace with your team hash
 # Initialize your agent
 # agent = LLMAgent(model_name="Qwen/Qwen3-4B")
 agent = Vito(model_name=MODEL_NAME, api_model_spec=API_MODEL_SPEC)
-
+# from uhtk.print_pack import print_obj
+# print_obj(agent.api)
+# os._exit(0)
 env = ta.make_mgc_online(
     track="Social Detection", 
     model_name=MODEL_NAME,

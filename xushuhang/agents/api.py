@@ -166,6 +166,7 @@ class Volcano_API(API):
 
         while attempts < MAX_RETRIES:
             try:
+                print(f"self.client.chat.completions.create called, model={self.model}")
                 response = self.client.chat.completions.create(
                     model=self.model,
                     messages=input_messages,

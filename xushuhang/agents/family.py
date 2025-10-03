@@ -16,7 +16,7 @@ class Vito(LLMAgent):
         self.observation_history = []
         self.turn_counter = 0
 
-        self.api = get_api_class(api_model_spec)(model=model_name)
+        self.api = get_api_class(api_model_spec)(model=api_model_spec)
 
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
@@ -98,28 +98,46 @@ class Vito(LLMAgent):
             if self.logger:
                 self.logger.log_phase("final_action", talk_prompt, talk_response, final_output)
 
+            # Extract player ID from response
             bracket_match = re.search(r'\[(\d+)\]', final_output)
             if bracket_match:
                 final_output = f"[{bracket_match.group(1)}]"
             else:
-                patterns = [
+                # Try to find player numbers in common action phrases
+                # Use simple string search instead of reversing regex patterns
+                found_number = None
+
+                # Look for patterns like "vote 3", "investigate 2", "protect 1"
+                simple_patterns = [
                     r'vote[^\d]{0,10}(\d+)',
                     r'detect[^\d]{0,10}(\d+)',
                     r'eliminate[^\d]{0,10}(\d+)'
+                    r'vote\s*(?:for\s*)?(?:player\s*)?(\d+)',
+                    r'investigate\s*(?:player\s*)?(\d+)',
+                    r'protect\s*(?:player\s*)?(\d+)',
+                    r'detect\s*(?:player\s*)?(\d+)',
+                    r'eliminate\s*(?:player\s*)?(\d+)',
+                    r'choose\s*(?:player\s*)?(\d+)',
+                    r'select\s*(?:player\s*)?(\d+)',
+                    r'player\s*(\d+)',
                 ]
 
-                reversed_text = final_output[::-1]
-
-                found_number = None
-                for pattern in patterns:
-                    reversed_pattern = pattern[::-1]
-                    match = re.search(reversed_pattern, reversed_text)
+                for pattern in simple_patterns:
+                    # match = re.search(pattern, final_output.lower())
+                    match = re.findall(pattern, final_output.lower())
                     if match:
-                        found_number = match.group(1)[::-1]
+                        # found_number = match.group(1)
+                        found_number = match[-1]
                         break
 
                 if found_number:
                     final_output = f"[{found_number}]"
+                else:
+                    # Last resort: look for any standalone number
+                    number_match = re.search(r'\b(\d+)\b', final_output)
+                    print("!!!! Last resort: look for any standalone number")
+                    if number_match:
+                        final_output = f"[{number_match.group(1)}]"
 
             # End turn logging
             if self.logger:
@@ -134,10 +152,16 @@ class Vito(LLMAgent):
 
 
         except Exception as e:
+            error_msg = f"An error occurred: {e}"
+            print(f"\n!!! ERROR in Vito agent: {error_msg}")
+
             # Log error if logger exists
             if self.logger:
                 self.logger.end_turn(f"ERROR: {str(e)}")
-            return f"An error occurred: {e}"
+
+            # Re-raise to see full traceback during development
+            # Comment this out in production if you want to continue playing
+            raise e
         
 
 
@@ -496,8 +520,7 @@ class Vito(LLMAgent):
         return ret
 
 
-
-    def prompt_strategy(self, analysis, belief, strategy) -> str:
+    def prompt_strategy_old(self, analysis, belief, strategy) -> str:
         ret = f"""
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
     Now it is step 3. Please refer to your goals, analysis, and beliefs, then decide your strategy.
@@ -518,11 +541,33 @@ class Vito(LLMAgent):
 
     """
         return ret
+
+    def prompt_strategy(self, analysis, belief, strategy) -> str:
+        ret = f"""
+    Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
+    Now it is step 3. Please refer to your goals, analysis, and beliefs, then decide your strategy.
+
+    # Your analysis:
+    {analysis}
+
+    # Your belief:
+    {belief}
+
+    # Your strategy:
+    {strategy}
+
+    Please follow the steps:
+    1. What is your goal?
+    2. Based on your analysis and belief, what is your strategy? For example, you can decide whether to claim which character you are, encourage everyone to expel which player, explain your words and actions to everyone, and so on.
+    3. IMPORTANT: If the current phase requires you to SELECT A PLAYER (voting, investigation, protection), your strategy should clearly state which player number you will choose and why.
+    4. Generate a new STRATEGY, starting with the symbol: "#STRATEGY:"
+
+    """
+        return ret
     
 
 
-
-    def prompt_talk(self, belief, strategy) -> str:
+    def prompt_talk_old(self, belief, strategy) -> str:
         ret = f"""
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
     Now it is step 4. Decide on your own speech or action.
@@ -538,6 +583,37 @@ class Vito(LLMAgent):
 
     # STRATEGY:
     {strategy}
+
+    """
+        return ret
+
+    def prompt_talk(self, belief, strategy) -> str:
+        ret = f"""
+    Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
+    Now it is step 4. Decide on your own speech or action.
+
+    IMPORTANT OUTPUT FORMAT RULES:
+    1. If the game asks you to SELECT A PLAYER (for voting, investigation, protection, etc.), you MUST output ONLY the player ID in brackets: [X]
+       - Example: If you want to vote for player 3, output exactly: [3]
+       - Example: If you want to investigate player 1, output exactly: [1]
+       - DO NOT add any other text, explanation, or reasoning
+       - The number X must be a valid player ID from the game
+
+    2. If the game asks you to SPEAK or DISCUSS, then generate natural speech content without any thinking process
+
+    3. Check your current observation carefully:
+       - Does it say "choose one player", "vote for", "investigate", "protect", etc.? → Output [X] format
+       - Does it say "speak", "discuss", "day phase"? → Output natural speech
+
+    Now, please refer to your beliefs and predetermined strategies to generate your final speech or action. Start with the symbol: "#FINAL:".
+
+    # BELIEF:
+    {belief}
+
+    # STRATEGY:
+    {strategy}
+
+    REMINDER: If you need to select a player, output ONLY "[X]" where X is the player number. Nothing else!
 
     """
         return ret
