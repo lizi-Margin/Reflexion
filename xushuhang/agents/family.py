@@ -2,10 +2,11 @@ import json, re
 from src.agent import LLMAgent
 from typing import List, Dict, Optional
 from xushuhang.agents.api_router import get_api_class
+from xushuhang.agents.game_logger import GameLogger
 
 
 class Vito(LLMAgent):
-    def __init__(self, model_name: str, api_model_spec='qwen3-8b'):
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):
         #super().__init__(model_name)
         self.model_name = model_name or "qwen3-8b"
         self.is_initialized = False
@@ -13,23 +14,19 @@ class Vito(LLMAgent):
         self.belief = ""
         self.strategy = ""
         self.observation_history = []
+        self.turn_counter = 0
 
-        self.api = get_api_class(api_model_spec)(model_name=model_name)
+        self.api = get_api_class(api_model_spec)(model=model_name)
+
+        # Initialize logger
+        self.logger = GameLogger() if enable_logging else None
 
 
     def __call__(self, observation: str) -> str:
         try: # Generate a response
-            # return self.api(input_messages=[
-            #     {"role": "system", "content": "You are participating in the game Secret Mafia and playing one of the roles. Then you need to understand the game rules, understand your identity and game goals, recognize whether you are currently in a dialogue or voting phase, and then analyze and make decisions based on the current information. Note: During the conversation phase, you are free to speak up; During the voting phase, your voting target format must be the player ID in square brackets, such as: [2]"},
-            #     {"role": "user", "content": observation},
-            # ],
-            # temperature=0.6,
-            # model="qwen3-8b",
-            # max_tokens=2048)
-
             # Parse observation into events
             obs_list = json.loads(observation) if isinstance(observation, str) and observation.startswith('[') else observation
-            
+
             # First observation - initialization
             if not self.is_initialized:
                 self.init_info = self.parse_initialization_info(observation)
@@ -38,45 +35,68 @@ class Vito(LLMAgent):
                 self.strategy = "No strategy set yet. Will develop based on game progress."
                 self.is_initialized = True
 
-            
+                # Log player info
+                if self.logger:
+                    self.logger.set_player_info(
+                        self.init_info['player_id'],
+                        self.init_info['role'],
+                        self.init_info['team']
+                    )
+
+
             # Regular observation processing
             formatted_obs = self.parse_observation_events(obs_list) if isinstance(obs_list, list) else observation
             self.observation_history.append(formatted_obs)
-            
+
+            # Start new turn in logger
+            self.turn_counter += 1
+            if self.logger:
+                self.logger.start_turn(self.turn_counter, formatted_obs)
 
 
             # Step 1: Analyze new information
-            analysis = self.parse_llm_response(
-            self.api(input_messages=[
+            analysis_prompt = self.prompt_analyze(formatted_obs)
+            analysis_response = self.api(input_messages=[
                 {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": self.prompt_analyze(formatted_obs)}
-            ]),
-            "#SUMMARY:")
-            
+                {"role": "user", "content": analysis_prompt}
+            ])
+            analysis = self.parse_llm_response(analysis_response, "#SUMMARY:")
+
+            if self.logger:
+                self.logger.log_phase("analysis", analysis_prompt, analysis_response, analysis)
+
             # Step 2: Update beliefs
-            self.belief = self.parse_llm_response(
-            self.api(input_messages=[
+            belief_prompt = self.prompt_belief(analysis, self.belief)
+            belief_response = self.api(input_messages=[
                 {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": self.prompt_belief(analysis, self.belief)}
-            ]),
-            "#BELIEF:")
-            
+                {"role": "user", "content": belief_prompt}
+            ])
+            self.belief = self.parse_llm_response(belief_response, "#BELIEF:")
+
+            if self.logger:
+                self.logger.log_phase("belief_update", belief_prompt, belief_response, self.belief)
+
             # Step 3: Update strategy
-            self.strategy = self.parse_llm_response(
-            self.api(input_messages=[
+            strategy_prompt = self.prompt_strategy(analysis, self.belief, self.strategy)
+            strategy_response = self.api(input_messages=[
                 {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": self.prompt_strategy(analysis, self.belief, self.strategy)}
-            ]),
-            "#STRATEGY:")
-            
+                {"role": "user", "content": strategy_prompt}
+            ])
+            self.strategy = self.parse_llm_response(strategy_response, "#STRATEGY:")
+
+            if self.logger:
+                self.logger.log_phase("strategy_update", strategy_prompt, strategy_response, self.strategy)
+
             # Step 4: Generate final action/speech
-            #TODO: [x] format
-            final_output = self.parse_llm_response(
-            self.api(input_messages=[
+            talk_prompt = self.prompt_talk(self.belief, self.strategy)
+            talk_response = self.api(input_messages=[
                 {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": self.prompt_talk(self.belief, self.strategy)}
-            ]),
-            "#FINAL:")
+                {"role": "user", "content": talk_prompt}
+            ])
+            final_output = self.parse_llm_response(talk_response, "#FINAL:")
+
+            if self.logger:
+                self.logger.log_phase("final_action", talk_prompt, talk_response, final_output)
 
             bracket_match = re.search(r'\[(\d+)\]', final_output)
             if bracket_match:
@@ -84,12 +104,12 @@ class Vito(LLMAgent):
             else:
                 patterns = [
                     r'vote[^\d]{0,10}(\d+)',
-                    r'detect[^\d]{0,10}(\d+)', 
+                    r'detect[^\d]{0,10}(\d+)',
                     r'eliminate[^\d]{0,10}(\d+)'
                 ]
-                
+
                 reversed_text = final_output[::-1]
-                
+
                 found_number = None
                 for pattern in patterns:
                     reversed_pattern = pattern[::-1]
@@ -97,36 +117,26 @@ class Vito(LLMAgent):
                     if match:
                         found_number = match.group(1)[::-1]
                         break
-                
+
                 if found_number:
                     final_output = f"[{found_number}]"
 
+            # End turn logging
+            if self.logger:
+                self.logger.end_turn(final_output)
 
-            
-            # print("Observation:\n")
-            # print(observation)
-            # print("=" * 20)
-            # print("\n\n\n\n\nSYSTEM PROMPT:\n", self.prompt_system())
-            # print("=" * 20)
-            # print("\n\n\n\n\nANALYSIS PROMPT:\n", self.prompt_analyze(formatted_obs))
-            # print("\nANALYSIS RESULT:\n", analysis)
-            # print("=" * 20)
-            # print("\n\n\n\n\nBELIEF PROMPT:\n", self.prompt_belief(analysis, self.belief))
-            # print("\nBELIEF RESULT:\n", self.belief)
-            # print("=" * 20)
-            # print("\n\n\n\n\nSTRATEGY PROMPT:\n", self.prompt_strategy(analysis, self.belief, self.strategy))
-            # print("\nSTRATEGY RESULT:\n", self.strategy)
             print("\n\n\n\n\n" + "=" * 20)
-            print("TALK PROMPT:\n", self.prompt_talk(self.belief, self.strategy))
+            print("TALK PROMPT:\n", talk_prompt)
             print("\nFINAL OUTPUT:\n", final_output)
             print("\n\n\n\n\n" + "=" * 20)
-
 
             return final_output
 
 
-
         except Exception as e:
+            # Log error if logger exists
+            if self.logger:
+                self.logger.end_turn(f"ERROR: {str(e)}")
             return f"An error occurred: {e}"
         
 
