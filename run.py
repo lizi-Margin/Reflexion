@@ -32,7 +32,7 @@ env = ta.make_mgc_online(
     model_description=MODEL_DESCRIPTION,
     team_hash=team_hash,
     agent=agent,
-    small_category=True  # Set to True to participate in the efficient division
+    small_category=False  # Set to True to participate in the efficient division
 )
 env.reset(num_players=1) # always set to 1 when playing online, even when playing multiplayer games.
 
