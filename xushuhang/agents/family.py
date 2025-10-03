@@ -1,31 +1,11 @@
-
+import json, re
 from src.agent import LLMAgent
-from openai import OpenAI
-import random
-import itertools
-import time
-import json
-import http.client
-from datetime import datetime
-import csv
 from typing import List, Dict, Optional
-import os
-import requests
-import os
-import re
-from dotenv import load_dotenv   
-
-
-
-
-load_dotenv()                     
-
-openai_key = os.getenv("OPENAI_API_KEY")
-wwxq_key = os.getenv("WWXQ_API_KEY")
+from xushuhang.agents.api_router import get_api_class
 
 
 class Vito(LLMAgent):
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b'):
         #super().__init__(model_name)
         self.model_name = model_name or "qwen3-8b"
         self.is_initialized = False
@@ -33,6 +13,8 @@ class Vito(LLMAgent):
         self.belief = ""
         self.strategy = ""
         self.observation_history = []
+
+        self.api = get_api_class(api_model_spec)(model_name=model_name)
 
 
     def __call__(self, observation: str) -> str:
@@ -288,8 +270,6 @@ class Vito(LLMAgent):
         
         return "\n".join(prompt_parts)
         
-    
-    
     
     
     def parse_initialization_info(self, observation_text: str) -> Dict:
@@ -551,73 +531,6 @@ class Vito(LLMAgent):
 
     """
         return ret
-
-
-
-
-
-
-
-
-
-
-
-
-    def api(
-            self,
-            input_messages: Optional[List[Dict]] = None,
-            temperature: float = 0.4,
-            model: str = 'qwen3-8b',
-            max_tokens: int = 1024,
-    ):
-        if input_messages is None:
-            raise ValueError("messages should not be None!")
-
-
-
-        url = "cloud.infini-ai.com"
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {wwxq_key}"
-        }
-
-        payload = {
-            "model": model,
-            "messages": input_messages,
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-        }
-
-
-        
-        MAX_RETRIES = 4
-        attempts = 0
-        RETRY_INTERVAL = 1
-
-
-        while attempts < MAX_RETRIES:
-            try:
-                conn = http.client.HTTPSConnection(url)
-                conn.request("POST", f"/maas/{model}/nvidia/chat/completions",
-                            json.dumps(payload), headers)
-                res = conn.getresponse()
-                data = res.read()
-                response_json = json.loads(data.decode("utf-8"))
-                # print(f"{model} HTTP Status:", res.status)
-                # print("==========QWEN Response JSON===========\n", response_json, "=============================================")
-                conn.close()
-                return response_json["choices"][0]["message"]["content"]
-            
-            except KeyError as e:
-                if attempts < MAX_RETRIES - 1:
-                    print(f"KeyError: {e}. Retrying in {RETRY_INTERVAL} seconds...")
-                    time.sleep(RETRY_INTERVAL)
-                    attempts += 1
-                    RETRY_INTERVAL = RETRY_INTERVAL * 2
-                else:
-                    raise Exception(f"Failed to get 'choices' after {MAX_RETRIES} attempts.") from e
-                
-
 
     def parse_llm_response(self, response_text, tag_name):
 

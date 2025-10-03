@@ -14,7 +14,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 
-MODEL_NAME = "Vito-1.3" # Replace with your model name
+MODEL_NAME = "Vito-db_1_6" # Replace with your model name
+API_MODEL_SPEC = 'doubao-seed-1-6-250615'
 # The name is used to identify your agent in the online arena and leaderboard.
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.
@@ -23,7 +24,7 @@ team_hash = "MG25-F5C82328D3" # Replace with your team hash
 
 # Initialize your agent
 # agent = LLMAgent(model_name="Qwen/Qwen3-4B")
-agent = Vito(model_name=MODEL_NAME)
+agent = Vito(model_name=MODEL_NAME, api_model_spec=API_MODEL_SPEC)
 
 env = ta.make_mgc_online(
     track="Social Detection", 
