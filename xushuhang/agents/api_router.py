@@ -1,4 +1,4 @@
-from api import *
+from xushuhang.agents.api import *
 
 def get_api_class(model_name):
     # a router to get correct API client class
