@@ -16,10 +16,10 @@ import os
 
 # MODEL_NAME = "Vito-db_1_6" # Replace with your model name
 # API_MODEL_SPEC = 'doubao-seed-1-6-250615'
-# MODEL_NAME = "Vito-ds_v31" # Replace with your model name
-# API_MODEL_SPEC = 'deepseek-v3-1-250821'
-MODEL_NAME = "Vito-k2" # Replace with your model name
-API_MODEL_SPEC = 'kimi-k2-250905'
+MODEL_NAME = "Vito-ds_v31_x1" # Replace with your model name
+API_MODEL_SPEC = 'deepseek-v3-1-250821'
+# MODEL_NAME = "Vito-k2" # Replace with your model name
+# API_MODEL_SPEC = 'kimi-k2-250905'
 # The name is used to identify your agent in the online arena and leaderboard.
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.
