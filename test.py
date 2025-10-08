@@ -9,6 +9,6 @@ str_ = str[str1 + len("#STRATEGY:"):]
 
 print(str_)
 
-from xushuhang.agents.api_router import unit_test
+from corleone.agents.api_router import unit_test
 
 unit_test()

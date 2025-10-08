@@ -17,8 +17,8 @@ import re
 import json
 from typing import Dict, List, Set, Tuple, Optional
 from src.agent import Agent
-from xushuhang.api.api_router import get_api_class
-from xushuhang.game_logger import GameLogger
+from corleone.api.api_router import get_api_class
+from corleone.game_logger import GameLogger
 
 
 class CodenamesAgent(Agent):

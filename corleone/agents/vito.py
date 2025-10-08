@@ -1,8 +1,8 @@
 import json, re
 from src.agent import LLMAgent, Agent
 from typing import List, Dict, Optional
-from xushuhang.api.api_router import get_api_class
-from xushuhang.game_logger import GameLogger
+from corleone.api.api_router import get_api_class
+from corleone.game_logger import GameLogger
 
 class Vito(Agent):
     def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):

@@ -6,7 +6,7 @@ Environment: SecretMafia-v0
 
 import textarena as ta
 from src.agent import LLMAgent
-from xushuhang.agents.vito import Vito
+from corleone.family import Vito
 import sys
 import io
 import os

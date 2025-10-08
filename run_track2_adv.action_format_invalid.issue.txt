@@ -1,0 +1,74 @@
+==================================================
+开始运行第 2/15 次游戏
+==================================================
+Environment auto-detection enabled. Will determine game type from first observation.
+ Initialized specialized Track 2 agent: VitoTrack2-Adv-ds_v31 
+ Using API model: deepseek-v3-1-250821 
+ Game type will be auto-detected from the first observation 
+✅ Registered 'VitoTrack2-Adv-ds_v31' with deterministic token: 2af8f141-7476-56cb-91f1-8ed29da85a3e
+Environment                    | Wrappers
+----------------------------------------------------------------------
+Codenames-v0-train             | GameMessagesAndCurrentBoardObservationWrapper, ActionFormattingWrapper
+ColonelBlotto-v0-train         | GameMessagesAndCurrentBoardObservationWrapper, ActionFormattingWrapper
+ThreePlayerIPD-v0-train        | LLMObservationWrapper, ClipCharactersActionWrapper
+
+Connecting to matchmaking server: wss://matchmaking.textarena.ai/ws?model_name=VitoTrack2-Adv-ds_v31&model_token=2af8f141-7476-56cb-91f1-8ed29da85a3e
+Sent queue request for environments: [65, 82, 83]
+Received from matchmaking: {"command": "queued", "avg_queue_time": 61.437745413385834, "num_players_in_queue": 5}
+In queue. Average wait time: 61.4s. Players in queue: 5
+Received from matchmaking: {"command": "match_found", "game_id": "5c7021b9-9f81-40af-850f-b322e2f03070", "game_url": "gamehost.textarena.ai/game/5c7021b9-9f81-40af-850f-b322e2f03070", "env_id": "ColonelBlotto-v0", "environment_id": 82}
+Match found! Environment: ColonelBlotto-v0-train (Server ID: ColonelBlotto-v0)
+Connecting to game server: gamehost.textarena.ai/game/5c7021b9-9f81-40af-850f-b322e2f03070
+Matchmaking WebSocket connection closed
+Waiting for game server to initialize...
+Connecting to game server: wss://gamehost.textarena.ai/game/5c7021b9-9f81-40af-850f-b322e2f03070/ws?token=2af8f141-7476-56cb-91f1-8ed29da85a3e
+Waiting for server... (2.7s elapsed)
+Connected to game server successfully after 6.3s
+Received: {"command": "pong"}
+Received: {"command": "observation", "observation": [[-1, "You are Commander Beta in a game of ColonelBlotto. Each round, you have to allocate exactly 20 units across fields: A, B, C\nFormat: '[A4 B2 C2]'\nWin the majority of fields to win the round!", 1], [-1, "=== COLONEL BLOTTO - Round 1/9 ===\nRounds Won - Commander Alpha: 0, Commander Beta: 0\nAvailable fields: A, B, C\nUnits to allocate: 20\nFormat: '[A4 B2 C2]'.", 5]], "player_id": 1}
+Received observation for player 1
+ Waiting for game to start... 
+ Received observation for Player 1, length: 348 chars 
+Detected game type: ColonelBlotto
+self.client.chat.completions.create called, model=deepseek-v3-1-250821
+self.client.chat.completions.create called, model=deepseek-v3-1-250821
+self.client.chat.completions.create called, model=deepseek-v3-1-250821
+ Generated action: [A0 B0 C
+F0] 
+Sent action: [A0 B0 C
+F0]...
+Received: {"command": "action_ack", "message": "Action received"}
+Received: {"command": "action_ack", "message": "Action received"}
+Action acknowledged by server
+Action acknowledged by server
+Received: {"command": "observation", "observation": [[1, "[A0 B0 C\nF0]", 2], [-1, "Player 1 attempted an invalid move. Reason: Invalid input format. Use: A:5, B:10, C:5 Please resubmit a valid move and remember to follow the game rules to avoid penalties.", 6]], "player_id": 1}
+Received observation for player 1
+ Step info: {'player_id': 1, 'turn_count': 2, 'acknowledged': True} 
+ Received observation for Player 1, length: 348 chars 
+self.client.chat.completions.create called, model=deepseek-v3-1-250821
+self.client.chat.completions.create called, model=deepseek-v3-1-250821
+self.client.chat.completions.create called, model=deepseek-v3-1-250821
+ Generated action: [A0 B0 C
+F0] 
+Sent action: [A0 B0 C
+F0]...
+Received: {"command": "action_ack", "message": "Action received"}
+Received: {"command": "action_ack", "message": "Action received"}
+Action acknowledged by server
+Action acknowledged by server
+Received: {"command": "game_over", "outcome": "loss", "reward": -1, "trueskill_change": -0.439, "new_trueskill": 13.418, "reason": "Invalid input format. Use: A:5, B:10, C:5", "game_id": 100113, "opponents": "openai/gpt-4.1-nano", "opponents_ts": "24.527", "opponents_with_ids": "0:openai/gpt-4.1-nano"}
+Game over received
+Game over: loss, reason: Invalid input format. Use: A:5, B:10, C:5
+Game over received, waiting for additional messages...
+Received: {"command": "pong"}
+Timeout after 5.2s while waiting for additional messages after game over
+Timeout after 10.2s while waiting for additional messages after game over
+Timeout after 15.2s while waiting for additional messages after game over
+Timeout after 20.2s while waiting for additional messages after game over
+WebSocket connection closed by server
+ Step info: {'player_id': 1, 'turn_count': 3, 'acknowledged': True, 'game_end': True, 'reason': 'Invalid input format. Use: A:5, B:10, C:5', 'outcome': 'loss'} 
+ Game complete! 
+ Rewards: {1: -0.439} 
+ Game Info: {1: {'turn_count': 2, 'invalid_move': False, 'reason': 'Invalid input format. Use: A:5, B:10, C:5', 'outcome': 'loss'}} 
+第 2 次游戏运行成功!
+等待5秒后开始下次游戏...

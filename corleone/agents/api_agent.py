@@ -1,8 +1,8 @@
 import json, re
 from src.agent import LLMAgent, Agent
 from typing import List, Dict, Optional
-from xushuhang.api.api_router import get_api_class
-from xushuhang.game_logger import GameLogger
+from corleone.api.api_router import get_api_class
+from corleone.game_logger import GameLogger
 
 
 class ApiAgent(Agent):

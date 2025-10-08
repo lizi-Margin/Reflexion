@@ -1,4 +1,4 @@
-from xushuhang.api.api import *
+from corleone.api.api import *
 
 def get_api_class(model_name):
     # a router to get correct API client class

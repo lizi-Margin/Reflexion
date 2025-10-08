@@ -13,7 +13,7 @@ for better performance compared to the generic ApiAgent.
 """
 
 import textarena as ta
-from xushuhang.agents.track2_router import create_track2_agent
+from corleone.agents.track2_router import create_track2_agent
 
 try: 
     from uhtk.print_pack import print_bold_green as print
