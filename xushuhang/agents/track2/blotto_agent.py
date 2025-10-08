@@ -16,8 +16,8 @@ import random
 import copy
 from typing import Dict, List, Tuple, Optional
 from src.agent import Agent
-from xushuhang.agents.api_router import get_api_class
-from xushuhang.agents.game_logger import GameLogger
+from xushuhang.api.api_router import get_api_class
+from xushuhang.game_logger import GameLogger
 
 
 class BlottoAgent(Agent):

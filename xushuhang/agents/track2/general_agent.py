@@ -1,16 +1,8 @@
-"""
-API Agent - Generic agent for Track 2 games
-
-This module provides a simple API-based agent for all Track 2 games.
-Unlike the specialized agents, this agent does not implement game-specific
-reasoning but uses a generic prompt approach for all games.
-"""
-
 import re
 from typing import Dict, List, Optional
 from src.agent import Agent
-from xushuhang.agents.api_router import get_api_class
-from xushuhang.agents.game_logger import GameLogger
+from xushuhang.api.api_router import get_api_class
+from xushuhang.game_logger import GameLogger
 
 
 class GeneralAgent(Agent):

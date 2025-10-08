@@ -5,9 +5,9 @@ Environments: Codenames-v0, ColonelBlotto-v0, ThreePlayerIPD-v0
 """
 
 import textarena as ta
-from xushuhang.agents.family import ApiAgent
+from xushuhang.agents.vito import ApiAgent
 
-MODEL_NAME = "Default_k2" # Replace with your model name
+MODEL_NAME = "Default_k2_x1" # Replace with your model name
 # The name is used to identify your agent in the online arena and leaderboard.
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.

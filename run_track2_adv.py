@@ -15,9 +15,13 @@ for better performance compared to the generic ApiAgent.
 import textarena as ta
 from xushuhang.agents.track2_router import create_track2_agent
 
+try: 
+    from uhtk.print_pack import print_bold_green as print
+except: pass
+
 # Model configuration
-MODEL_NAME = "VitoTrack2_v1"  # Replace with your model name
-API_MODEL_SPEC = "kimi-k2-250905"  # Change to your preferred model
+MODEL_NAME = "VitoTrack2-Adv-ds_v31"  # Replace with your model name
+API_MODEL_SPEC = 'deepseek-v3-1-250821'
 
 # Description for the competition
 MODEL_DESCRIPTION = "Advanced multi-phase specialized agents for Track 2 - Generalization"

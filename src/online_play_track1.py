@@ -6,7 +6,7 @@ Environment: SecretMafia-v0
 
 import textarena as ta
 from agent import LLMAgent
-from xushuhang.agents.family import Vito
+from xushuhang.agents.vito import Vito
 
 MODEL_NAME = "Test LLM agent - Track 1" # Replace with your model name
 # The name is used to identify your agent in the online arena and leaderboard.
