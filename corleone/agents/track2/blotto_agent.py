@@ -119,12 +119,12 @@ class BlottoAgent(Agent):
             self.player_id = 0 if self.commander_role == "Alpha" else 1
 
         # Extract available fields
-        fields_match = re.search(r"fields:\s+([A-Z,\s]+)", observation)
+        fields_match = re.search(r"fields:\s+([A-Z ,]+)", observation)
         if fields_match:
             self.fields = [f.strip() for f in fields_match.group(1).split(",")]
 
         # Extract total units
-        units_match = re.search(r"allocate up to (\d+) units", observation)
+        units_match = re.search(r"Units to allocate: (\d+)", observation)
         if units_match:
             self.total_units = int(units_match.group(1))
 
@@ -262,6 +262,7 @@ class BlottoAgent(Agent):
 
         # Parse and validate the allocation
         return self._parse_and_validate_allocation(allocation)
+        # return allocation
 
     def _parse_and_validate_allocation(self, allocation_text: str) -> str:
         """
@@ -320,7 +321,7 @@ class BlottoAgent(Agent):
                 allocation[field] = 0
 
         # Convert to required format
-        result = "[" + " ".join(f"{field}{allocation[field]}" for field in self.fields) + "]"
+        result = "[" + ", ".join(f"{field}:{allocation[field]}" for field in self.fields) + "]"
         return result
 
     def _generate_uniform_allocation(self) -> str:
@@ -426,7 +427,7 @@ class BlottoAgent(Agent):
             f"2. Each field must have a non-negative integer number of units\n"
             f"3. Your allocation must implement your chosen strategy effectively\n\n"
 
-            f"Provide your allocation in EXACTLY this format: [A4 B7 C9]\n"
+            f"Provide your allocation in EXACTLY and STRICTLY this format: [A:4, B:7, C:9]\n"
             f"Where each letter is a field name followed immediately by the number of units (no spaces between).\n\n"
 
             f"Begin your allocation and start with a symbol: '#ALLOCATION:'"
