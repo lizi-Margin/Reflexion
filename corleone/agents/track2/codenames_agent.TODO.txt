@@ -1,0 +1,2 @@
+1. debug: see run_track2_adv.action_format_invalid.issue.txt
+2. implement the verbose mode for CodenamesAgent to print obs and action to stdout for debugging

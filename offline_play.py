@@ -19,12 +19,10 @@ try:
 except: pass
 
 
-# env_ids = ["SecretMafia-v0-train"]
-# env_ids = ["Codenames-v0-train", "ColonelBlotto-v0-train", "ThreePlayerIPD-v0-train"]
 # initialize the environment
 # env_id = "Codenames-v0-train"; npc_num = 3  # 2v2 
-env_id = "ColonelBlotto-v0-train"; npc_num = 1  # 1v1
-# env_id = "ThreePlayerIPD-v0-train"; npc_num = 2  # 3 players
+# env_id = "ColonelBlotto-v0-train"; npc_num = 1  # 1v1
+env_id = "ThreePlayerIPD-v0-train"; npc_num = 2  # 3 players
 agents = {
     0: create_track2_agent(model_name='test', api_model_spec='qwen3-8b', env_name=env_id, enable_logging=False),
 }
