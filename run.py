@@ -24,7 +24,7 @@ API_MODEL_SPEC = 'deepseek-v3-1-250821'
 # It should be unique and descriptive.
 # For different versions of your agent, you should use different names.
 MODEL_DESCRIPTION = "This agent is for Track 1 - Social Detection (SecretMafia-v0)."
-team_hash = "MG25-F5C82328D3" # Replace with your team hash
+team_hash = "MG25-F5C82328D3" # Replace with your team hash 
 
 # Initialize your agent
 # agent = LLMAgent(model_name="Qwen/Qwen3-4B")

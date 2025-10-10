@@ -1,4 +1,4 @@
-import json, re
+import json, re, time
 from src.agent import LLMAgent, Agent
 from typing import List, Dict, Optional
 from corleone.api.api_router import get_api_class
@@ -20,148 +20,171 @@ class Vito(Agent):
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
 
+        self.round = 0
+        print("Initializing Vito...")
+
 
     def __call__(self, observation: str) -> str:
-        try: # Generate a response
-            # Parse observation into events
-            obs_list = json.loads(observation) if isinstance(observation, str) and observation.startswith('[') else observation
+        retry_count = 0
+        while retry_count < 5:
+            try: # Generate a response
+                print("===============================================   VITO   ===============================================")
+                start_time = time.time()
+                # return self.api(input_messages=[
+                #     {"role": "system", "content": "You are participating in the game Secret Mafia and playing one of the roles. Then you need to understand the game rules, understand your identity and game goals, recognize whether you are currently in a dialogue or voting phase, and then analyze and make decisions based on the current information. Note: During the conversation phase, you are free to speak up; During the voting phase, your voting target format must be the player ID in square brackets, such as: [2]"},
+                #     {"role": "user", "content": observation},
+                # ],
+                # temperature=0.6,
+                # model="qwen3-8b",
+                # max_tokens=2048)
 
-            # First observation - initialization
-            if not self.is_initialized:
-                self.init_info = self.parse_initialization_info(observation)
-                self.init_identity = self.generate_identity_prompt(self.init_info)
-                self.belief = self.generate_belief_prompt(self.init_info)
-                self.strategy = "No strategy set yet. Will develop based on game progress."
-                self.is_initialized = True
+                # Parse observation into events
+                obs_list = json.loads(observation) if isinstance(observation, str) and observation.startswith('[') else observation
+                
+                # First observation - initialization
+                if not self.is_initialized:
+                    self.init_info = self.parse_initialization_info(observation)
+                    self.init_identity = self.generate_identity_prompt(self.init_info)
+                    self.belief = self.generate_belief_prompt(self.init_info)
+                    self.strategy = "No strategy set yet. Will develop based on game progress."
+                    self.is_initialized = True
+                    print("Initialized Vito with:", self.init_info)
 
-                # Log player info
+                # End turn logging
                 if self.logger:
-                    self.logger.set_player_info(
-                        self.init_info['player_id'],
-                        self.init_info['role'],
-                        self.init_info['team']
-                    )
+                    self.logger.end_turn(final_output)
 
-
-            # Regular observation processing
-            formatted_obs = self.parse_observation_events(obs_list) if isinstance(obs_list, list) else observation
-            self.observation_history.append(formatted_obs)
-
-            # Start new turn in logger
-            self.turn_counter += 1
-            if self.logger:
-                self.logger.start_turn(self.turn_counter, formatted_obs)
-
-
-            # Step 1: Analyze new information
-            analysis_prompt = self.prompt_analyze(formatted_obs)
-            analysis_response = self.api(input_messages=[
-                {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": analysis_prompt}
-            ])
-            analysis = self.parse_llm_response(analysis_response, "#SUMMARY:")
-
-            if self.logger:
-                self.logger.log_phase("analysis", analysis_prompt, analysis_response, analysis)
-
-            # Step 2: Update beliefs
-            belief_prompt = self.prompt_belief(analysis, self.belief)
-            belief_response = self.api(input_messages=[
-                {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": belief_prompt}
-            ])
-            self.belief = self.parse_llm_response(belief_response, "#BELIEF:")
-
-            if self.logger:
-                self.logger.log_phase("belief_update", belief_prompt, belief_response, self.belief)
-
-            # Step 3: Update strategy
-            strategy_prompt = self.prompt_strategy(analysis, self.belief, self.strategy)
-            strategy_response = self.api(input_messages=[
-                {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": strategy_prompt}
-            ])
-            self.strategy = self.parse_llm_response(strategy_response, "#STRATEGY:")
-
-            if self.logger:
-                self.logger.log_phase("strategy_update", strategy_prompt, strategy_response, self.strategy)
-
-            # Step 4: Generate final action/speech
-            talk_prompt = self.prompt_talk(self.belief, self.strategy)
-            talk_response = self.api(input_messages=[
-                {"role": "system", "content": self.prompt_system()},
-                {"role": "user", "content": talk_prompt}
-            ])
-            final_output = self.parse_llm_response(talk_response, "#FINAL:")
-
-            if self.logger:
-                self.logger.log_phase("final_action", talk_prompt, talk_response, final_output)
-
-            # Extract player ID from response
-            bracket_match = re.search(r'\[(\d+)\]', final_output)
-            if bracket_match:
-                final_output = f"[{bracket_match.group(1)}]"
-            else:
-                # Try to find player numbers in common action phrases
-                # Use simple string search instead of reversing regex patterns
-                found_number = None
-
-                # Look for patterns like "vote 3", "investigate 2", "protect 1"
-                simple_patterns = [
-                    r'vote[^\d]{0,10}(\d+)',
-                    r'detect[^\d]{0,10}(\d+)',
-                    r'eliminate[^\d]{0,10}(\d+)'
-                    r'vote\s*(?:for\s*)?(?:player\s*)?(\d+)',
-                    r'investigate\s*(?:player\s*)?(\d+)',
-                    r'protect\s*(?:player\s*)?(\d+)',
-                    r'detect\s*(?:player\s*)?(\d+)',
-                    r'eliminate\s*(?:player\s*)?(\d+)',
-                    r'choose\s*(?:player\s*)?(\d+)',
-                    r'select\s*(?:player\s*)?(\d+)',
-                    r'player\s*(\d+)',
-                ]
-
-                for pattern in simple_patterns:
-                    # match = re.search(pattern, final_output.lower())
-                    match = re.findall(pattern, final_output.lower())
-                    if match:
-                        # found_number = match.group(1)
-                        found_number = match[-1]
-                        break
-
-                if found_number:
-                    final_output = f"[{found_number}]"
+                #count round
+                current_round = self.round % 5
+                if current_round == 0:
+                    if self.init_info["role"] == "Villager":
+                        self.round += 1
+                        phase = "day_speak"
+                    else:
+                        phase = "night"
+                elif current_round in [1,2,3]:
+                    phase = "day_speak"
                 else:
-                    # Last resort: look for any standalone number
-                    number_match = re.search(r'\b(\d+)\b', final_output)
-                    print("!!!! Last resort: look for any standalone number")
-                    if number_match:
-                        final_output = f"[{number_match.group(1)}]"
-
-            # End turn logging
-            if self.logger:
-                self.logger.end_turn(final_output)
-
-            print("\n\n\n\n\n" + "=" * 20)
-            print("TALK PROMPT:\n", talk_prompt)
-            print("\nFINAL OUTPUT:\n", final_output)
-            print("\n\n\n\n\n" + "=" * 20)
-
-            return final_output
+                    phase = "day_vote"
+                self.round += 1
+                print(f"Current Round: {current_round}, Phase: {phase}")
 
 
-        except Exception as e:
-            error_msg = f"An error occurred: {e}"
-            print(f"\n!!! ERROR in Vito agent: {error_msg}")
+                
+                # Regular observation processing
+                formatted_obs = self.parse_observation_events(obs_list) if isinstance(obs_list, list) else observation
+                self.observation_history.append(formatted_obs)
+                
 
-            # Log error if logger exists
-            if self.logger:
-                self.logger.end_turn(f"ERROR: {str(e)}")
 
-            # Re-raise to see full traceback during development
-            # Comment this out in production if you want to continue playing
-            raise e
-        
+                # Step 1: Analyze new information
+                analysis = self.parse_llm_response(
+                self.api(input_messages=[
+                    {"role": "system", "content": self.prompt_system()},
+                    {"role": "user", "content": self.prompt_analyze(formatted_obs)}
+                ]),
+                "#SUMMARY:")
+                # print("Step1 Time Cost:", time.time() - start_time)
+                
+                # Step 2: Update beliefs
+                self.belief = self.parse_llm_response(
+                self.api(input_messages=[
+                    {"role": "system", "content": self.prompt_system()},
+                    {"role": "user", "content": self.prompt_belief(analysis, self.belief)}
+                ]),
+                "#BELIEF:")
+                # print("Step2 Time Cost:", time.time() - start_time)
+                
+                # Step 3: Update strategy
+                self.strategy = self.parse_llm_response(
+                self.api(input_messages=[
+                    {"role": "system", "content": self.prompt_system()},
+                    {"role": "user", "content": self.prompt_strategy(analysis, self.belief, self.strategy)}
+                ]),
+                "#STRATEGY:")
+                # print("Step3 Time Cost:", time.time() - start_time)
+
+                # # Step 4: Generate final action/speech
+                # final_output = self.parse_llm_response(
+                # self.api(input_messages=[
+                #     {"role": "system", "content": self.prompt_system()},
+                #     {"role": "user", "content": self.prompt_talk(self.belief, self.strategy)}
+                # ]),
+                # "#FINAL:")
+
+                # bracket_match = re.search(r'\[(\d+)\]', final_output)
+                # if bracket_match:
+                #     final_output = f"[{bracket_match.group(1)}]"
+                #     print("Step4 bracket matched.")
+                #     break
+                # else:
+                #     break
+                if phase == "day_speak":
+                    final_response = self.parse_llm_response(
+                    self.api(input_messages=[
+                        {"role": "system", "content": self.prompt_system()},
+                        {"role": "user", "content": self.prompt_talk(self.belief, self.strategy)}
+                    ]),
+                    "#FINAL:")
+                    final_output = final_response
+                    print("Step4 Speak Time Cost:", time.time() - start_time)
+
+
+                else:
+                    final_response = self.parse_llm_response(
+                    self.api(input_messages=[
+                        {"role": "system", "content": self.prompt_system()},
+                        {"role": "user", "content": self.prompt_vote(self.belief, self.strategy)}
+                    ]),
+                    "#FINAL:")
+
+                    bracket_match = re.search(r'\[(\d+)\]', final_response)
+                    if bracket_match:
+                        final_output = f"[{bracket_match.group(1)}]"
+                    else:
+                        patterns = [
+                            r'vote[^\d]{0,10}(\d+)',
+                            r'detect[^\d]{0,10}(\d+)', 
+                            r'eliminate[^\d]{0,10}(\d+)',
+                            r'kill[^\d]{0,10}(\d+)',
+                            r'protect[^\d]{0,10}(\d+)',
+                            r'rescue[^\d]{0,10}(\d+)',
+                            r'investigate[^\d]{0,10}(\d+)'
+                        ]
+                        
+                        reversed_text = final_output[::-1]
+                        
+                        found_number = None
+                        for pattern in patterns:
+                            reversed_pattern = pattern[::-1]
+                            match = re.search(reversed_pattern, reversed_text)
+                            if match:
+                                found_number = match.group(1)[::-1]
+                                break
+                        
+                        if found_number:
+                            final_output = f"[{found_number}]"
+                        else:
+                            print("No valid vote action.")
+                    print("Step4 Vote Time Cost:", time.time() - start_time)
+                break
+
+
+            except Exception as e:
+                if retry_count == 5:
+                    return f"An error occurred: {e}"
+                retry_count += 1
+                continue
+            
+        # print("TALK PROMPT:\n", self.prompt_talk(self.belief, self.strategy))
+        print("\nFINAL OUTPUT:\n", final_output)
+        print("Total Time Cost:", time.time() - start_time)
+        print("\n" + "=" * 20 + "\n\n\n\n\n")
+        return final_output.strip()
+
+
+
+
 
 
 
@@ -486,10 +509,10 @@ class Vito(Agent):
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
     Now it is step 1. Analyze newly acquired information.
 
-    You got these new information:
+    # You got these new information:
     {observation}
 
-    Please follow the steps:
+    # Please follow the steps:
     1. What key information do these records reveal?
     2. For other players' comments, try to empathize with their perspective: why do they speak like this? What is the purpose? This may reflect their identity or strategy.
     3. Summarize your analysis results and start with a symbol: "#SUMMARY:"
@@ -510,7 +533,7 @@ class Vito(Agent):
     # Previous belief:
     {belief}
 
-    Please follow the steps:
+    # Please follow the steps:
     1. Based on system message, which players' survival status needs to be modified?
     2. Based on your analysis just now, which players' identities can be guessed? Note that identity confirmation can only be set through system messages from Mafia and Detection, otherwise you can only suspect their roles.
     3. Modify your BELIEF and generate a new BELIEF, maintain the format: [player_id: player identity guess | survival status | explanation of identity guess and elimination reason.], starting with the symbol: "#BELIEF:" 
@@ -533,7 +556,7 @@ class Vito(Agent):
     # Your strategy:
     {strategy}
 
-    Please follow the steps:
+    # Please follow the steps:
     1. What is your goal?
     2. Based on your analysis and belief, what is your strategy? For example, you can decide whether to claim which character you are, encourage everyone to expel which player, explain your words and actions to everyone, and so on.
     3. Generate a new STRATEGY, starting with the symbol: "#STRATEGY:"
@@ -571,11 +594,9 @@ class Vito(Agent):
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
     Now it is step 4. Decide on your own speech or action.
 
-    If you need to speak now, you need to generate the final speech content based on your beliefs and strategies, and the speech content should not contain any thinking process.
+    You need to speak now, you need to generate the final speech content based on your beliefs and strategies, and the speech content should not contain your thinking process.
 
-    If you need to select a player for action (including voting, rescue, reconnaissance, etc.), you need to output the final goal in the format of "[X]", where X represents the player's ID and is a number. For example, "[1]" means you want to vote for player 1.
-
-    Now, please refer to your beliefs and predetermined strategies to generate your final speech or action goals. Start with a symbol: "#FINAL:".
+    Now, please refer to your beliefs and predetermined strategies to generate your final speech. Start with a symbol: "#FINAL:".
 
     # BELIEF:
     {belief}
@@ -586,25 +607,14 @@ class Vito(Agent):
     """
         return ret
 
-    def prompt_talk(self, belief, strategy) -> str:
+    def prompt_vote(self, belief, strategy) -> str:
         ret = f"""
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
-    Now it is step 4. Decide on your own speech or action.
+    Now it is step 4. Decide on your own action.
+    
+    Now you need to select a player for action (including voting, rescue, detect, etc.), you need to output the final goal in the format of "[X]", where X represents the player's ID and is a number. For example, "[1]" means you want to vote for player 1.
 
-    IMPORTANT OUTPUT FORMAT RULES:
-    1. If the game asks you to SELECT A PLAYER (for voting, investigation, protection, etc.), you MUST output ONLY the player ID in brackets: [X]
-       - Example: If you want to vote for player 3, output exactly: [3]
-       - Example: If you want to investigate player 1, output exactly: [1]
-       - DO NOT add any other text, explanation, or reasoning
-       - The number X must be a valid player ID from the game
-
-    2. If the game asks you to SPEAK or DISCUSS, then generate natural speech content without any thinking process
-
-    3. Check your current observation carefully:
-       - Does it say "choose one player", "vote for", "investigate", "protect", etc.? → Output [X] format
-       - Does it say "speak", "discuss", "day phase"? → Output natural speech
-
-    Now, please refer to your beliefs and predetermined strategies to generate your final speech or action. Start with the symbol: "#FINAL:".
+    Now, please refer to your beliefs and predetermined strategies to generate your final action goal. Start with a symbol: "#FINAL:".
 
     # BELIEF:
     {belief}
@@ -612,10 +622,12 @@ class Vito(Agent):
     # STRATEGY:
     {strategy}
 
-    REMINDER: If you need to select a player, output ONLY "[X]" where X is the player number. Nothing else!
-
     """
         return ret
+
+
+
+
 
     def parse_llm_response(self, response_text, tag_name):
 
@@ -624,3 +636,11 @@ class Vito(Agent):
             return response_text[index + len(tag_name):].strip()
         else:
             return response_text
+        
+
+
+
+
+
+
+

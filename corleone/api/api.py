@@ -43,6 +43,7 @@ class WWXQ_API(API):
         input_messages: Optional[List[Dict]] = None,
         temperature: float = 0.4,
         max_tokens: int = 1024,
+        # **kwargs  # legacy support for old api call with model_name
     ) -> str:
         if input_messages is None:
             raise ValueError("messages should not be None!")
