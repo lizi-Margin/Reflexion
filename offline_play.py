@@ -7,6 +7,7 @@ import textarena as ta
 from src.agent import LLMAgent
 from corleone.family import Vito, Michael
 from corleone.agents.track2.track2_router import create_track2_agent
+from corleone.agents.track2.codenames_agent import CodenamesAgent
 import sys
 import io
 import os
@@ -35,7 +36,7 @@ env.reset(num_players=len(agents))
 
 # main game loop
 done = False 
-step = 0
+step = 0  # it is not real step, just one round chat for one player
 while not done:
   step += 1
   print(f"Step {step} start! ------------------------------------------------>")

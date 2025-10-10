@@ -30,7 +30,7 @@ class CodenamesAgent(Agent):
     - Operative (players 1, 3): Guesses words based on clues
     """
 
-    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True, verbose: bool = True):
         """
         Initialize the CodenamesAgent
 
@@ -56,6 +56,7 @@ class CodenamesAgent(Agent):
 
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
+        self.verbose = verbose
 
     def __call__(self, observation: str) -> str:
         """
@@ -68,6 +69,8 @@ class CodenamesAgent(Agent):
             Action string in the format required by the game
         """
         try:
+            if self.verbose:
+                print(f"model_name={self.model_name} observation: {observation[:30]}...")
             # First turn initialization
             if not self.is_initialized:
                 self._initialize_from_observation(observation)
@@ -92,7 +95,8 @@ class CodenamesAgent(Agent):
             # End logging for this turn
             if self.logger:
                 self.logger.end_turn(result)
-
+            if self.verbose:
+                print(f"{self.model_name} action: {result}")
             return result
 
         except Exception as e:
