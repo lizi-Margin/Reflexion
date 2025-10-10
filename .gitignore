@@ -1,0 +1,12 @@
+*.pyc
+__pycache__
+
+!*.py
+
+.marscode
+.vscode
+.*
+!.gitignore
+
+/runs
+/uhtk
