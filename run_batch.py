@@ -3,7 +3,7 @@ import sys
 import time
 import os
 
-def run_multiple_games(num_runs=15):
+def run_multiple_games(num_runs=1):
     """
     运行指定次数的游戏
     
@@ -63,8 +63,8 @@ if __name__ == "__main__":
             num_runs = int(sys.argv[1])
         except ValueError:
             print("参数必须是整数，使用默认值15")
-            num_runs = 13
+            num_runs = 3
     else:
-        num_runs = 13
+        num_runs = 3
     
     run_multiple_games(num_runs)
