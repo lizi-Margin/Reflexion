@@ -1,2 +1,2 @@
-from corleone.agents.vito import Vito
-from corleone.agents.Michael import Michael
+from corleone.agents.track1.vito import Vito
+from corleone.agents.track1.Michael import Michael
