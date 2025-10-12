@@ -12,6 +12,8 @@ This is a Mind Games Challenge competition repository containing AI agents for t
 The codebase is built on the TextArena framework and implements sophisticated multi-phase 
 easoning agents that compete online against other teams.
 
+- **Human Comment**: We mainly focus on the Track 2 (Generalization) agents.
+
 ## Common Commands
 
 ### Running Games
