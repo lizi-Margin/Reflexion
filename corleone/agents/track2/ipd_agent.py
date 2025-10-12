@@ -1,20 +1,3 @@
-"""
-Three Player IPD Agent - Mind Games Challenge Track 2
-
-This module implements a specialized agent for the Three Player Iterated Prisoner's Dilemma game.
-
-Game Rules:
-- 3-player game with multiple rounds
-- Each round has conversation phase followed by decision phase
-- During conversation, players can freely communicate
-- During decision, each player must decide to cooperate or defect with each other player
-- Payoff matrix for each pair:
-  - Both cooperate: R points each
-  - Both defect: P points each
-  - One defects, other cooperates: T points for defector, S points for cooperator
-- Player(s) with highest score at the end win
-"""
-
 import re
 import json
 from typing import Dict, List, Set, Tuple, Optional
@@ -29,7 +12,8 @@ class IPDAgent(Agent):
 
     The agent uses multi-phase reasoning to:
     1. During conversation: Build trust and coordinate strategies
-    2. During decision: Make strategic cooperate/defect choices
+    2. During decision: Make strategic cooperate/defect choices, with dynamic goals
+       based on game state (e.g., rank, round number).
     """
 
     def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):
@@ -354,19 +338,52 @@ class IPDAgent(Agent):
         result = " ".join([f"[{opponent_id} {decisions[opponent_id]}]" for opponent_id in sorted(decisions.keys())])
         return result
 
-    # Prompt methods
+    # --- NEW HELPER METHODS ---
+    def _get_player_rankings(self) -> Dict:
+        """Calculates and returns the current ranking of all players."""
+        sorted_scores = sorted(self.scores.items(), key=lambda item: item[1], reverse=True)
+        rankings = {}
+        rank = 1
+        for i, (player_id, score) in enumerate(sorted_scores):
+            if i > 0 and score < sorted_scores[i-1][1]:
+                rank = i + 1
+            rankings[player_id] = {"rank": rank, "score": score}
+        return rankings
+
+    def _summarize_opponent_behavior(self, opponent_id: int) -> str:
+        """Summarizes an opponent's past actions towards us."""
+        defections = 0
+        cooperations = 0
+        for round_num, round_data in self.decision_history.items():
+            if self.player_id in round_data.get(opponent_id, {}):
+                action = round_data[opponent_id][self.player_id]
+                if action == 'defect':
+                    defections += 1
+                else:
+                    cooperations += 1
+        
+        total_interactions = defections + cooperations
+        if total_interactions == 0:
+            return "No prior interactions recorded."
+        
+        return (f"Out of {total_interactions} interactions, Player {opponent_id} has defected against you {defections} times "
+                f"and cooperated {cooperations} times.")
+
+    # --- MODIFIED PROMPT METHODS ---
 
     def _prompt_system(self) -> str:
         """System prompt for IPD agent"""
+        # MODIFICATION: Changed goal from "maximize your score" to "win the game"
         return (
-            f"You are Player {self.player_id} in a 3-player Iterated Prisoner's Dilemma game. "
-            f"The game consists of {self.num_rounds} rounds, each with {self.total_conversation_rounds} conversation turns "
-            f"followed by decisions. For each pair of players, the payoff matrix is:\n"
+            f"You are Player {self.player_id}, a highly strategic and competitive agent in a 3-player Iterated Prisoner's Dilemma game. "
+            f"The game consists of {self.num_rounds} rounds. "
+            f"Your PRIMARY GOAL is to have the highest score at the end of the game and WIN. Maximizing your score is secondary to winning. "
+            f"For each pair of players, the payoff matrix is:\n"
             f"- Both cooperate: {self.R} points each\n"
             f"- Both defect: {self.P} points each\n"
             f"- You defect, they cooperate: {self.T} points for you\n"
             f"- You cooperate, they defect: {self.S} points for you\n"
-            f"Your goal is to maximize your score through strategic cooperation and defection."
+            f"Adapt your strategy based on your current rank, the remaining rounds, and your opponents' behavior."
         )
 
     def _prompt_conversation_analysis(self) -> str:
@@ -379,19 +396,17 @@ class IPDAgent(Agent):
             f"Current scores: {', '.join([f'Player {p}: {s}' for p, s in self.scores.items()])}\n\n"
         )
 
-        # Add decision history if available
         if self.decision_history:
             prompt += "Previous rounds:\n"
+            # This part is fine, no changes needed here.
             for round_num in sorted(self.decision_history.keys()):
                 prompt += f"Round {round_num} decisions:\n"
                 for p1 in range(3):
                     for p2 in range(p1 + 1, 3):
-                        if p2 in self.decision_history[round_num][p1]:
-                            prompt += f"- Player {p1} -> Player {p2}: {self.decision_history[round_num][p1][p2]}\n"
-                            prompt += f"- Player {p2} -> Player {p1}: {self.decision_history[round_num][p2][p1]}\n"
+                        if p2 in self.decision_history[round_num].get(p1, {}):
+                            prompt += f"- Player {p1} vs Player {p2}: {self.decision_history[round_num][p1][p2]} vs {self.decision_history[round_num][p2][p1]}\n"
             prompt += "\n"
 
-        # Add conversation history for current round
         if self.conversation_history:
             prompt += "Conversation in current round:\n"
             for speaker_id, message in self.conversation_history:
@@ -402,9 +417,9 @@ class IPDAgent(Agent):
             f"Please analyze the current state:\n"
             f"1. What patterns of cooperation/defection have emerged?\n"
             f"2. Has any player been consistently cooperative or defective?\n"
-            f"3. What promises or commitments have been made in conversation?\n"
+            f"3. What promises or commitments have been made in conversation? How credible are they given past actions?\n"
             f"4. What is each player's likely strategy based on their behavior?\n"
-            f"5. Who appears most trustworthy and who seems deceptive?\n\n"
+            f"5. Who appears most trustworthy and who seems deceptive? REMEMBER: Actions speak louder than words.\n\n"
 
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
@@ -416,11 +431,11 @@ class IPDAgent(Agent):
         prompt = (
             f"Based on your analysis:\n\n{analysis}\n\n"
 
-            f"Now, determine your conversation strategy for this turn. Consider:\n"
-            f"1. Your goals in this conversation (build trust, coordinate, negotiate, signal intentions)\n"
-            f"2. How to position yourself with each opponent\n"
-            f"3. What information to reveal or conceal about your intentions\n"
-            f"4. Whether to propose explicit agreements or strategies\n\n"
+            f"Now, determine your conversation strategy for this turn. Your goal is to WIN the game. Consider:\n"
+            f"1. Your goals in this conversation: Should you build trust, form a temporary alliance, deceive an opponent, or call out a defector?\n"
+            f"2. How to position yourself with each opponent based on your rank and their behavior.\n"
+            f"3. What information to reveal or conceal. Is it beneficial to lie about your intentions?\n"
+            f"4. Whether to propose explicit agreements. If so, who is the target of this agreement?\n\n"
 
             f"Remember the game parameters:\n"
             f"- Both cooperate: {self.R} points each\n"
@@ -428,7 +443,7 @@ class IPDAgent(Agent):
             f"- You defect, they cooperate: {self.T} points for you\n"
             f"- You cooperate, they defect: {self.S} points for you\n\n"
 
-            f"What overall approach will you take in this conversation?\n\n"
+            f"What overall approach will you take in this conversation to improve your chances of winning?\n\n"
 
             f"Begin your strategy and start with a symbol: '#STRATEGY:'"
         )
@@ -441,7 +456,7 @@ class IPDAgent(Agent):
             f"Based on your strategy:\n\n{strategy}\n\n"
 
             f"Now, craft your message to the other players. This message will be seen by all players.\n"
-            f"Create a natural, conversational message that implements your strategy effectively.\n\n"
+            f"Create a natural, conversational message that implements your strategy effectively. It can be truthful or deceptive as your strategy requires.\n\n"
 
             f"Begin your message and start with a symbol: '#MESSAGE:'"
         )
@@ -450,39 +465,42 @@ class IPDAgent(Agent):
 
     def _prompt_decision_analysis(self) -> str:
         """Prompt for decision analysis phase"""
+        # MODIFICATION: Added explicit behavioral summaries for each opponent.
         prompt = (
             f"As Player {self.player_id} in Round {self.current_round}/{self.num_rounds}, "
-            f"you now need to decide whether to cooperate or defect with each opponent (Players {self.opponent_ids[0]} and {self.opponent_ids[1]}).\n\n"
+            f"you must now decide whether to cooperate or defect with each opponent (Players {self.opponent_ids[0]} and {self.opponent_ids[1]}).\n\n"
 
             f"Current scores: {', '.join([f'Player {p}: {s}' for p, s in self.scores.items()])}\n\n"
         )
+        
+        # Add detailed behavioral summaries
+        prompt += "Opponent Behavior Summary:\n"
+        for opp_id in self.opponent_ids:
+            prompt += f"- {self._summarize_opponent_behavior(opp_id)}\n"
+        prompt += "\n"
 
-        # Add decision history if available
         if self.decision_history:
-            prompt += "Previous rounds:\n"
+            prompt += "Full Decision History:\n"
+            # This part is fine, no changes needed here.
             for round_num in sorted(self.decision_history.keys()):
                 prompt += f"Round {round_num} decisions:\n"
                 for p1 in range(3):
                     for p2 in range(p1 + 1, 3):
-                        if p2 in self.decision_history[round_num][p1]:
-                            prompt += f"- Player {p1} -> Player {p2}: {self.decision_history[round_num][p1][p2]}\n"
-                            prompt += f"- Player {p2} -> Player {p1}: {self.decision_history[round_num][p2][p1]}\n"
+                        if p2 in self.decision_history[round_num].get(p1, {}):
+                            prompt += f"- Player {p1} vs Player {p2}: {self.decision_history[round_num][p1][p2]} vs {self.decision_history[round_num][p2][p1]}\n"
             prompt += "\n"
 
-        # Add conversation history for current round
         if self.conversation_history:
-            prompt += "Conversation in current round:\n"
+            prompt += "Conversation in This Round:\n"
             for speaker_id, message in self.conversation_history:
                 prompt += f"Player {speaker_id}: {message}\n"
             prompt += "\n"
 
         prompt += (
-            f"Please analyze each opponent separately:\n"
-            f"1. What is Player {self.opponent_ids[0]}'s likely strategy based on past behavior?\n"
-            f"2. What is Player {self.opponent_ids[1]}'s likely strategy based on past behavior?\n"
-            f"3. What promises or commitments have been made by each player?\n"
-            f"4. How trustworthy does each player appear to be?\n"
-            f"5. What signals have you given about your own intentions?\n\n"
+            f"CRITICAL ANALYSIS REQUIRED:\n"
+            f"1. Analyze each opponent's likely action. CRUCIALLY, weigh their past actions far more heavily than their words in this round's conversation.\n"
+            f"2. How credible are their promises? A player who has defected before is highly likely to do so again if it benefits them.\n"
+            f"3. What signals have you given? How might they interpret your intentions?\n\n"
 
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
@@ -494,8 +512,7 @@ class IPDAgent(Agent):
         prompt = (
             f"Based on your analysis:\n\n{analysis}\n\n"
 
-            f"Now, evaluate the expected payoffs for different decision combinations. "
-            f"You need to decide whether to cooperate or defect with Players {self.opponent_ids[0]} and {self.opponent_ids[1]}.\n\n"
+            f"Now, evaluate the expected payoffs for different decision combinations with Players {self.opponent_ids[0]} and {self.opponent_ids[1]}.\n\n"
 
             f"Game parameters:\n"
             f"- Both cooperate: {self.R} points each\n"
@@ -510,9 +527,9 @@ class IPDAgent(Agent):
             f"4. Defect against both opponents\n\n"
 
             f"For each strategy, estimate:\n"
-            f"- The likelihood each opponent will cooperate or defect\n"
-            f"- Your expected payoff based on these probabilities\n"
-            f"- The impact on future rounds and your reputation\n\n"
+            f"- Your expected payoff based on your prediction of opponents' actions.\n"
+            f"- The impact on your score relative to your opponents, especially the current leader.\n"
+            f"- The impact on future rounds and your reputation (less important in later rounds).\n\n"
 
             f"Begin your payoff evaluation and start with a symbol: '#PAYOFF:'"
         )
@@ -521,24 +538,43 @@ class IPDAgent(Agent):
 
     def _prompt_decision_final(self, analysis, payoff) -> str:
         """Prompt for final decision phase"""
+        # MODIFICATION: This is the most heavily modified prompt. It introduces dynamic goals.
+        rankings = self._get_player_rankings()
+        my_rank = rankings[self.player_id]['rank']
+        
         prompt = (
             f"Based on your analysis and payoff evaluation:\n\n"
             f"Analysis: {analysis}\n\n"
             f"Payoff evaluation: {payoff}\n\n"
+            
+            f"--- STRATEGIC CONTEXT ---\n"
+            f"This is Round {self.current_round} of {self.num_rounds}.\n"
+            f"Current Rankings:\n"
+        )
+        for p_id, rank_info in sorted(rankings.items(), key=lambda x: x[1]['rank']):
+            prompt += f"- Rank {rank_info['rank']}: Player {p_id} ({rank_info['score']} points)\n"
+        prompt += f"You are currently Rank {my_rank}.\n\n"
 
-            f"Now, make your final decisions for Player {self.opponent_ids[0]} and Player {self.opponent_ids[1]}.\n\n"
+        # --- DYNAMIC GOAL INJECTION ---
+        if self.current_round == self.num_rounds:
+            prompt += "--- FINAL ROUND: OBJECTIVE OVERRIDE ---\n"
+            if my_rank == 1:
+                prompt += ("You are in the lead! Your objective is to SECURE THE WIN. "
+                           "Prioritize low-risk decisions that prevent opponents from catching up. "
+                           "Cooperating with others who are not a threat to your lead is a safe way to maintain your advantage.\n\n")
+            else:
+                prompt += ("You are NOT in the lead! Your objective is to WIN AT ALL COSTS. "
+                           "You MUST take risks to overtake the leader(s). A safe play that doesn't close the score gap is a loss. "
+                           "Consider aggressive defections, especially against the player(s) ahead of you, to maximize the score swing in your favor.\n\n")
+        else:
+            prompt += ("--- MID-GAME: STRATEGIC CONSIDERATIONS ---\n"
+                       "Balance short-term gains with your long-term reputation. However, do not be afraid to punish defectors to establish credibility. "
+                       "Your primary goal is to improve your ranking and position yourself for the final rounds.\n\n")
 
-            f"Consider:\n"
-            f"1. Your short-term payoff for this round\n"
-            f"2. The long-term impact on your reputation and future cooperation\n"
-            f"3. Your overall strategy for the game\n"
-            f"4. The current scores and round number ({self.current_round}/{self.num_rounds})\n\n"
-
+        prompt += (
+            f"Now, make your final, decisive choices for Player {self.opponent_ids[0]} and Player {self.opponent_ids[1]}.\n"
             f"Provide your decisions in EXACTLY this format:\n"
             f"[{self.opponent_ids[0]} cooperate/defect] [{self.opponent_ids[1]} cooperate/defect]\n\n"
-
-            f"Where you replace 'cooperate/defect' with your actual decision for each opponent.\n\n"
-
             f"Begin your decisions and start with a symbol: '#DECISIONS:'"
         )
 
