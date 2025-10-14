@@ -31,10 +31,16 @@ class LogAnalyzer:
         self.sessions = []
 
         for file_path in self.log_dir.glob("*.json"):
+            # Skip training data and analysis files
+            if any(keyword in file_path.name.lower() for keyword in ['training_data', 'analysis_report', 'report']):
+                continue
+
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     session = json.load(f)
-                    self.sessions.append(session)
+                    # Validate that this is a session file
+                    if "session_id" in session and "turns" in session:
+                        self.sessions.append(session)
             except Exception as e:
                 print(f"Error loading session file {file_path}: {e}")
 
@@ -144,6 +150,10 @@ class LogAnalyzer:
 
                     # Enhanced observation analysis
                     "observation_analysis": game_context.get("formatted_observation", {}),
+
+                    # LLM probability data for distillation
+                    "llm_response": agent_state.get("llm_response", {}),
+                    "recent_api_responses": agent_state.get("recent_api_responses", []),
 
                     # Session-level context
                     "total_players": session.get("num_players"),

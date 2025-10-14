@@ -431,21 +431,37 @@ class LoggedAgent:
         Returns:
             Agent action
         """
-        # Get agent state before action
-        agent_state = self._extract_agent_state()
+        # Get agent state before action (without probability data)
+        agent_state_before = self._extract_agent_state()
 
         # Extract additional context from agent
         game_phase = self._extract_game_phase_from_agent()
         round_number = self._extract_round_from_agent()
 
+        # Check if agent supports probability capture
+        if hasattr(self.base_agent, 'api') and hasattr(self.base_agent.api, '__code__'):
+            import inspect
+            api_sig = inspect.signature(self.base_agent.api)
+            if 'return_full_response' in api_sig.parameters:
+                # Enable probability capture by calling with return_full_response=True
+                # This will be captured in the next call to the agent's think method
+                if hasattr(self.base_agent, '_enable_probability_capture'):
+                    self.base_agent._enable_probability_capture = True
+
         # Get action from base agent
         action = self.base_agent(observation)
 
-        # Log the turn with enhanced context
+        # Get agent state after action (including probability data if available)
+        agent_state_after = self._extract_agent_state()
+
+        # Merge states, prioritizing after state for probability information
+        merged_agent_state = {**agent_state_before, **agent_state_after}
+
+        # Log the turn with enhanced context including probability data
         self.logger.log_turn(
             player_id=self.player_id,
             observation=observation,
-            agent_state=agent_state,
+            agent_state=merged_agent_state,
             action=action,
             game_phase=game_phase,
             round_number=round_number
@@ -485,10 +501,102 @@ class LoggedAgent:
         if hasattr(self.base_agent, 'init_identity'):
             state['init_identity'] = getattr(self.base_agent, 'init_identity')
 
+        # Extract LLM probability information (soft labels) for distillation
+        if hasattr(self.base_agent, 'current_step_responses'):
+            current_step_responses = getattr(self.base_agent, 'current_step_responses')
+            if current_step_responses:
+                # Get the most recent API response with probabilities
+                latest_response = current_step_responses.get('latest')
+                if latest_response:
+                    state['llm_response'] = self._extract_probability_data(latest_response)
+
+        # Extract API response history if available
+        if hasattr(self.base_agent, 'api_responses'):
+            api_responses = getattr(self.base_agent, 'api_responses')
+            if api_responses:
+                # Store recent API responses with probability information
+                state['recent_api_responses'] = [
+                    self._extract_probability_data(resp) for resp in api_responses[-3:]
+                ]
+
         # Store the full agent for deeper analysis if needed
         state['agent_class'] = self.base_agent.__class__.__name__
 
         return state
+
+    def _extract_probability_data(self, api_response: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Extract probability data from API response for distillation.
+
+        Args:
+            api_response: Raw API response from LLM
+
+        Returns:
+            Structured probability data suitable for training
+        """
+        if not api_response:
+            return {}
+
+        probability_data = {
+            'text': api_response.get('text', ''),
+            'model': api_response.get('model', ''),
+            'has_probabilities': False,
+            'top_tokens': [],
+            'full_response': api_response
+        }
+
+        # Extract logprobs information from different API formats
+        if 'logprobs' in api_response:
+            logprobs = api_response['logprobs']
+            if logprobs and isinstance(logprobs, dict):
+                probability_data['has_probabilities'] = True
+
+                # Handle OpenAI API format
+                if 'top_logprobs' in logprobs:
+                    probability_data['top_tokens'] = []
+                    for token_data in logprobs['top_logprobs'][:10]:  # Keep top 10 tokens
+                        if isinstance(token_data, dict) and 'token' in token_data:
+                            probability_data['top_tokens'].append({
+                                'token': token_data['token'],
+                                'logprob': token_data.get('logprob', 0.0),
+                                'linear_prob': token_data.get('linear_prob', 0.0)
+                            })
+                        elif isinstance(token_data, str):
+                            probability_data['top_tokens'].append({
+                                'token': token_data,
+                                'logprob': 0.0,
+                                'linear_prob': 0.0
+                            })
+
+                # Handle other possible formats
+                elif 'content' in logprobs:
+                    content = logprobs['content']
+                    if isinstance(content, list) and content:
+                        first_token = content[0]
+                        if 'top_logprobs' in first_token:
+                            probability_data['top_tokens'] = []
+                            for token_data in first_token['top_logprobs'][:10]:
+                                probability_data['top_tokens'].append({
+                                    'token': token_data.get('token', ''),
+                                    'logprob': token_data.get('logprob', 0.0),
+                                    'linear_prob': token_data.get('linear_prob', 0.0)
+                                })
+
+        # Calculate additional probability statistics
+        if probability_data['top_tokens']:
+            total_prob = sum(token.get('linear_prob', 0.0) for token in probability_data['top_tokens'])
+            probability_data['probability_mass'] = total_prob
+
+            # Calculate entropy using natural logarithm
+            import math
+            entropy = 0.0
+            for token in probability_data['top_tokens']:
+                prob = token.get('linear_prob', 0.0)
+                if prob > 0:
+                    entropy -= prob * math.log(prob)
+            probability_data['entropy'] = entropy
+
+        return probability_data
 
     def _extract_game_phase_from_agent(self) -> Optional[str]:
         """

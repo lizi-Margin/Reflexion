@@ -716,12 +716,15 @@ class Michael(LLMAgent):
         self.strategy = ""
         self.observation_history = []
         self.round = 0
+        # Store API responses for logging
+        self.api_responses = []  # Store full API responses with probabilities
+        self.current_step_responses = {}  # Store responses for current step
         print("Initializing Michael...")
         """
         night: 0, 5,10,...
         day speak:1,2,3,6,7,8,11,12,13...
         day vote:4,9,14...
-        
+
         """
 
 
@@ -1241,10 +1244,10 @@ class Michael(LLMAgent):
             temperature: float = 0.4,
             model: str = 'qwen3-8b',
             max_tokens: int = 1024,
+            return_full_response: bool = False,
     ):
         if input_messages is None:
             raise ValueError("messages should not be None!")
-
 
         if self.model_name in ['qwen3-8b', 'qwen3-4b','deepseek-v3.1','deepseek-r1']:
             print(self.model_name)
@@ -1259,14 +1262,14 @@ class Michael(LLMAgent):
                 "messages": input_messages,
                 "temperature": temperature,
                 "max_tokens": max_tokens,
+                # Add logprobs to get token probabilities
+                "logprobs": True,
+                "top_logprobs": 5,  # Get top 5 tokens for each position
             }
 
-
-            
             MAX_RETRIES = 4
             attempts = 0
             RETRY_INTERVAL = 1
-
 
             while attempts < MAX_RETRIES:
                 try:
@@ -1277,10 +1280,22 @@ class Michael(LLMAgent):
                     data = res.read()
                     response_json = json.loads(data.decode("utf-8"))
                     print(f"{self.model_name} HTTP Status:", res.status)
-                    # print("==========QWEN Response JSON===========\n", response_json, "=============================================")
-                    conn.close()
-                    return response_json["choices"][0]["message"]["content"]
-                
+
+                    # Store full response for logging
+                    response_data = {
+                        "timestamp": datetime.now().isoformat(),
+                        "model": self.model_name,
+                        "temperature": temperature,
+                        "input_messages": input_messages,
+                        "response": response_json
+                    }
+                    self.api_responses.append(response_data)
+
+                    if return_full_response:
+                        return response_data
+                    else:
+                        return response_json["choices"][0]["message"]["content"]
+
                 except KeyError as e:
                     if attempts < MAX_RETRIES - 1:
                         print(f"KeyError: {e}. Retrying in {RETRY_INTERVAL} seconds...")
@@ -1294,22 +1309,38 @@ class Michael(LLMAgent):
 
             MAX_RETRIES = 5
             attempts = 0
-            RETRY_INTERVAL = 1 
+            RETRY_INTERVAL = 1
 
             while attempts < MAX_RETRIES:
                 try:
                     client = OpenAI(
-                        
                         api_key=api_key,
                         base_url="https://xiaoai.plus/v1",
                     )
                     completion = client.chat.completions.create(
                         model=self.model_name,
-                        messages=input_messages
+                        messages=input_messages,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                        logprobs=True,
+                        top_logprobs=5
                     )
                     print(f"GPT ({self.model_name}) working.")
-                    # print(completion.choices[0].message.content)
-                    return completion.choices[0].message.content
+
+                    # Store full response for logging
+                    response_data = {
+                        "timestamp": datetime.now().isoformat(),
+                        "model": self.model_name,
+                        "temperature": temperature,
+                        "input_messages": input_messages,
+                        "response": completion.model_dump()  # Convert to dict
+                    }
+                    self.api_responses.append(response_data)
+
+                    if return_full_response:
+                        return response_data
+                    else:
+                        return completion.choices[0].message.content
                 except Exception as e:
                     if attempts < MAX_RETRIES - 1:
                         print(f"HTTP Exception or Timeout Error occurred: {e}. Retrying in {RETRY_INTERVAL} seconds...")
