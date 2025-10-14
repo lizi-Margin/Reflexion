@@ -1,0 +1,44 @@
+[
+  {
+    "session_id": "SecretMafia-v0_20251014_131543",
+    "environment": "SecretMafia-v0",
+    "player_id": 0,
+    "model_name": "unknown",
+    "agent_class": "dict",
+    "turn_number": 1,
+    "observation": "SYSTEM: Game started. You are Player 0. Your role: Villager. Team: Village.",
+    "agent_belief": "=== PLAYER BELIEFS ===\nPlayer 0: Role: CONFIRMED as Villager | Status: ALIVE\nPlayer 1: Role: UNKNOWN | Status: ALIVE",
+    "agent_strategy": "Gather information about other players.",
+    "agent_round": 1,
+    "action": "Hello everyone, I'm a regular villager. Let's work together to find the mafia.",
+    "timestamp": "2025-10-14T13:15:43.695531"
+  },
+  {
+    "session_id": "SecretMafia-v0_20251014_131543",
+    "environment": "SecretMafia-v0",
+    "player_id": 1,
+    "model_name": "unknown",
+    "agent_class": "dict",
+    "turn_number": 2,
+    "observation": "SYSTEM: Player 0 said: Hello everyone, I'm a regular villager. Let's work together to find the mafia.",
+    "agent_belief": "=== PLAYER BELIEFS ===\nPlayer 0: Role: SUSPECTED as Villager | Status: ALIVE\nPlayer 1: Role: CONFIRMED as Mafia | Status: ALIVE",
+    "agent_strategy": "Pretend to be a villager and blend in.",
+    "agent_round": 1,
+    "action": "I agree! I'm also a villager. We need to be careful about who we trust.",
+    "timestamp": "2025-10-14T13:15:43.695531"
+  },
+  {
+    "session_id": "SecretMafia-v0_20251014_131543",
+    "environment": "SecretMafia-v0",
+    "player_id": 0,
+    "model_name": "unknown",
+    "agent_class": "dict",
+    "turn_number": 3,
+    "observation": "SYSTEM: Player 1 said: I agree! I'm also a villager. We need to be careful about who we trust.",
+    "agent_belief": "=== PLAYER BELIEFS ===\nPlayer 0: Role: CONFIRMED as Villager | Status: ALIVE\nPlayer 1: Role: SUSPECTED as Villager | Status: ALIVE",
+    "agent_strategy": "Continue gathering information before making accusations.",
+    "agent_round": 2,
+    "action": "Good point. Let's hear from everyone else before we make any decisions.",
+    "timestamp": "2025-10-14T13:15:43.695531"
+  }
+]

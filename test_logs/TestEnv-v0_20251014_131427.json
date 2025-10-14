@@ -1,0 +1,36 @@
+{
+  "session_id": "TestEnv-v0_20251014_131427",
+  "timestamp": "2025-10-14T13:14:27.286160",
+  "environment": "TestEnv-v0",
+  "num_players": 1,
+  "agents": {
+    "0": {
+      "player_id": 0,
+      "agent_class": "Michael",
+      "model_name": "test-model",
+      "init_info": null
+    }
+  },
+  "game_info": {
+    "test": true
+  },
+  "turns": [
+    {
+      "turn_number": 1,
+      "timestamp": "2025-10-14T13:14:53.932866",
+      "player_id": 0,
+      "observation": "System: You are Player 0. Your role: Villager. Team: Village.",
+      "agent_state": {
+        "belief": "",
+        "strategy": "",
+        "round": 0,
+        "history_length": 0,
+        "init_info": null
+      },
+      "action": "An error occurred: Failed to get response after 5 attempts.",
+      "step_info": {}
+    }
+  ],
+  "results": null,
+  "summary": {}
+}

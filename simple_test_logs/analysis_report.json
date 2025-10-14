@@ -1,0 +1,37 @@
+{
+  "analysis_timestamp": "2025-10-14T13:15:43.707532",
+  "total_sessions": 1,
+  "basic_stats": {
+    "total_sessions": 1,
+    "environments": {
+      "SecretMafia-v0": 1
+    },
+    "agent_models": {
+      "unknown": 2
+    },
+    "role_distribution": {},
+    "game_outcomes": {
+      "winners_0": 1
+    },
+    "avg_turns_per_game": 3.0,
+    "total_turns": 3
+  },
+  "agent_performance": {
+    "unknown": {
+      "games_played": 2,
+      "wins": 1,
+      "win_rate": 0.5,
+      "roles_played": {},
+      "avg_turns_to_win": 3.0,
+      "total_turns": 6,
+      "avg_turns_per_game": 3.0
+    }
+  },
+  "training_examples_count": 3,
+  "data_quality": {
+    "sessions_with_complete_data": 1,
+    "sessions_with_missing_agent_state": -2,
+    "sessions_with_missing_observations": -2,
+    "avg_agent_state_completeness": 1.0
+  }
+}
