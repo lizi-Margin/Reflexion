@@ -90,10 +90,10 @@ class LogAnalyzer:
 
     def extract_training_data(self) -> List[Dict[str, Any]]:
         """
-        Extract training examples from logged sessions.
+        Extract training examples from logged sessions with enhanced context.
 
         Returns:
-            List of training examples with observation-action pairs
+            List of training examples with observation-action pairs and rich context
         """
         training_examples = []
 
@@ -106,13 +106,14 @@ class LogAnalyzer:
                 observation = turn.get("observation")
                 agent_state = turn.get("agent_state", {})
                 action = turn.get("action")
+                game_context = turn.get("game_context", {})
 
                 # Get agent information
                 agent_info = agents_info.get(str(player_id), {})
                 model_name = agent_info.get("model_name", "unknown")
                 agent_class = agent_info.get("agent_class", "unknown")
 
-                # Create training example
+                # Create enhanced training example
                 example = {
                     "session_id": session.get("session_id"),
                     "environment": env,
@@ -120,12 +121,33 @@ class LogAnalyzer:
                     "model_name": model_name,
                     "agent_class": agent_class,
                     "turn_number": turn.get("turn_number"),
+                    "timestamp": turn.get("timestamp"),
+
+                    # Core training data
                     "observation": observation,
+                    "action": action,
+
+                    # Agent internal state
                     "agent_belief": agent_state.get("belief", ""),
                     "agent_strategy": agent_state.get("strategy", ""),
                     "agent_round": agent_state.get("round", 0),
-                    "action": action,
-                    "timestamp": turn.get("timestamp")
+                    "agent_is_initialized": agent_state.get("is_initialized", False),
+
+                    # Game context for better training
+                    "game_phase": game_context.get("phase"),
+                    "game_round": game_context.get("round"),
+                    "agent_role": game_context.get("agent_role"),
+                    "agent_team": game_context.get("agent_team"),
+                    "action_type": game_context.get("action_type"),
+                    "is_voting_action": game_context.get("is_voting_action", False),
+                    "is_speaking_action": game_context.get("is_speaking_action", False),
+
+                    # Enhanced observation analysis
+                    "observation_analysis": game_context.get("formatted_observation", {}),
+
+                    # Session-level context
+                    "total_players": session.get("num_players"),
+                    "session_info": session.get("game_info", {})
                 }
 
                 training_examples.append(example)

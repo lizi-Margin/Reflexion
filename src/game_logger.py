@@ -87,7 +87,9 @@ class GameLogger:
                  observation: Any,
                  agent_state: Dict[str, Any],
                  action: str,
-                 step_info: Optional[Dict] = None) -> None:
+                 step_info: Optional[Dict] = None,
+                 game_phase: Optional[str] = None,
+                 round_number: Optional[int] = None) -> None:
         """
         Log a single turn in the game.
 
@@ -97,9 +99,22 @@ class GameLogger:
             agent_state: Agent's internal state (beliefs, strategy, etc.)
             action: Action taken by the agent
             step_info: Additional step information from environment
+            game_phase: Current phase of the game (e.g., "night", "day_speak", "day_vote")
+            round_number: Current round number in the game
         """
         if not self.enabled or self.current_session is None:
             return
+
+        # Extract role information from agent state if available
+        agent_role = None
+        agent_team = None
+        if agent_state.get("init_info"):
+            agent_role = agent_state["init_info"].get("role")
+            agent_team = agent_state["init_info"].get("team")
+
+        # Parse game phase from observation if not provided
+        if not game_phase and isinstance(observation, str):
+            game_phase = self._extract_game_phase(observation)
 
         turn_data = {
             "turn_number": len(self.current_session["turns"]) + 1,
@@ -108,7 +123,18 @@ class GameLogger:
             "observation": self._serialize_observation(observation),
             "agent_state": agent_state,
             "action": action,
-            "step_info": step_info or {}
+            "step_info": step_info or {},
+            # Enhanced context information
+            "game_context": {
+                "phase": game_phase,
+                "round": round_number,
+                "agent_role": agent_role,
+                "agent_team": agent_team,
+                "formatted_observation": self._format_observation_for_analysis(observation),
+                "action_type": self._classify_action_type(action, game_phase),
+                "is_voting_action": self._is_voting_action(action),
+                "is_speaking_action": self._is_speaking_action(action)
+            }
         }
 
         self.current_session["turns"].append(turn_data)
@@ -160,6 +186,131 @@ class GameLogger:
                 return str(observation)
         else:
             return str(observation)
+
+    def _extract_game_phase(self, observation: str) -> Optional[str]:
+        """
+        Extract current game phase from observation text.
+
+        Args:
+            observation: Raw observation text
+
+        Returns:
+            Game phase string (e.g., "night", "day_speak", "day_vote") or None
+        """
+        if not isinstance(observation, str):
+            return None
+
+        # Look for phase indicators in Secret Mafia
+        if "night" in observation.lower():
+            return "night"
+        elif "day" in observation.lower() and "vote" in observation.lower():
+            return "day_vote"
+        elif "day" in observation.lower() and ("speak" in observation.lower() or "discuss" in observation.lower()):
+            return "day_speak"
+        elif "day" in observation.lower():
+            return "day"
+
+        return None
+
+    def _format_observation_for_analysis(self, observation: Any) -> Dict[str, Any]:
+        """
+        Format observation for better analysis during training.
+
+        Args:
+            observation: Raw observation
+
+        Returns:
+            Structured observation data
+        """
+        formatted = {
+            "raw": str(observation),
+            "length": len(str(observation)),
+            "type": type(observation).__name__
+        }
+
+        if isinstance(observation, str):
+            # Extract key information from Secret Mafia observations
+            formatted.update({
+                "contains_system_message": observation.startswith("SYSTEM:") or "SYSTEM:" in observation,
+                "contains_player_speech": any(f"Player {i}:" in observation for i in range(10)),
+                "contains_vote": any(f"[{i}]" in observation for i in range(10)),
+                "is_initialization": "You are Player" in observation and "Your role:" in observation
+            })
+
+        return formatted
+
+    def _classify_action_type(self, action: str, phase: Optional[str] = None) -> str:
+        """
+        Classify the type of action taken.
+
+        Args:
+            action: The action string
+            phase: Current game phase
+
+        Returns:
+            Action type classification
+        """
+        if not action:
+            return "empty"
+
+        action_lower = action.lower()
+
+        if self._is_voting_action(action):
+            return "vote"
+        elif self._is_speaking_action(action):
+            return "speech"
+        elif any(word in action_lower for word in ["investigate", "detect", "check"]):
+            return "investigate"
+        elif any(word in action_lower for word in ["protect", "save", "heal"]):
+            return "protect"
+        elif any(word in action_lower for word in ["kill", "eliminate", "attack"]):
+            return "attack"
+        elif phase == "night":
+            return "night_action"
+        else:
+            return "other"
+
+    def _is_voting_action(self, action: str) -> bool:
+        """
+        Check if action is a voting action.
+
+        Args:
+            action: The action string
+
+        Returns:
+            True if this is a voting action
+        """
+        if not action:
+            return False
+
+        # Check for bracket format [X] where X is a number
+        import re
+        bracket_match = re.search(r'^\[\d+\]$', action.strip())
+        if bracket_match:
+            return True
+
+        # Check for vote-related keywords
+        vote_keywords = ["vote", "eliminate", "expel", "remove", "lynch"]
+        return any(keyword in action.lower() for keyword in vote_keywords)
+
+    def _is_speaking_action(self, action: str) -> bool:
+        """
+        Check if action is a speaking action.
+
+        Args:
+            action: The action string
+
+        Returns:
+            True if this is a speaking action
+        """
+        if not action:
+            return False
+
+        # If it's not a voting action and has substantial content, assume it's speech
+        if not self._is_voting_action(action) and len(action) > 10:
+            return True
+
+        return False
 
     def _generate_summary(self) -> None:
         """Generate session summary statistics."""
@@ -283,15 +434,21 @@ class LoggedAgent:
         # Get agent state before action
         agent_state = self._extract_agent_state()
 
+        # Extract additional context from agent
+        game_phase = self._extract_game_phase_from_agent()
+        round_number = self._extract_round_from_agent()
+
         # Get action from base agent
         action = self.base_agent(observation)
 
-        # Log the turn
+        # Log the turn with enhanced context
         self.logger.log_turn(
             player_id=self.player_id,
             observation=observation,
             agent_state=agent_state,
-            action=action
+            action=action,
+            game_phase=game_phase,
+            round_number=round_number
         )
 
         return action
@@ -321,7 +478,55 @@ class LoggedAgent:
         if hasattr(self.base_agent, 'init_info'):
             state['init_info'] = getattr(self.base_agent, 'init_info')
 
+        # Enhanced state extraction for Michael/Vito agents
+        if hasattr(self.base_agent, 'is_initialized'):
+            state['is_initialized'] = getattr(self.base_agent, 'is_initialized')
+
+        if hasattr(self.base_agent, 'init_identity'):
+            state['init_identity'] = getattr(self.base_agent, 'init_identity')
+
+        # Store the full agent for deeper analysis if needed
+        state['agent_class'] = self.base_agent.__class__.__name__
+
         return state
+
+    def _extract_game_phase_from_agent(self) -> Optional[str]:
+        """
+        Extract current game phase from agent state.
+
+        Returns:
+            Current game phase or None
+        """
+        # Try to get phase from agent's internal logic (specifically for Michael/Vito)
+        if hasattr(self.base_agent, 'round') and hasattr(self.base_agent, 'init_info'):
+            round_num = getattr(self.base_agent, 'round', 0)
+            init_info = getattr(self.base_agent, 'init_info', {})
+
+            # Replicate the phase logic from Michael's code
+            current_round = round_num % 5
+            if current_round == 0:
+                if init_info.get("role") == "Villager":
+                    return "day_speak"
+                else:
+                    return "night"
+            elif current_round in [1, 2, 3]:
+                return "day_speak"
+            else:
+                return "day_vote"
+
+        return None
+
+    def _extract_round_from_agent(self) -> Optional[int]:
+        """
+        Extract current round number from agent.
+
+        Returns:
+            Current round number or None
+        """
+        if hasattr(self.base_agent, 'round'):
+            return getattr(self.base_agent, 'round')
+
+        return None
 
     def __getattr__(self, name):
         """Delegate attribute access to the base agent."""

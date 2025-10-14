@@ -1,0 +1,110 @@
+[
+  {
+    "session_id": "SecretMafia-v0_20251014_134927",
+    "environment": "SecretMafia-v0",
+    "player_id": 0,
+    "model_name": "unknown",
+    "agent_class": "dict",
+    "turn_number": 1,
+    "timestamp": "2025-10-14T13:49:27.486062",
+    "observation": "SYSTEM: Game started. You are Player 0. Your role: Mafia. Team: Mafia. The game will start at night.",
+    "action": "[1]",
+    "agent_belief": "=== PLAYER BELIEFS ===\nPlayer 0: Role: CONFIRMED as Mafia | Status: ALIVE\nPlayer 1: Role: UNKNOWN | Status: ALIVE",
+    "agent_strategy": "Pretend to be a villager and blend in during the day.",
+    "agent_round": 0,
+    "agent_is_initialized": true,
+    "game_phase": "night",
+    "game_round": 0,
+    "agent_role": null,
+    "agent_team": null,
+    "action_type": "vote",
+    "is_voting_action": true,
+    "is_speaking_action": false,
+    "observation_analysis": {
+      "raw": "SYSTEM: Game started. You are Player 0. Your role: Mafia. Team: Mafia. The game will start at night.",
+      "length": 100,
+      "type": "str",
+      "contains_system_message": true,
+      "contains_player_speech": false,
+      "contains_vote": false,
+      "is_initialization": true
+    },
+    "total_players": 2,
+    "session_info": {
+      "test": "enhanced_logging",
+      "description": "Testing enhanced logging with game context"
+    }
+  },
+  {
+    "session_id": "SecretMafia-v0_20251014_134927",
+    "environment": "SecretMafia-v0",
+    "player_id": 1,
+    "model_name": "unknown",
+    "agent_class": "dict",
+    "turn_number": 2,
+    "timestamp": "2025-10-14T13:49:27.486062",
+    "observation": "SYSTEM: Night phase begins. Player 0 was eliminated during the night.",
+    "action": "I think we need to be more careful. Someone was eliminated last night.",
+    "agent_belief": "=== PLAYER BELIEFS ===\nPlayer 0: Role: SUSPECTED as Mafia | Status: DEAD\nPlayer 1: Role: CONFIRMED as Villager | Status: ALIVE",
+    "agent_strategy": "Investigate remaining players to find mafia members.",
+    "agent_round": 1,
+    "agent_is_initialized": true,
+    "game_phase": "day_speak",
+    "game_round": 1,
+    "agent_role": null,
+    "agent_team": null,
+    "action_type": "vote",
+    "is_voting_action": true,
+    "is_speaking_action": false,
+    "observation_analysis": {
+      "raw": "SYSTEM: Night phase begins. Player 0 was eliminated during the night.",
+      "length": 69,
+      "type": "str",
+      "contains_system_message": true,
+      "contains_player_speech": false,
+      "contains_vote": false,
+      "is_initialization": false
+    },
+    "total_players": 2,
+    "session_info": {
+      "test": "enhanced_logging",
+      "description": "Testing enhanced logging with game context"
+    }
+  },
+  {
+    "session_id": "SecretMafia-v0_20251014_134927",
+    "environment": "SecretMafia-v0",
+    "player_id": 1,
+    "model_name": "unknown",
+    "agent_class": "dict",
+    "turn_number": 3,
+    "timestamp": "2025-10-14T13:49:27.486062",
+    "observation": "SYSTEM: Voting phase begins. Please vote for who you think is the mafia.",
+    "action": "Based on the available information, I vote for [0].",
+    "agent_belief": "=== PLAYER BELIEFS ===\nPlayer 0: Role: SUSPECTED as Mafia | Status: DEAD\nPlayer 1: Role: CONFIRMED as Villager | Status: ALIVE",
+    "agent_strategy": "Vote based on available evidence.",
+    "agent_round": 4,
+    "agent_is_initialized": true,
+    "game_phase": "day_vote",
+    "game_round": 4,
+    "agent_role": null,
+    "agent_team": null,
+    "action_type": "vote",
+    "is_voting_action": true,
+    "is_speaking_action": false,
+    "observation_analysis": {
+      "raw": "SYSTEM: Voting phase begins. Please vote for who you think is the mafia.",
+      "length": 72,
+      "type": "str",
+      "contains_system_message": true,
+      "contains_player_speech": false,
+      "contains_vote": false,
+      "is_initialization": false
+    },
+    "total_players": 2,
+    "session_info": {
+      "test": "enhanced_logging",
+      "description": "Testing enhanced logging with game context"
+    }
+  }
+]

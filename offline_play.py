@@ -24,9 +24,9 @@ logger = GameLogger(log_dir=LOG_DIR, enabled=ENABLE_LOGGING)
 
 # Initialize the agents
 raw_agents = {
-    0: Michael(model_name="qwen3-8b"),
-    1: Michael(model_name="qwen3-8b"),
-    2: Michael(model_name="qwen3-8b"),
+    0: Michael(model_name="deepseek-r1"),
+    1: Michael(model_name="deepseek-r1"),
+    2: Michael(model_name="deepseek-r1"),
     3: Michael(model_name="deepseek-r1"),
     4: Michael(model_name="deepseek-r1"),
     5: Michael(model_name="deepseek-r1"),
