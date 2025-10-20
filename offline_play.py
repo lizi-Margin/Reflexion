@@ -43,6 +43,7 @@ else:
 
 # Initialize the environment
 env = ta.make(env_id=ENV_ID)
+env.reset(num_players=len(agents))
 
 # Start logging session
 session_id = logger.start_session(

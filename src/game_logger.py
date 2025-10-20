@@ -608,12 +608,12 @@ class LoggedAgent:
         # Try to get phase from agent's internal logic (specifically for Michael/Vito)
         if hasattr(self.base_agent, 'round') and hasattr(self.base_agent, 'init_info'):
             round_num = getattr(self.base_agent, 'round', 0)
-            init_info = getattr(self.base_agent, 'init_info', {})
+            init_info = getattr(self.base_agent, 'init_info', None)
 
             # Replicate the phase logic from Michael's code
             current_round = round_num % 5
             if current_round == 0:
-                if init_info.get("role") == "Villager":
+                if init_info and init_info.get("role") == "Villager":
                     return "day_speak"
                 else:
                     return "night"

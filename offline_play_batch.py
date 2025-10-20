@@ -121,44 +121,53 @@ def play_single_game(game_id, logger):
 
 def update_statistics(rewards, game_info, agents):
     """Update game statistics based on game results"""
+    # Handle case where game_info is None (game error)
+    if game_info is None:
+        print("Warning: game_info is None, skipping statistics update")
+        return
+
     game_stats["total_games"] += 1
-    
+
     # Count wins by team
-    mafia_win = any(info["role"] in ["Mafia"] and reward == 1 
+    mafia_win = any(info["role"] in ["Mafia"] and reward == 1
                    for info, reward in zip(game_info.values(), rewards.values()))
-    
+
     if mafia_win:
         game_stats["mafia_wins"] += 1
     else:
         game_stats["villager_wins"] += 1
-    
+
     # Track reasons for game end
     for player_info in game_info.values():
-        game_stats["reasons"][player_info["reason"]] += 1
-        if player_info["invalid_move"]:
+        if player_info is None:
+            continue
+        game_stats["reasons"][player_info.get("reason", "unknown")] += 1
+        if player_info.get("invalid_move", False):
             game_stats["invalid_moves"] += 1
-    
+
     # Track role-based statistics
     for player_id, info in game_info.items():
-        role = info["role"]
-        reward = rewards[player_id]
-        
+        if info is None:
+            continue
+        role = info.get("role", "unknown")
+        reward = rewards.get(player_id, 0)
+
         game_stats["role_stats"][role]["games"] += 1
         if reward == 1:  # Win
             game_stats["role_stats"][role]["wins"] += 1
-        
+
         # Update win rate
         games = game_stats["role_stats"][role]["games"]
         wins = game_stats["role_stats"][role]["wins"]
         game_stats["role_stats"][role]["win_rate"] = wins / games if games > 0 else 0.0
-        
+
         # Track agent-based statistics
         agent_name = get_agent_name(player_id)
         game_stats["agent_stats"][agent_name]["games"] += 1
         game_stats["agent_stats"][agent_name]["roles"][role] += 1
         if reward == 1:  # Win
             game_stats["agent_stats"][agent_name]["wins"] += 1
-        
+
         # Update agent win rate
         agent_games = game_stats["agent_stats"][agent_name]["games"]
         agent_wins = game_stats["agent_stats"][agent_name]["wins"]
@@ -169,14 +178,19 @@ def print_statistics():
     print(f"\n{'='*60}")
     print(f"FINAL STATISTICS AFTER {game_stats['total_games']} GAMES")
     print(f"{'='*60}")
-    
+
     # Overall win rates
     print(f"\nOverall Results:")
     print(f"  Total Games: {game_stats['total_games']}")
-    print(f"  Mafia Wins: {game_stats['mafia_wins']} "
-          f"({game_stats['mafia_wins']/game_stats['total_games']*100:.1f}%)")
-    print(f"  Villager Wins: {game_stats['villager_wins']} "
-          f"({game_stats['villager_wins']/game_stats['total_games']*100:.1f}%)")
+
+    if game_stats['total_games'] > 0:
+        print(f"  Mafia Wins: {game_stats['mafia_wins']} "
+              f"({game_stats['mafia_wins']/game_stats['total_games']*100:.1f}%)")
+        print(f"  Villager Wins: {game_stats['villager_wins']} "
+              f"({game_stats['villager_wins']/game_stats['total_games']*100:.1f}%)")
+    else:
+        print(f"  Mafia Wins: {game_stats['mafia_wins']} (0.0%)")
+        print(f"  Villager Wins: {game_stats['villager_wins']} (0.0%)")
     
     # Agent-based statistics
     print(f"\nAgent-based Statistics:")
@@ -216,7 +230,12 @@ def main():
             rewards, game_info, agents = play_single_game(game_id, logger)
             update_statistics(rewards, game_info, agents)
         except Exception as e:
+            import traceback
             print(f"Error in game {game_id}: {e}")
+            print("Full traceback:")
+            traceback.print_exc()
+            # Create empty data to avoid statistics errors
+            update_statistics({}, None, {})
             continue
 
     # Print final statistics
@@ -231,7 +250,11 @@ def main():
         print(f"Total sessions logged: {stats['total_sessions']}")
         print(f"Sessions by environment: {stats['sessions_by_env']}")
         print(f"Log directory: {LOG_DIR}")
-        print(f"Latest session: {stats.get('latest_session', {}).get('session_id', 'None')}")
+        latest_session = stats.get('latest_session')
+        if latest_session:
+            print(f"Latest session: {latest_session.get('session_id', 'None')}")
+        else:
+            print("Latest session: None")
 
 if __name__ == "__main__":
     main()

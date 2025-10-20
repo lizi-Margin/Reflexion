@@ -67,7 +67,7 @@ class Vito(LLMAgent):
                 #count round
                 current_round = self.round % 5
                 if current_round == 0:
-                    if self.init_info["role"] == "Villager":
+                    if self.init_info and self.init_info.get("role") == "Villager":
                         self.round += 1
                         phase = "day_speak"
                     else:
@@ -758,7 +758,7 @@ class Michael(LLMAgent):
             #count round
             current_round = self.round % 5
             if current_round == 0:
-                if self.init_info["role"] == "Villager":
+                if self.init_info and self.init_info.get("role") == "Villager":
                     self.round += 1
                     phase = "day_speak"
                 else:
@@ -1245,6 +1245,7 @@ class Michael(LLMAgent):
             model: str = 'qwen3-8b',
             max_tokens: int = 1024,
             return_full_response: bool = False,
+            full_logprobs: bool = False,  # New parameter for complete probability distribution
     ):
         if input_messages is None:
             raise ValueError("messages should not be None!")
