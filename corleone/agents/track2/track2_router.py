@@ -79,8 +79,12 @@ def create_track2_agent(
         from corleone.agents.track2.blotto_agent import BlottoAgent
         return BlottoAgent(model_name, api_model_spec, enable_logging=enable_logging)
     elif "ThreePlayerIPD" in env_name:
-        from corleone.agents.track2.ipd_agent import IPDAgent
-        return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging)
+        if model_name.startswith('bsl'):
+            from corleone.agents.track2.ipd_agent_baseline import IPDAgent
+            return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging)
+        else:
+            from corleone.agents.track2.ipd_agent import IPDAgent
+            return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging)
     else:
         raise ValueError(f"Unknown environment: {env_name}")
 

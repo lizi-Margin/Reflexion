@@ -118,10 +118,10 @@ class AgentFactory:
                 if hasattr(agent, param):
                     setattr(agent, param, value)
 
-        # Wrap with logger if enabled (skip for IPDAgent which has its own logging)
-        if logger and agent_config.strategy_pool_enabled and agent_config.agent_type != "IPDAgent":
-            from corleone.game_logger_merged import LoggedAgent
-            agent = LoggedAgent(agent, logger, player_id)
+        # # Wrap with logger if enabled (skip for IPDAgent which has its own logging)
+        # if logger and agent_config.strategy_pool_enabled and agent_config.agent_type != "IPDAgent":
+        #     from corleone.game_logger_merged import LoggedAgent
+        #     agent = LoggedAgent(agent, logger, player_id)
 
         return agent
 
@@ -200,12 +200,11 @@ class EnhancedSelfPlayTrainer:
                 agents[player_id] = agent
 
                 # Track strategy assignment for strategy pool agents
-                if agent_config.strategy_pool_enabled and hasattr(agent, 'agent'):
+                if agent_config.strategy_pool_enabled:
                     if hasattr(agent.agent, 'current_behavior_strategy_id'):
-                        strategy_assignments[player_id] = agent.agent.current_behavior_strategy_id
+                        strategy_assignments[player_id] = agent.current_behavior_strategy_id
                     else:
-                        # Create a default strategy assignment
-                        strategy_assignments[player_id] = f"player_{player_id}_default"
+                       assert False
 
             # Initialize environment
             env = ta.make(env_id=self.config.env_id)

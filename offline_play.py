@@ -5,7 +5,7 @@ You (human player) will be player 0, and the AI model will be player 1.
 
 import textarena as ta
 from src.agent import LLMAgent
-from corleone.family import Vito, Michael
+from corleone.family import Vito
 from corleone.agents.track2.track2_router import create_track2_agent
 from corleone.agents.track2.codenames_agent import CodenamesAgent
 import sys
@@ -17,7 +17,7 @@ try:
 except: pass
 
 
-def create_agents(env_id, npc_num, model_name='test', api_model_spec='qwen3-8b', enable_logging=False):
+def create_agents(env_id, npc_num, model_name='test', api_model_spec='qwen3-8b', enable_logging=True):
     """
     Create a dictionary of agents for the specified environment.
 
@@ -44,7 +44,7 @@ def create_agents(env_id, npc_num, model_name='test', api_model_spec='qwen3-8b',
             model_name=f'bsl{i}',
             api_model_spec=api_model_spec,
             env_name=env_id,
-            enable_logging=enable_logging
+            enable_logging=False
         )
     return agents
 
@@ -107,7 +107,7 @@ def main():
         npc_num=npc_num,
         model_name='test',
         api_model_spec='qwen3-8b',
-        enable_logging=False
+        enable_logging=True
     )
 
     # Play game
