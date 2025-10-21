@@ -1,0 +1,190 @@
+{
+  "strategies": [
+    {
+      "id": "conv_trust_builder",
+      "type": "conversation",
+      "text": "Build trust by promising cooperation and emphasizing mutual benefits. Example: 'I believe we can all benefit if we cooperate consistently.'",
+      "context": {
+        "phase": "early",
+        "rank": 2,
+        "gap": 0,
+        "remaining": 7
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958493"
+    },
+    {
+      "id": "conv_warning",
+      "type": "conversation",
+      "text": "Warn that defection will be punished. Example: 'I will cooperate, but if anyone defects against me, I will retaliate immediately.'",
+      "context": {
+        "phase": "mid",
+        "rank": 1,
+        "gap": 0,
+        "remaining": 5
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958501"
+    },
+    {
+      "id": "conv_alliance",
+      "type": "conversation",
+      "text": "Propose alliance against another player. Example: 'Player X keeps defecting. Let's cooperate with each other and defect against Player X.'",
+      "context": {
+        "phase": "mid",
+        "rank": 2,
+        "gap": -5,
+        "remaining": 4
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958503"
+    },
+    {
+      "id": "conv_deceptive",
+      "type": "conversation",
+      "text": "Promise cooperation while planning to defect. Use when desperate. Example: 'I promise to cooperate with everyone.'",
+      "context": {
+        "phase": "late",
+        "rank": 3,
+        "gap": -10,
+        "remaining": 1
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958504"
+    },
+    {
+      "id": "conv_minimal",
+      "type": "conversation",
+      "text": "Stay vague and don't reveal intentions. Example: 'I'm evaluating the situation and will decide based on what I observe.'",
+      "context": {
+        "phase": "early",
+        "rank": 1,
+        "gap": 3,
+        "remaining": 8
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958509"
+    },
+    {
+      "id": "dec_tit_for_tat",
+      "type": "decision",
+      "text": "Tit-for-Tat: Cooperate first round. Then copy opponent's last action.",
+      "context": {
+        "phase": "mid",
+        "rank": 2,
+        "gap": 0,
+        "remaining": 5
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958513"
+    },
+    {
+      "id": "dec_tft_forgive",
+      "type": "decision",
+      "text": "Tit-for-Tat with Forgiveness: Like TFT but occasionally forgive defections.",
+      "context": {
+        "phase": "early",
+        "rank": 1,
+        "gap": 2,
+        "remaining": 7
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958515"
+    },
+    {
+      "id": "dec_grim_trigger",
+      "type": "decision",
+      "text": "Grim Trigger: Cooperate until opponent defects once, then always defect against them.",
+      "context": {
+        "phase": "mid",
+        "rank": 1,
+        "gap": 0,
+        "remaining": 5
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958516"
+    },
+    {
+      "id": "dec_always_cooperate",
+      "type": "decision",
+      "text": "Always Cooperate: Unconditionally cooperate. Use when leading comfortably.",
+      "context": {
+        "phase": "early",
+        "rank": 1,
+        "gap": 5,
+        "remaining": 8
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958518"
+    },
+    {
+      "id": "dec_always_defect",
+      "type": "decision",
+      "text": "Always Defect: Unconditionally defect. Use in final round or when desperate.",
+      "context": {
+        "phase": "late",
+        "rank": 3,
+        "gap": -8,
+        "remaining": 1
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958519"
+    },
+    {
+      "id": "dec_adaptive_rank",
+      "type": "decision",
+      "text": "Adaptive: If leading, cooperate. If middle, use TFT. If last, defect more.",
+      "context": {
+        "phase": "late",
+        "rank": 2,
+        "gap": -3,
+        "remaining": 2
+      },
+      "usage": 0,
+      "score": 0.0,
+      "performance": 0.5,
+      "created": "2025-10-21T17:47:29.958521"
+    },
+    {
+      "id": "conv_a80a81bc",
+      "type": "conversation",
+      "text": "Test: promise cooperation",
+      "context": {
+        "phase": "mid",
+        "rank": 2,
+        "gap": -5,
+        "remaining": 6
+      },
+      "usage": 2,
+      "score": 1.0,
+      "performance": 0.75,
+      "created": "2025-10-21T17:48:29.780957"
+    }
+  ],
+  "metadata": {
+    "total_strategies": 12,
+    "conversation_strategies": 6,
+    "decision_strategies": 6,
+    "last_updated": "2025-10-21T17:48:29.780981"
+  }
+}

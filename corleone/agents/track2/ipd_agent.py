@@ -1,5 +1,7 @@
 import re
 import json
+import uuid
+from datetime import datetime
 from typing import Dict, List, Set, Tuple, Optional
 from src.agent import Agent
 from corleone.api.api_router import get_api_class
@@ -14,9 +16,12 @@ class IPDAgent(Agent):
     1. During conversation: Build trust and coordinate strategies
     2. During decision: Make strategic cooperate/defect choices, with dynamic goals
        based on game state (e.g., rank, round number).
+
+    Uses the global StrategyPoolManager for learning across games.
     """
 
-    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True,
+                 strategy_pool_manager=None):
         """
         Initialize the IPDAgent
 
@@ -24,9 +29,14 @@ class IPDAgent(Agent):
             model_name: Name of the model for identification
             api_model_spec: Which API/model to use for generation
             enable_logging: Whether to enable logging
+            strategy_pool_manager: Reference to global StrategyPoolManager (None for standalone)
         """
         self.model_name = model_name
         self.api = get_api_class(api_model_spec)(model=api_model_spec)
+
+        # Strategy pool manager (shared across all agents in training)
+        self.strategy_manager = strategy_pool_manager
+        self.strategy_usage_log = []  # Log of strategies used this game
 
         # Game state tracking
         self.is_initialized = False
@@ -69,6 +79,7 @@ class IPDAgent(Agent):
             if not self.is_initialized:
                 self._initialize_from_observation(observation)
 
+
             # Regular turn processing
             self.observation_history.append(observation)
             self.turn_counter += 1
@@ -90,6 +101,11 @@ class IPDAgent(Agent):
             if self.logger:
                 self.logger.end_turn(result)
 
+            if self.enable_logging:
+                print("=" * 60)
+                print(f"Turn {self.turn_counter}:")
+                print(f"Phase: {self.phase}")
+                print(result)
             return result
 
         except Exception as e:
@@ -237,6 +253,11 @@ class IPDAgent(Agent):
         # Extract strategy
         strategy = self._parse_tag_section(strategy_response, "#STRATEGY:")
 
+        # Log strategy usage
+        if self.strategy_manager:
+            sid = self.create_strategy("conversation", strategy)
+            self.log_strategy_usage(sid, "conversation")
+
         if self.logger:
             self.logger.log_phase("strategy", strategy_prompt, strategy_response, strategy)
 
@@ -301,6 +322,13 @@ class IPDAgent(Agent):
 
         # Extract decisions
         decisions = self._parse_tag_section(decision_response, "#DECISIONS:")
+
+        # Log decision strategy usage
+        if self.strategy_manager:
+            # Extract strategy reasoning before #DECISIONS:
+            decision_strategy = decision_response.split("#DECISIONS:")[0].strip()
+            sid = self.create_strategy("decision", decision_strategy)
+            self.log_strategy_usage(sid, "decision")
 
         if self.logger:
             self.logger.log_phase("decisions", decision_prompt, decision_response, decisions)
@@ -428,9 +456,20 @@ class IPDAgent(Agent):
 
     def _prompt_conversation_strategy(self, analysis) -> str:
         """Prompt for conversation strategy phase"""
+
+        # Get reference strategies
+        reference_section = ""
+        if self.strategy_manager:
+            ref_strategies = self.select_reference_strategies('conversation')
+            if ref_strategies:
+                reference_section = "\n### Reference Conversation Strategies (proven in similar situations):\n"
+                for i, ref in enumerate(ref_strategies, 1):
+                    reference_section += f"{i}. {ref['text']}\n   (Used {ref['usage']} times, performance: {ref['performance']:.2f})\n\n"
+                reference_section += "You can adopt, modify, or ignore these.\n\n"
+
         prompt = (
             f"Based on your analysis:\n\n{analysis}\n\n"
-
+            f"{reference_section}"
             f"Now, determine your conversation strategy for this turn. Your goal is to WIN the game. Consider:\n"
             f"1. Your goals in this conversation: Should you build trust, form a temporary alliance, deceive an opponent, or call out a defector?\n"
             f"2. How to position yourself with each opponent based on your rank and their behavior.\n"
@@ -538,15 +577,26 @@ class IPDAgent(Agent):
 
     def _prompt_decision_final(self, analysis, payoff) -> str:
         """Prompt for final decision phase"""
-        # MODIFICATION: This is the most heavily modified prompt. It introduces dynamic goals.
+
+        # Get reference decision strategies
+        reference_section = ""
+        if self.strategy_manager:
+            ref_strategies = self.select_reference_strategies('decision')
+            if ref_strategies:
+                reference_section = "\n### Reference Decision Strategies (proven approaches):\n"
+                for i, ref in enumerate(ref_strategies, 1):
+                    reference_section += f"{i}. {ref['text']}\n   (Performance: {ref['performance']:.2f})\n\n"
+                reference_section += "Consider these when deciding.\n\n"
+
         rankings = self._get_player_rankings()
         my_rank = rankings[self.player_id]['rank']
-        
+
         prompt = (
             f"Based on your analysis and payoff evaluation:\n\n"
             f"Analysis: {analysis}\n\n"
             f"Payoff evaluation: {payoff}\n\n"
-            
+            f"{reference_section}"
+
             f"--- STRATEGIC CONTEXT ---\n"
             f"This is Round {self.current_round} of {self.num_rounds}.\n"
             f"Current Rankings:\n"
@@ -555,7 +605,7 @@ class IPDAgent(Agent):
             prompt += f"- Rank {rank_info['rank']}: Player {p_id} ({rank_info['score']} points)\n"
         prompt += f"You are currently Rank {my_rank}.\n\n"
 
-        # --- DYNAMIC GOAL INJECTION ---
+        # Dynamic goal injection
         if self.current_round == self.num_rounds:
             prompt += "--- FINAL ROUND: OBJECTIVE OVERRIDE ---\n"
             if my_rank == 1:
@@ -588,3 +638,118 @@ class IPDAgent(Agent):
         if index != -1:
             return text[index + len(tag):].strip()
         return text  # Return full text if tag not found
+
+    # Strategy Pool Integration Methods
+    # These methods adapt the global StrategyPoolManager for IPD-specific use
+
+    def get_context_features(self) -> Dict:
+        """Extract current game context for strategy matching"""
+        # Round phase
+        if self.num_rounds > 0:
+            progress = self.current_round / self.num_rounds
+            if progress <= 0.33:
+                phase = "early"
+            elif progress <= 0.66:
+                phase = "mid"
+            else:
+                phase = "late"
+        else:
+            phase = "mid"
+
+        # My rank
+        rankings = self._get_player_rankings()
+        my_rank = rankings[self.player_id]['rank']
+
+        # Score gap
+        leader_score = max(self.scores.values())
+        score_gap = self.scores[self.player_id] - leader_score
+
+        # Rounds remaining
+        rounds_remaining = self.num_rounds - self.current_round + 1
+
+        return {
+            "phase": phase,
+            "rank": my_rank,
+            "gap": score_gap,
+            "remaining": rounds_remaining,
+            "game": "IPD"
+        }
+
+    def select_reference_strategies(self, strategy_type: str, top_k: int = 2) -> List[Dict]:
+        """Select best matching strategies from global pool"""
+        if not self.strategy_manager:
+            return []
+
+        context = self.get_context_features()
+        candidates = []
+
+        for sid, strategy in self.strategy_manager.strategies.items():
+            # Filter by IPD + strategy type
+            if strategy.get("game") != "IPD":
+                continue
+            if strategy.get("strategy_type") != strategy_type:
+                continue
+
+            # Simple similarity: phase + rank match
+            score = 0.0
+            ctx = strategy.get("context_features", {})
+
+            if ctx.get("phase") == context["phase"]:
+                score += 0.5
+            if ctx.get("rank") == context["rank"]:
+                score += 0.5
+
+            # Add performance weight
+            avg_perf = strategy.get("avg_performance", 0.5)
+            combined = score * 0.6 + avg_perf * 0.4
+
+            if score >= 0.3:  # Minimum similarity
+                candidates.append({
+                    "text": strategy.get("strategy_text", ""),
+                    "usage": strategy.get("usage_count", 0),
+                    "performance": avg_perf,
+                    "similarity": score,
+                    "combined": combined
+                })
+
+        # Sort by combined score
+        candidates.sort(key=lambda x: x["combined"], reverse=True)
+        return candidates[:top_k]
+
+    def create_strategy(self, strategy_type: str, text: str) -> str:
+        """Create new strategy in global pool"""
+        if not self.strategy_manager:
+            return f"no_pool_{uuid.uuid4().hex[:8]}"
+
+        sid = f"ipd_{strategy_type[:4]}_{uuid.uuid4().hex[:8]}"
+        context = self.get_context_features()
+
+        strategy = {
+            "id": sid,
+            "game": "IPD",
+            "strategy_type": strategy_type,  # 'conversation' or 'decision'
+            "type": "behavior",  # For compatibility with global manager
+            "role": "Player",  # IPD doesn't have special roles
+            "game_phase": f"{context['phase']}_round",
+            "strategy_text": text,
+            "context_features": context,
+            "usage_count": 1,
+            "success_score": 0.0,
+            "avg_performance": 0.5,
+            "last_used": datetime.now().isoformat(),
+            "created_at": datetime.now().isoformat()
+        }
+
+        self.strategy_manager.strategies[sid] = strategy
+        return sid
+
+    def log_strategy_usage(self, sid: str, strategy_type: str):
+        """Log strategy usage for this game"""
+        self.strategy_usage_log.append({
+            "id": sid,
+            "type": strategy_type,
+            "round": self.current_round
+        })
+
+        # Note: usage_count is already incremented in create_strategy
+        # The trainer will call save_strategy_pool() after the game
