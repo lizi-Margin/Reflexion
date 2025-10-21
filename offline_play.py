@@ -98,8 +98,8 @@ def main():
     """Main function for single game play"""
     # Configure environment
     # env_id = "Codenames-v0-train"; npc_num = 3  # 2v2
-    # env_id = "ColonelBlotto-v0-train"; npc_num = 1  # 1v1
-    env_id = "ThreePlayerIPD-v0-train"; npc_num = 2  # 3 players
+    env_id = "ColonelBlotto-v0-train"; npc_num = 1  # 1v1
+    # env_id = "ThreePlayerIPD-v0-train"; npc_num = 2  # 3 players
 
     # Create agents
     agents = create_agents(
