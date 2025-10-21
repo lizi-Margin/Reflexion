@@ -1,0 +1,126 @@
+"""
+Reflexion-Based Inter-Trial Memory System Flow
+
+TRIAL 1:
+┌─────────────────────────────────────────────────────────────┐
+│  Game Execution                                             │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐ │
+│  │ Conversation │ -> │   Decision   │ -> │  Game Ends   │ │
+│  │    Phase     │    │    Phase     │    │  (Rank 2)    │ │
+│  └──────────────┘    └──────────────┘    └──────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│  Reflection Generation (because didn't win)                 │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ LLM analyzes game log:                               │  │
+│  │ - "Being overly cooperative early led to exploitation" │
+│  │ - "Need to defect more against aggressive opponents" │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────┐
+│  Memory Update                                              │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ memory/ipd_memory.json:                              │  │
+│  │ {                                                     │  │
+│  │   "conversation_reflections": [reflection1],         │  │
+│  │   "decision_reflections": [reflection1],             │  │
+│  │   "trial_history": [{trial1_data}]                   │  │
+│  │ }                                                     │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+
+
+TRIAL 2 (with memory):
+┌─────────────────────────────────────────────────────────────┐
+│  Memory-Guided Execution                                    │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ Conversation Prompt:                                 │  │
+│  │ "### Lessons from Past Games:                        │  │
+│  │  1. [Rank 2] Being overly cooperative early led to   │  │
+│  │     exploitation. Be more cautious.                  │  │
+│  │                                                       │  │
+│  │  Now determine your strategy..."                     │  │
+│  └──────────────────────────────────────────────────────┘  │
+│                           ↓                                 │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │ Agent uses lessons → Better strategy → Improved play │  │
+│  └──────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                              ↓
+                        Game Ends (Rank 1 - WON!)
+                              ↓
+                    No reflection (because won)
+                              ↓
+                     Memory stats updated:
+                     - Trials: 2
+                     - Win rate: 50%
+                     - Reflections: 2
+
+
+TRIAL 3+:
+┌─────────────────────────────────────────────────────────────┐
+│  Continuous Improvement Loop                                │
+│                                                             │
+│  More trials → More reflections → Better guidance →        │
+│  → Improved performance → Higher win rate                  │
+│                                                             │
+│  Memory accumulates up to 10 most recent reflections       │
+│  Best 3 reflections shown in each prompt                   │
+└─────────────────────────────────────────────────────────────┘
+
+
+KEY COMPONENTS:
+
+1. IPDMemory (ipd_memory.py):
+   - Stores reflections across trials
+   - Generates new reflections from game logs
+   - Provides guidance for next games
+   - Tracks statistics (win rate, avg rank)
+
+2. IPDAgent (ipd_agent.py):
+   - Enhanced with memory parameter
+   - Injects memory guidance into prompts
+   - Calls finalize_game() to update memory
+   - Uses same multi-phase reasoning as before
+
+3. Training Script (train_with_memory.py):
+   - Runs multiple trials with shared memory
+   - Shows performance improvement over time
+   - Prints reflections and statistics
+
+4. Memory File (memory/ipd_memory.json):
+   - Persistent storage of all learning
+   - Automatically saved/loaded
+   - Can be shared across sessions
+
+
+PROMPT INTEGRATION:
+
+BEFORE (no memory):
+┌─────────────────────────────────┐
+│ System: You are a strategic     │
+│         player...               │
+│                                 │
+│ User: Based on analysis X,      │
+│       determine your strategy   │
+└─────────────────────────────────┘
+
+AFTER (with memory):
+┌─────────────────────────────────┐
+│ System: You are a strategic     │
+│         player...               │
+│                                 │
+│ User: Based on analysis X,      │
+│                                 │
+│ ### Lessons from Past Games:    │ <-- NEW!
+│ 1. [WON] Trust but verify       │
+│ 2. [Rank 2] Don't over-coop     │
+│ 3. [Rank 3] Punish defectors    │
+│                                 │
+│ Apply these lessons.            │
+│                                 │
+│ Now determine your strategy     │
+└─────────────────────────────────┘
+"""
