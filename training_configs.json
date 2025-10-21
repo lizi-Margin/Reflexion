@@ -1,0 +1,257 @@
+{
+  "training_presets": {
+    "michael_models": {
+      "description": "Michael agents with different models",
+      "agent_configs": [
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.4,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        },
+        {
+          "agent_type": "Michael",
+          "model_name": "deepseek-r1",
+          "temperature": 0.3,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        },
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-4b",
+          "temperature": 0.5,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        }
+      ],
+      "agent_distribution": [0.5, 0.3, 0.2],
+      "min_players_per_game": 5,
+      "max_players_per_game": 8,
+      "games_per_session": 30,
+      "optimization_interval": 10,
+      "max_workers": 4,
+      "strategy_pool_path": "strategy_pool.json",
+      "enable_strategy_learning": true,
+      "strategy_mutation_rate": 0.1,
+      "log_dir": "training_logs_michael",
+      "enable_logging": true
+    },
+
+    "mixed_agents": {
+      "description": "Mixed Michael and Vito agents",
+      "agent_configs": [
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.4,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        },
+        {
+          "agent_type": "Vito",
+          "model_name": "qwen3-8b",
+          "temperature": 0.4,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": false,
+          "custom_params": {}
+        }
+      ],
+      "agent_distribution": [0.7, 0.3],
+      "min_players_per_game": 5,
+      "max_players_per_game": 8,
+      "games_per_session": 25,
+      "optimization_interval": 5,
+      "max_workers": 3,
+      "strategy_pool_path": "strategy_pool.json",
+      "enable_strategy_learning": true,
+      "strategy_mutation_rate": 0.1,
+      "log_dir": "training_logs_mixed",
+      "enable_logging": true
+    },
+
+    "temperature_exploration": {
+      "description": "Same agent type with different temperatures",
+      "agent_configs": [
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.2,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        },
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.4,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        },
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.7,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        }
+      ],
+      "agent_distribution": [0.3, 0.4, 0.3],
+      "min_players_per_game": 5,
+      "max_players_per_game": 8,
+      "games_per_session": 40,
+      "optimization_interval": 8,
+      "max_workers": 6,
+      "strategy_pool_path": "strategy_pool.json",
+      "enable_strategy_learning": true,
+      "strategy_mutation_rate": 0.15,
+      "log_dir": "training_logs_temperature",
+      "enable_logging": true
+    },
+
+    "high_performance": {
+      "description": "High-performance configuration for serious training",
+      "agent_configs": [
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.3,
+          "max_tokens": 1536,
+          "strategy_pool_enabled": true,
+          "custom_params": {
+            "similarity_threshold": 0.8,
+            "exploration_rate": 0.15
+          }
+        },
+        {
+          "agent_type": "Michael",
+          "model_name": "deepseek-r1",
+          "temperature": 0.25,
+          "max_tokens": 1536,
+          "strategy_pool_enabled": true,
+          "custom_params": {
+            "similarity_threshold": 0.8,
+            "exploration_rate": 0.1
+          }
+        }
+      ],
+      "agent_distribution": [0.6, 0.4],
+      "min_players_per_game": 6,
+      "max_players_per_game": 8,
+      "games_per_session": 50,
+      "optimization_interval": 5,
+      "max_workers": 8,
+      "strategy_pool_path": "strategy_pool.json",
+      "enable_strategy_learning": true,
+      "strategy_mutation_rate": 0.2,
+      "log_dir": "training_logs_high_perf",
+      "enable_logging": true
+    },
+
+    "quick_test": {
+      "description": "Quick test configuration",
+      "agent_configs": [
+        {
+          "agent_type": "Michael",
+          "model_name": "qwen3-8b",
+          "temperature": 0.4,
+          "max_tokens": 1024,
+          "strategy_pool_enabled": true,
+          "custom_params": {}
+        }
+      ],
+      "agent_distribution": [1.0],
+      "min_players_per_game": 4,
+      "max_players_per_game": 6,
+      "games_per_session": 10,
+      "optimization_interval": 3,
+      "max_workers": 2,
+      "strategy_pool_path": "strategy_pool.json",
+      "enable_strategy_learning": true,
+      "strategy_mutation_rate": 0.1,
+      "log_dir": "training_logs_quick",
+      "enable_logging": true
+    }
+  },
+
+  "agent_type_info": {
+    "Michael": {
+      "description": "Advanced agent with dynamic strategy pool and 4-step reasoning",
+      "features": ["Strategy pool", "Performance tracking", "Language strategies", "Behavior strategies"],
+      "recommended_temperature": [0.3, 0.5],
+      "strategy_pool_compatible": true
+    },
+    "Vito": {
+      "description": "Basic agent with 4-step reasoning process",
+      "features": ["4-step reasoning", "Belief tracking", "Strategy planning"],
+      "recommended_temperature": [0.3, 0.6],
+      "strategy_pool_compatible": false
+    }
+  },
+
+  "model_info": {
+    "qwen3-8b": {
+      "description": "Qwen3 8B parameter model - good balance of performance and speed",
+      "recommended_temperature": [0.2, 0.6],
+      "context_length": 8192,
+      "cost_efficiency": "High"
+    },
+    "deepseek-r1": {
+      "description": "DeepSeek R1 model - strong reasoning capabilities",
+      "recommended_temperature": [0.1, 0.4],
+      "context_length": 16384,
+      "cost_efficiency": "Medium"
+    },
+    "qwen3-4b": {
+      "description": "Qwen3 4B parameter model - fast and efficient",
+      "recommended_temperature": [0.3, 0.7],
+      "context_length": 8192,
+      "cost_efficiency": "Very High"
+    }
+  },
+
+  "training_tips": {
+    "beginner": {
+      "recommended_preset": "quick_test",
+      "description": "Start with quick test to verify setup",
+      "parameters": {
+        "num_batches": 2,
+        "games_per_batch": 10,
+        "workers": 2
+      }
+    },
+    "development": {
+      "recommended_preset": "mixed_agents",
+      "description": "Good balance of variety and performance for development",
+      "parameters": {
+        "num_batches": 5,
+        "games_per_batch": 20,
+        "workers": 4
+      }
+    },
+    "production": {
+      "recommended_preset": "high_performance",
+      "description": "Maximum performance for serious training",
+      "parameters": {
+        "num_batches": 20,
+        "games_per_batch": 50,
+        "workers": 8
+      }
+    },
+    "research": {
+      "recommended_preset": "temperature_exploration",
+      "description": "Explore the effect of different temperature settings",
+      "parameters": {
+        "num_batches": 10,
+        "games_per_batch": 30,
+        "workers": 6
+      }
+    }
+  }
+}

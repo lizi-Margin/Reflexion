@@ -13,6 +13,13 @@ import os
 import requests
 import os
 import re
+try:
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+    SKLEARN_AVAILABLE = True
+except ImportError:
+    SKLEARN_AVAILABLE = False
+    print("Warning: scikit-learn not available. Some advanced features may be limited.")
 from dotenv import load_dotenv   
 
 
@@ -707,7 +714,7 @@ class Vito(LLMAgent):
 
 
 class Michael(LLMAgent):
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, use_strategy_pool: bool = True):
         #super().__init__(model_name)
         self.model_name = model_name
         self.is_initialized = False
@@ -719,7 +726,21 @@ class Michael(LLMAgent):
         # Store API responses for logging
         self.api_responses = []  # Store full API responses with probabilities
         self.current_step_responses = {}  # Store responses for current step
-        print("Initializing Michael...")
+
+        # Strategy pool system
+        self.use_strategy_pool = use_strategy_pool
+        if use_strategy_pool:
+            self.strategy_pool = {}  # Load strategy pool from JSON
+            self.current_behavior_strategy_id = None
+            self.current_language_strategy_id = None
+            self.strategy_usage_log = []  # Track strategy usage in current game
+            self.similarity_threshold = 0.7  # Threshold for strategy matching
+
+            # Load strategy pool
+            self.load_strategy_pool()
+            print("Initializing Michael with dynamic strategy pool...")
+        else:
+            print("Initializing Michael without strategy pool...")
         """
         night: 0, 5,10,...
         day speak:1,2,3,6,7,8,11,12,13...
@@ -768,9 +789,19 @@ class Michael(LLMAgent):
             else:
                 phase = "day_vote"
             self.round += 1
+
+            # Set current phase for strategy matching
+            self.current_phase = phase
             print(f"Current Round: {current_round}, Phase: {phase}")
 
-
+            # Check for game end and update strategy performance
+            game_ended, game_result = self.detect_game_end(observation)
+            if game_ended:
+                print(f"Game ended! Winner: {game_result.get('winner_team')}, Victory: {game_result.get('victory')}")
+                if self.use_strategy_pool:
+                    self.update_strategy_performance(game_result, game_result.get("role_performance", {}))
+                    self.save_strategy_pool()
+                    print("Strategy pool updated and saved at game end.")
 
             # Regular observation processing
             formatted_obs = self.parse_observation_events(obs_list) if isinstance(obs_list, list) else observation
@@ -794,13 +825,38 @@ class Michael(LLMAgent):
             ]),
             "#BELIEF:")
             
-            # Step 3: Update strategy
-            self.strategy = self.parse_llm_response(
-            self.api(input_messages=[
+            # Step 3: Update strategy with dual strategy system
+            strategy_response = self.api(input_messages=[
                 {"role": "system", "content": self.prompt_system()},
                 {"role": "user", "content": self.prompt_strategy(analysis, self.belief, self.strategy)}
-            ]),
-            "#STRATEGY:")
+            ])
+
+            # Parse and log strategy usage
+            self.strategy = self.parse_llm_response(strategy_response, "#STRATEGY:")
+
+            # Extract and log behavior strategy
+            behavior_strategy_match = re.search(r'#BEHAVIOR_STRATEGY:(.*?)(?=#LANGUAGE_STRATEGY:|#FINAL:|$)', self.strategy, re.DOTALL)
+            if behavior_strategy_match:
+                behavior_strategy_text = behavior_strategy_match.group(1).strip()
+                # Check if it's a reference to existing strategy or new
+                new_strategy_id = self.create_new_strategy("behavior", behavior_strategy_text)
+                self.current_behavior_strategy_id = new_strategy_id
+                self.log_strategy_usage(new_strategy_id, "behavior", phase)
+            else:
+                # Fallback: treat entire strategy as behavior strategy
+                new_strategy_id = self.create_new_strategy("behavior", self.strategy)
+                self.current_behavior_strategy_id = new_strategy_id
+                self.log_strategy_usage(new_strategy_id, "behavior", phase)
+
+            # Extract and log language strategy (only for day_speak phase)
+            if phase == "day_speak":
+                language_strategy_match = re.search(r'#LANGUAGE_STRATEGY:(.*?)(?=#FINAL:|$)', self.strategy, re.DOTALL)
+                if language_strategy_match:
+                    language_strategy_text = language_strategy_match.group(1).strip()
+                    # Check if it's a reference to existing strategy or new
+                    new_strategy_id = self.create_new_strategy("language", language_strategy_text, self.current_behavior_strategy_id)
+                    self.current_language_strategy_id = new_strategy_id
+                    self.log_strategy_usage(new_strategy_id, "language", phase)
             
             # Step 4: Generate final action/speech
 
@@ -1150,6 +1206,31 @@ class Michael(LLMAgent):
 
 
     def prompt_strategy(self, analysis, belief, strategy) -> str:
+        """Generate strategy prompt with behavior and language strategy support"""
+        # Get current phase for strategy selection
+        current_phase = getattr(self, 'current_phase', 'day_speak')
+
+        # Select reference strategies
+        behavior_strategies = self.select_reference_strategies('behavior')
+
+        # Prepare behavior strategy section
+        behavior_section = ""
+        if behavior_strategies:
+            behavior_section = "\n# Reference Behavior Strategies:\n"
+            for i, ref_strategy in enumerate(behavior_strategies[:2]):  # Show top 2
+                behavior_section += f"{i+1}. {ref_strategy['strategy_text']}\n"
+            behavior_section += "\nThese behavior strategies are provided as reference. You can adopt one, modify it, or create your own based on the current situation.\n"
+
+        # Prepare language strategy section (only for day_speak phase)
+        language_section = ""
+        if current_phase == 'day_speak':
+            language_strategies = self.select_reference_strategies('language')
+            if language_strategies:
+                language_section = "\n# Reference Language Strategies:\n"
+                for i, ref_strategy in enumerate(language_strategies[:2]):  # Show top 2
+                    language_section += f"{i+1}. {ref_strategy['strategy_text']}\n"
+                language_section += "\nThese language strategies show how to express yourself effectively. You can use these techniques or develop your own approach.\n"
+
         ret = f"""
     Your actions in each round are divided into four steps: 1 Analyze newly acquired information; 2. Update the identification of other players' identities; 3. Update your own strategy; 4. Decide on your own speech or action.
     Now it is step 3. Please refer to your goals, analysis, and beliefs, then decide your strategy.
@@ -1160,33 +1241,33 @@ class Michael(LLMAgent):
     # Your belief:
     {belief}
 
-    # Your strategy:
+    # Your current strategy:
     {strategy}
 
+    # Strategy Selection Guidance:
+    Based on the current game phase ({current_phase}), you need to consider both BEHAVIOR and LANGUAGE strategies:
+
+    ## BEHAVIOR STRATEGY (All Phases)
+    This defines your overall goal and approach for this round (e.g., "Hide identity and mislead", "Protect key players", "Investigate suspicious behavior").
+
+    ## LANGUAGE STRATEGY (Day Discussion Only)
+    This defines HOW you will communicate and express yourself when speaking (e.g., "Use logical reasoning to point out contradictions", "Create emotional appeal to gain trust", "Use misleading information to confuse others").
+
+    {behavior_section}
+    {language_section}
     # Please follow the steps:
-    1. What is your goal?
-    2. Based on your analysis and belief, what is your strategy? For example, you can decide whether to claim which character you are, encourage everyone to expel which player, explain your words and actions to everyone, and so on.
-    3. Generate a new STRATEGY, starting with the symbol: "#STRATEGY:"
+    1. First, decide your BEHAVIOR STRATEGY - what is your primary goal for this round?
+    2. If it's a discussion phase, decide your LANGUAGE STRATEGY - how will you communicate effectively?
+    3. Generate your strategies using the format below:
 
-    # Reference of strategy
+    #BEHAVIOR_STRATEGY: [Your behavior strategy description]
 
-    Here are some commonly used game techniques that you can refer to, but the final strategy should be determined based on specific circumstances.
+    #LANGUAGE_STRATEGY: [Your language strategy description]
 
-    ## When you want to impersonate a certain role:
-    You can use intentional language loopholes to deceive opponents. For example, you can include the final speech in two parts: thinking and speaking. In the thinking section, you emphasize your identity and some information (however, this part of the content is fake and you want to deceive others into believing it), and in the speaking section, you put in your pretend fake role and say some words. Then use these two parts together as the content of the speech, so that other players will think that you have released the wrong thinking content and be deceived by you.
+    # Final combined strategy:
+    #STRATEGY: [Your final integrated strategy description]
 
-    ## When you are unsure of the situation on the field:
-    When playing Mafia, Detective, or Doctor, you should prioritize protecting yourself and not casually reveal your role; Only when Mafia is detected as a detector, self disclosure can be considered. When playing the role of villages, you can try to distinguish the villagers team and follow the crowd, or you can try declaring yourself as a detective and doctor to attract Mafia's attention.
-    
-    ## When you are questioned and accused:
-    If you are an ordinary citizen, try to analyze the situation and identify the hidden villains, and use sincerity to impress everyone; Otherwise, you can choose to disclose your identity or impersonate someone else to emphasize your importance and make others hesitant to vote for your expulsion. Note that you should explain both the accused behavior and speech at the same time, and try to justify it.
-    
-    ## When you are a detective:
-    If you successfully confirm the identity of a certain mafia, you can try to declare it directly and ask the doctor to protect you at night (but ask him not to expose himself); Otherwise, it is recommended to hide your identity as your presence poses the greatest threat to Mafia.
-    
-    ## When you are a doctor:
-    You should prioritize protecting yourself; When a detective appears, choose whether to protect yourself or the detective based on the specific situation (note that the person who declares themselves a detective does not necessarily have to be a detective, you need to judge for yourself)
-    
+    # Important: You can reference the provided strategies, modify them, or create completely new ones based on your analysis and beliefs.
     """
         return ret
     
@@ -1363,3 +1444,309 @@ class Michael(LLMAgent):
         
 
 
+  # Strategy Pool System Methods
+    def load_strategy_pool(self):
+        """Load strategy pool from JSON file"""
+        try:
+            import json
+            strategy_pool_path = os.path.join(os.getcwd(), "strategy_pool.json")
+            if os.path.exists(strategy_pool_path):
+                with open(strategy_pool_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    self.strategy_pool = {s["id"]: s for s in data.get("strategies", [])}
+                print(f"Loaded {len(self.strategy_pool)} strategies from pool")
+            else:
+                print(f"Strategy pool file not found at {strategy_pool_path}, using empty pool")
+                self.strategy_pool = {}
+        except Exception as e:
+            print(f"Error loading strategy pool: {e}")
+            self.strategy_pool = {}
+
+    def save_strategy_pool(self):
+        """Save strategy pool to JSON file"""
+        if not self.use_strategy_pool:
+            return
+
+        try:
+            import json
+            strategy_pool_path = os.path.join(os.getcwd(), "strategy_pool.json")
+
+            # Load existing data to preserve metadata
+            existing_data = {}
+            if os.path.exists(strategy_pool_path):
+                with open(strategy_pool_path, "r", encoding="utf-8") as f:
+                    existing_data = json.load(f)
+
+            # Update strategies
+            existing_data["strategies"] = list(self.strategy_pool.values())
+            existing_data["metadata"]["last_updated"] = datetime.now().isoformat()
+            existing_data["metadata"]["total_strategies"] = len(self.strategy_pool)
+
+            # Count strategy types
+            behavior_count = sum(1 for s in self.strategy_pool.values() if s["type"] == "behavior")
+            language_count = sum(1 for s in self.strategy_pool.values() if s["type"] == "language")
+            existing_data["metadata"]["behavior_strategies"] = behavior_count
+            existing_data["metadata"]["language_strategies"] = language_count
+
+            with open(strategy_pool_path, "w", encoding="utf-8") as f:
+                json.dump(existing_data, f, indent=2, ensure_ascii=False)
+            print(f"Saved {len(self.strategy_pool)} strategies to pool")
+        except Exception as e:
+            print(f"Error saving strategy pool: {e}")
+
+    def get_current_context_features(self):
+        """Extract current game context features for strategy matching"""
+        if not self.init_info:
+            return {}
+
+        alive_players = len([p for p in self.init_info.get("all_players", [])])
+
+        # Extract known threats from beliefs
+        known_threats = 0
+        if self.belief:
+            # Simple heuristic: count suspected/confirmed mafia in beliefs
+            for line in self.belief.split("\n"):
+                if "mafia" in line.lower() and ("suspected" in line.lower() or "confirmed" in line.lower()):
+                    known_threats += 1
+
+        # Determine urgency based on game state
+        urgency = "medium"
+        if alive_players <= 4:
+            urgency = "high"
+        elif alive_players >= 6:
+            urgency = "low"
+
+        return {
+            "alive_players": alive_players,
+            "known_threats": known_threats,
+            "urgency_level": urgency
+        }
+
+    def calculate_strategy_similarity(self, strategy_id, current_context):
+        """Calculate similarity score between a strategy and current context"""
+        if strategy_id not in self.strategy_pool:
+            return 0.0
+
+        strategy = self.strategy_pool[strategy_id]
+        total_score = 0.0
+
+        # Role matching (40% weight)
+        if self.init_info and strategy["role"] == self.init_info.get("role"):
+            total_score += 0.4
+
+        # Game phase matching (30% weight)
+        current_phase = getattr(self, "current_phase", "day_speak")
+        if strategy["game_phase"] == current_phase:
+            total_score += 0.3
+
+        # Context features matching (20% weight)
+        strategy_context = strategy.get("context_features", {})
+
+        # Check alive players range
+        min_players = strategy_context.get("min_alive_players", 0)
+        max_players = strategy_context.get("max_alive_players", 10)
+        current_players = current_context.get("alive_players", 0)
+        if min_players <= current_players <= max_players:
+            total_score += 0.1
+
+        # Check urgency level
+        allowed_urgency = strategy_context.get("urgency_levels", [])
+        current_urgency = current_context.get("urgency_level", "medium")
+        if current_urgency in allowed_urgency:
+            total_score += 0.1
+
+        # Strategy type context matching (10% weight)
+        strategy_type = strategy.get("type", "behavior")
+        if strategy_type == "behavior":
+            total_score += 0.1  # Behavior strategies always get full context score
+        elif strategy_type == "language" and current_phase == "day_speak":
+            total_score += 0.1  # Language strategies only in discussion phase
+
+        return total_score
+
+    def select_reference_strategies(self, strategy_type, behavior_context=None):
+        """Select reference strategies based on current context"""
+        current_context = self.get_current_context_features()
+
+        # Filter strategies by type and relevance
+        candidate_strategies = []
+        for strategy_id, strategy in self.strategy_pool.items():
+            if strategy["type"] != strategy_type:
+                continue
+
+            # Additional filtering for language strategies
+            if strategy_type == "language" and behavior_context:
+                # Check if language strategy relates to current behavior strategy
+                related_behavior_id = strategy.get("related_behavior_id")
+                if related_behavior_id and related_behavior_id != behavior_context:
+                    continue
+
+            # Calculate similarity
+            similarity = self.calculate_strategy_similarity(strategy_id, current_context)
+            if similarity > 0.3:  # Minimum threshold
+                candidate_strategies.append((strategy_id, similarity))
+
+        # Sort by similarity score
+        candidate_strategies.sort(key=lambda x: x[1], reverse=True)
+
+        # Select strategies based on threshold
+        selected_strategies = []
+        for strategy_id, similarity in candidate_strategies[:3]:  # Top 3
+            if similarity >= self.similarity_threshold:
+                selected_strategies.append(self.strategy_pool[strategy_id])
+
+        return selected_strategies
+
+    def log_strategy_usage(self, strategy_id, strategy_type, phase):
+        """Log strategy usage for performance tracking"""
+        log_entry = {
+            "strategy_id": strategy_id,
+            "strategy_type": strategy_type,
+            "phase": phase,
+            "round": self.round,
+            "context": self.get_current_context_features(),
+            "belief_summary": self.belief[:200] if self.belief else "",  # Truncate for storage
+            "timestamp": datetime.now().isoformat()
+        }
+        self.strategy_usage_log.append(log_entry)
+
+        # Update strategy usage count
+        if strategy_id in self.strategy_pool:
+            self.strategy_pool[strategy_id]["usage_count"] += 1
+            self.strategy_pool[strategy_id]["last_used"] = datetime.now().isoformat()
+
+    def update_strategy_performance(self, game_result, role_performance):
+        """Update strategy performance based on game outcome"""
+        try:
+            # Calculate performance scores for each used strategy
+            base_score = 1.0 if game_result.get("victory", False) else -1.0
+
+            # Role-specific performance bonus
+            role_bonus = role_performance.get("bonus", 0.0)
+            total_score = base_score + role_bonus
+
+            # Update each used strategy
+            for log_entry in self.strategy_usage_log:
+                strategy_id = log_entry["strategy_id"]
+                if strategy_id in self.strategy_pool:
+                    strategy = self.strategy_pool[strategy_id]
+
+                    # Update success score
+                    strategy["success_score"] += total_score
+
+                    # Update average performance
+                    usage_count = strategy["usage_count"]
+                    if usage_count > 0:
+                        strategy["avg_performance"] = strategy["success_score"] / usage_count
+
+                    # Ensure performance stays within reasonable bounds
+                    strategy["avg_performance"] = max(0.0, min(1.0, strategy["avg_performance"]))
+
+            print(f"Updated strategy performance. Total strategies updated: {len(self.strategy_usage_log)}")
+
+        except Exception as e:
+            print(f"Error updating strategy performance: {e}")
+
+    def create_new_strategy(self, strategy_type, strategy_text, behavior_context=None):
+        """Create a new strategy and add it to the pool"""
+        import uuid
+
+        new_strategy = {
+            "id": f"{strategy_type}_{uuid.uuid4().hex[:8]}",
+            "type": strategy_type,
+            "role": self.init_info.get("role", "Unknown") if self.init_info else "Unknown",
+            "game_phase": getattr(self, "current_phase", "day_speak"),
+            "strategy_text": strategy_text,
+            "context_features": self.get_current_context_features(),
+            "usage_count": 1,
+            "success_score": 0.0,
+            "avg_performance": 0.5,  # Start with neutral performance
+            "related_behavior_id": behavior_context if strategy_type == "language" else None,
+            "last_used": datetime.now().isoformat(),
+            "created_at": datetime.now().isoformat()
+        }
+
+        self.strategy_pool[new_strategy["id"]] = new_strategy
+        print(f"Created new {strategy_type} strategy: {new_strategy['id']}")
+
+        return new_strategy["id"]
+
+    def detect_game_end(self, observation: str) -> tuple[bool, Dict]:
+        """Detect if the game has ended and extract game results"""
+        try:
+            # Parse observation
+            obs_list = json.loads(observation) if isinstance(observation, str) and observation.startswith('[') else observation
+
+            if isinstance(obs_list, list):
+                # Look through all events for game end messages
+                for event in obs_list:
+                    if len(event) >= 2 and event[0] == -1:  # System message
+                        message = event[1]
+
+                        # Check for game end patterns
+                        if "wins!" in message or "All Mafia were eliminated" in message or "Mafia reached parity" in message:
+                            game_result = self._parse_game_result(message)
+                            if game_result:
+                                return True, game_result
+
+            # Also check formatted observations
+            if isinstance(observation, str):
+                if "wins!" in observation or "All Mafia were eliminated" in observation or "Mafia reached parity" in observation:
+                    game_result = self._parse_game_result(observation)
+                    if game_result:
+                        return True, game_result
+
+            return False, {}
+
+        except Exception as e:
+            print(f"Error detecting game end: {e}")
+            return False, {}
+
+    def _parse_game_result(self, message: str) -> Dict:
+        """Parse game result from system message"""
+        try:
+            game_result = {
+                "victory": False,
+                "winner_team": None,
+                "reason": "",
+                "role_performance": {}
+            }
+
+            # Determine winner and reason
+            if "All Mafia were eliminated" in message or "Village wins!" in message:
+                game_result["winner_team"] = "Village"
+                game_result["reason"] = "All Mafia eliminated"
+            elif "Mafia reached parity" in message or "Mafia wins!" in message:
+                game_result["winner_team"] = "Mafia"
+                game_result["reason"] = "Mafia reached parity"
+
+            # Determine if current player won
+            if self.init_info:
+                player_role = self.init_info.get("role", "")
+                player_team = "Mafia" if player_role == "Mafia" else "Village"
+                game_result["victory"] = (player_team == game_result["winner_team"])
+
+                # Calculate role-specific performance bonus
+                if game_result["victory"]:
+                    bonus = 0.2  # Base victory bonus
+                    # Additional bonuses for special roles
+                    if player_role == "Detective" and game_result["winner_team"] == "Village":
+                        bonus += 0.1  # Detective bonus for village victory
+                    elif player_role == "Doctor" and game_result["winner_team"] == "Village":
+                        bonus += 0.1  # Doctor bonus for protecting village
+                    elif player_role == "Mafia" and game_result["winner_team"] == "Mafia":
+                        bonus += 0.1  # Mafia bonus for successful deception
+                else:
+                    bonus = -0.1  # Small penalty for losing
+
+                game_result["role_performance"] = {
+                    "role": player_role,
+                    "team": player_team,
+                    "bonus": bonus
+                }
+
+            return game_result
+
+        except Exception as e:
+            print(f"Error parsing game result: {e}")
+            return {}
