@@ -21,9 +21,9 @@ from collections import defaultdict
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import textarena as ta
-from src.strategy_pool_manager import StrategyPoolManager, TrainingSession
-from xushuhang.agents.family import Michael, Vito
-from src.game_logger import GameLogger, LoggedAgent
+from .strategy_pool_manager import StrategyPoolManager, TrainingSession
+from corleone.agents.track1.micheal import Michael, Vito
+from .game_logger import GameLogger, LoggedAgent
 
 
 @dataclass

@@ -25,8 +25,8 @@ except ImportError:
     print("Streamlit not available. Install with: pip install streamlit plotly")
     STREAMLIT_AVAILABLE = False
 
-from src.strategy_pool_manager import StrategyPoolManager
-from src.strategy_evaluator import StrategyEvaluator
+from .strategy_pool_manager import StrategyPoolManager
+from .strategy_evaluator import StrategyEvaluator
 
 
 class TrainingMonitor:

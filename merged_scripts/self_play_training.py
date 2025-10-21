@@ -18,9 +18,9 @@ import numpy as np
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import textarena as ta
-from src.strategy_pool_manager import StrategyPoolManager, TrainingSession
-from xushuhang.agents.family import Michael
-from src.game_logger import GameLogger, LoggedAgent
+from .strategy_pool_manager import StrategyPoolManager, TrainingSession
+from corleone.agents.track1.micheal import Michael
+from .game_logger import GameLogger, LoggedAgent
 
 
 class SelfPlayTrainer:

@@ -6,8 +6,8 @@ All game sessions will be recorded for training and analysis purposes.
 
 import textarena as ta
 from src.agent import LLMAgent, HumanAgent
-from src.game_logger import GameLogger, LoggedAgent
-from xushuhang.agents.family import Vito, Michael
+from .game_logger import GameLogger, LoggedAgent
+from corleone.agents.track1.micheal import Vito, Michael
 import sys
 import io
 import os

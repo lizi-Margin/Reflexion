@@ -8,10 +8,10 @@ import os
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
-from src.game_logger import GameLogger, LoggedAgent
-from src.log_analyzer import LogAnalyzer
+from .game_logger import GameLogger, LoggedAgent
+from .log_analyzer import LogAnalyzer
 from src.agent import LLMAgent
-from xushuhang.agents.family import Vito, Michael
+from corleone.agents.track1.micheal import Vito, Michael
 
 def test_game_logger():
     """Test basic game logger functionality."""

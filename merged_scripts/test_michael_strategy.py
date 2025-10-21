@@ -12,7 +12,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
 # Import required modules
-from xushuhang.agents.family import Michael
+from corleone.agents.track1.micheal import Michael
 
 def test_strategy_pool_system():
     """Test the strategy pool system functionality"""

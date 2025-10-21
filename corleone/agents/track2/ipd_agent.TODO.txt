@@ -1,1 +1,0 @@
-1. implement the verbose mode for IPDAgent to print obs and action to stdout for debugging

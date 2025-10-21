@@ -14,7 +14,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import textarena as ta
-from xushuhang.agents.family import Michael
+from corleone.agents.track1.micheal import Michael
 
 
 class SimpleSelfPlay:
