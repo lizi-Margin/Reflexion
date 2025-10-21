@@ -4,7 +4,7 @@ You (human player) will be player 0, and the AI model will be player 1.
 """
 
 import textarena as ta
-from src.agent import LLMAgent
+from corleone.agents.agent import LLMAgent
 from corleone.family import Vito
 from corleone.agents.track2.track2_router import create_track2_agent
 from corleone.agents.track2.codenames_agent import CodenamesAgent

@@ -1,6 +1,6 @@
 import re
 from typing import Dict, List, Optional
-from src.agent import Agent
+from corleone.agents.agent import Agent
 from corleone.api.api_router import get_api_class
 from corleone.game_logger import GameLogger
 

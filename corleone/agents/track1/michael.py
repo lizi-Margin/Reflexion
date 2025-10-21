@@ -1,5 +1,5 @@
 
-from src.agent import LLMAgent
+from corleone.agents.agent import LLMAgent
 from openai import OpenAI
 import random
 import itertools

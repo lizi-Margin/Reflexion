@@ -8,7 +8,7 @@ This module provides a factory function for creating appropriate agents for Trac
 """
 
 from typing import Optional
-from src.agent import Agent
+from corleone.agents.agent import Agent
 
 # Import specialized agents (will be implemented next)
 # Using forward references to avoid circular imports

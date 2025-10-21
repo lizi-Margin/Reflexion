@@ -1,5 +1,5 @@
 import json, re, time
-from src.agent import LLMAgent, Agent
+from corleone.agents.agent import LLMAgent, Agent
 from typing import List, Dict, Optional
 from corleone.api.api_router import get_api_class
 from corleone.game_logger import GameLogger
