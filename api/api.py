@@ -56,7 +56,7 @@ class WWXQ_API(API):
         payload = {
             "model": self.model,
             "messages": input_messages,
-            "temperature": temperature,
+            # "temperature": temperature,
             "max_tokens": max_tokens,
         }
 
@@ -90,9 +90,10 @@ class OpenAI_API(API):
         super().__init__(
             api_key=api_key or os.getenv("OPENAI_API_KEY"),
             model=model,
+            url='https://xiaoai.plus/v1',
             **kwargs
         )
-        self.client = OpenAI(api_key=self.api_key)
+        self.client = OpenAI(api_key=self.api_key, base_url=self.url)
 
     def __call__(
         self,
@@ -112,7 +113,7 @@ class OpenAI_API(API):
                 response = self.client.chat.completions.create(
                     model=self.model,
                     messages=input_messages,
-                    temperature=temperature,
+                    # temperature=temperature,
                     max_tokens=max_tokens,
                 )
                 return response.choices[0].message.content
@@ -133,10 +134,11 @@ class Volcano_API(API):
         super().__init__(
             api_key=api_key or os.getenv("ARK_API_KEY"),
             model=model,
+            url='https://ark.cn-beijing.volces.com/api/v3'
             **kwargs
         )
         self.client = OpenAI(
-            base_url='https://ark.cn-beijing.volces.com/api/v3',
+            base_url=self.url,
             api_key=self.api_key,
         )
 
@@ -171,7 +173,7 @@ class Volcano_API(API):
                 response = self.client.chat.completions.create(
                     model=self.model,
                     messages=input_messages,
-                    temperature=temperature,
+                    # temperature=temperature,
                     max_tokens=max_tokens,
                 )
                 return response.choices[0].message.content

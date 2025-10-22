@@ -10,7 +10,7 @@ Usage:
 
 import textarena as ta
 from reflexion.ipd_runs.ipd_agent import IPDAgent
-from reflexion.ipd_runs.ipd_agent_baseline import IPDAgent as BaselineAgent
+from reflexion.ipd_runs.ipd_agent import IPDAgent as BaselineAgent
 from reflexion.ipd_runs.ipd_memory import IPDMemory
 import sys
 
@@ -18,14 +18,23 @@ import sys
 def create_baseline_agent(agent_id: int, api_model_spec: str = 'qwen3-8b'):
     """Create a baseline opponent agent"""
     return BaselineAgent(
-        model_name=f'baseline_{agent_id}',
+        model_name=f'bsl_{agent_id}',
         api_model_spec=api_model_spec,
         enable_logging=False
     )
 
+def create_selfplay_agent(agent_id: int, memory: IPDMemory, api_model_spec: str = 'qwen3-8b'):
+    """Create a self-playing agent with memory"""
+    return IPDAgent(
+        model_name=f'selfplay_{agent_id}',
+        api_model_spec=api_model_spec,
+        memory=memory,
+        enable_logging=False
+    )
 
-def run_single_trial(trial_num: int, agent: IPDAgent, env_id: str = "ThreePlayerIPD-v0-train",
-                     api_model_spec: str = 'qwen3-8b', verbose: bool = True):
+
+def run_single_trial(trial_num: int, agent: IPDAgent, memory: IPDMemory, env_id: str = "ThreePlayerIPD-v0-train",
+                     api_model_spec: str = 'qwen3-8b', verbose: bool = True, selfplay: bool = True):
     """
     Run a single trial of IPD
 
@@ -44,11 +53,19 @@ def run_single_trial(trial_num: int, agent: IPDAgent, env_id: str = "ThreePlayer
     print(f"{'='*80}")
 
     # Create baseline opponents
-    agents = {
-        0: agent,  # Our learning agent
-        1: create_baseline_agent(1, api_model_spec),
-        2: create_baseline_agent(2, api_model_spec)
-    }
+    if selfplay:
+        print("Self-play mode enabled")
+        agents = {
+            0: agent,
+            1: create_selfplay_agent(0, memory, api_model_spec),  # Our learning agent
+            2: create_selfplay_agent(0, memory, api_model_spec),  # Our learning agent
+        }
+    else:
+        agents = {
+            0: agent,  # Our learning agent
+            1: create_baseline_agent(1, api_model_spec),
+            2: create_baseline_agent(2, api_model_spec)
+        }
 
     # Create environment
     env = ta.make(env_id=env_id)
@@ -65,7 +82,8 @@ def run_single_trial(trial_num: int, agent: IPDAgent, env_id: str = "ThreePlayer
         player_id, observation = env.get_observation()
 
         if verbose and player_id == 0:  # Only print for our agent
-            print(f"Player {player_id} observation:\n{observation[:300]}...")
+            # print(f"Player {player_id} observation:\n{observation[:300]}...")
+            print(f"Player {player_id} observation:\n{observation}...")
 
         action = agents[player_id](observation)
 
@@ -79,7 +97,9 @@ def run_single_trial(trial_num: int, agent: IPDAgent, env_id: str = "ThreePlayer
 
     # Update agent memory
     final_obs = game_info.get('final_observation', '')
-    agent.finalize_game(final_observation=final_obs)
+    # agent.finalize_game(final_observation=final_obs)
+    for agent_id in agents:
+        agents[agent_id].finalize_game(final_observation=final_obs)
 
     if verbose:
         print(f"\n{'='*80}")
@@ -99,7 +119,9 @@ def main():
     # Configuration
     NUM_TRIALS = 5  # Number of trials to run
     ENV_ID = "ThreePlayerIPD-v0-train"
-    API_MODEL_SPEC = "qwen3-8b"  # Change to your preferred model
+    # API_MODEL_SPEC = "qwen3-8b"  # Change to your preferred model
+    API_MODEL_SPEC = "gpt-5-chat-latest"  # Change to your preferred model
+    # API_MODEL_SPEC = "kimi-k2-250905"  # Change to your preferred model
     VERBOSE = True
 
     print(f"""
@@ -147,6 +169,7 @@ Watch how performance improves over trials!
         result = run_single_trial(
             trial_num=trial_num,
             agent=agent,
+            memory=memory,  # Shared memory!
             env_id=ENV_ID,
             api_model_spec=API_MODEL_SPEC,
             verbose=VERBOSE
@@ -160,7 +183,9 @@ Watch how performance improves over trials!
         print(f"  Total Trials: {stats['total_trials']}")
         print(f"  Win Rate: {stats['win_rate']:.2%}")
         print(f"  Avg Rank: {stats['avg_rank']:.2f}")
-        print(f"  Reflections: {stats['conversation_reflections']} conv, {stats['decision_reflections']} dec")
+        # Show recent reflections
+        print(f"\nRecent Lessons:")
+        print(memory.get_guidance(max_reflections=3))
 
     # Final summary
     print(f"\n{'='*80}")
@@ -172,15 +197,11 @@ Watch how performance improves over trials!
     print(f"  Total Trials: {final_stats['total_trials']}")
     print(f"  Win Rate: {final_stats['win_rate']:.2%}")
     print(f"  Avg Rank: {final_stats['avg_rank']:.2f}")
-    print(f"  Conversation Reflections: {final_stats['conversation_reflections']}")
-    print(f"  Decision Reflections: {final_stats['decision_reflections']}")
 
     # Show recent reflections
-    print(f"\nRecent Conversation Lessons:")
-    print(memory.get_conversation_guidance(max_reflections=3))
+    print(f"\nRecent Lessons:")
+    print(memory.get_guidance(max_reflections=3))
 
-    print(f"\nRecent Decision Lessons:")
-    print(memory.get_decision_guidance(max_reflections=3))
 
     print(f"\n{'='*80}")
     print(f"Memory saved to: {memory.memory_file}")

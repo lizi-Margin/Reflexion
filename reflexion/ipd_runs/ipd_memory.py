@@ -13,6 +13,9 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 from api.api_router import get_api_class
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .ipd_agent import IPDAgent
 
 
 class IPDMemory:
@@ -44,9 +47,7 @@ class IPDMemory:
 
         # Memory structure
         self.memory = {
-            "conversation_reflections": [],  # List of conversation strategy reflections
-            "decision_reflections": [],      # List of decision strategy reflections
-            "opponent_patterns": {},         # Patterns observed across trials
+            "memory": [],  # List of conversation strategy reflections
             "trial_history": [],             # History of trial outcomes
             "metadata": {
                 "created_at": datetime.now().isoformat(),
@@ -67,8 +68,7 @@ class IPDMemory:
                     self.memory.update(loaded)
                 print(f"[IPDMemory] Loaded memory from {self.memory_file}")
                 print(f"[IPDMemory] Total trials: {self.memory['metadata']['total_trials']}")
-                print(f"[IPDMemory] Conversation reflections: {len(self.memory['conversation_reflections'])}")
-                print(f"[IPDMemory] Decision reflections: {len(self.memory['decision_reflections'])}")
+                print(f"[IPDMemory] memory: {len(self.memory['memory'])}")
             except Exception as e:
                 print(f"[IPDMemory] Error loading memory: {e}")
 
@@ -106,7 +106,7 @@ class IPDMemory:
         self.memory["metadata"]["total_trials"] += 1
         self.save()
 
-    def generate_reflection(self, trial_log_path: str, trial_rank: int, won: bool) -> Dict[str, str]:
+    def generate_reflection(self, agent: 'IPDAgent', trial_rank: int, won: bool) -> Dict[str, str]:
         """
         Generate reflection from a trial using LLM
 
@@ -118,55 +118,62 @@ class IPDMemory:
         Returns:
             Dictionary with conversation_reflection and decision_reflection
         """
-        # Load trial log
-        try:
-            with open(trial_log_path, 'r', encoding='utf-8') as f:
-                game_log = json.load(f)
-        except Exception as e:
-            print(f"[IPDMemory] Error loading trial log: {e}")
-            return {"conversation_reflection": "", "decision_reflection": ""}
+        strategy = agent.strategy
+        assert strategy is not None, "Agent strategy must be set before generating reflection"
 
-        # Extract key information
-        turns = game_log.get("turns", [])
-        metadata = game_log.get("metadata", {})
-
-        # Separate conversation and decision turns
-        conversation_turns = []
-        decision_turns = []
-
-        for turn in turns:
-            observation = turn.get("observation", "")
-            if "Submit your decisions" in observation or "Chat finished" in observation:
-                decision_turns.append(turn)
-            else:
-                conversation_turns.append(turn)
-
-        # Generate conversation reflection
-        conversation_reflection = self._generate_conversation_reflection(
-            conversation_turns, trial_rank, won
+        # Generate opponent behavior analysis
+        opponent_analysis = self._generate_opponent_behavior_analysis(
+            agent, trial_rank, won
         )
 
-        # Generate decision reflection
-        decision_reflection = self._generate_decision_reflection(
-            decision_turns, trial_rank, won
+        # Generate conversation reflection
+        reflection = self._generate_reflection(
+            agent, trial_rank, won
         )
 
         return {
-            "conversation_reflection": conversation_reflection,
-            "decision_reflection": decision_reflection
+            "strategy": strategy,
+            "reflection": reflection,
+            "opponent_analysis": opponent_analysis,
         }
 
-    def _generate_conversation_reflection(self, conversation_turns: List[Dict],
-                                         trial_rank: int, won: bool) -> str:
-        """Generate reflection on conversation strategies"""
-        if not conversation_turns:
+    def _generate_strategy_conclusion(self, agent: 'IPDAgent', trial_rank: int, won: bool) -> str:
+        """Generate conclusion on strategy performance"""
+    
+    def _generate_opponent_behavior_analysis(self, agent: 'IPDAgent', trial_rank: int, won: bool) -> str:
+        """Generate analysis of opponent behavior"""
+        full_obs = agent.observation_history[-1]
+        prompt = f"""You are analyzing a Three Player Iterated Prisoner's Dilemma game where conversation happened before decisions.
+Player ID: You are the player {agent.player_id}.
+Opponent Player IDs: {', '.join([p for p in agent.opponent_ids])}
+Full observation (You are the player {agent.player_id}):
+{full_obs}
+
+Based on this outcome, analyze the behavior of your 2 opponents:
+1. How they behaved in the whole game (mostly cooperate or defect)?
+2. Did they truthful or deceptive? Are they saying cooperate in conversation but defect in decision?
+3. Did they defect in the last round (optimum strategy)?
+Please provide your analysis in a clear, structured format, every opponent in 1-2 sentences.
+
+Analysis:"""
+        try:
+            opponent_analysis = self.api(input_messages=[
+                {"role": "system", "content": "You are an expert at analyzing game strategies."},
+                {"role": "user", "content": prompt}
+            ])
+            return opponent_analysis.strip()
+        except Exception as e:
+            print(f"[IPDMemory] Error generating opponent behavior analysis: {e}")
             return ""
 
-        # Build context from conversation turns
-        conversation_summary = self._summarize_conversations(conversation_turns)
+    def _generate_reflection(self, agent: 'IPDAgent', trial_rank: int, won: bool) -> str:
+        """Generate reflection on conversation strategies"""
+        assert agent.strategy is not None, "Agent strategy must be set before generating reflection"
 
+        # Build context from conversation turns
+        full_obs = agent.observation_history[-1]
         # Get previous conversation reflections for context
-        previous_reflections = self.memory["conversation_reflections"][-3:]
+        previous_reflections = self.memory["reflections"][-3:]
         previous_text = ""
         if previous_reflections:
             previous_text = "\n\nPrevious conversation reflections:\n"
@@ -175,22 +182,31 @@ class IPDMemory:
 
         # Generate reflection prompt
         prompt = f"""You are analyzing a Three Player Iterated Prisoner's Dilemma game where conversation happened before decisions.
+Player ID: You are the player {agent.player_id}.
+Your strategy: {agent.strategy}
 
 OUTCOME: You finished rank {trial_rank} out of 3 players. {"You WON the game!" if won else "You did NOT win."}
 
-CONVERSATION SUMMARY:
-{conversation_summary}
+Full observation (You are the player {agent.player_id}):
+{full_obs}
 
 {previous_text}
 
-Based on this outcome, reflect on your conversation strategy:
+Based on this outcome, reflect on your strategy:
+About conversation:
 1. What conversation approaches worked well or poorly?
-2. Did your messages build trust effectively or create suspicion?
+2. Did your messages deceptive enough or build trust effectively or create suspicion?
 3. Were you too truthful or too deceptive in your communication?
-4. How did opponents respond to your messages?
-5. What should you do differently in future conversations?
+4. What should you do differently in future conversations?
 
-Provide a concise, actionable reflection (2-3 sentences) that identifies the KEY lesson learned about conversation strategy in IPD.
+About decision:
+1. Were you too cooperative or too aggressive?
+2. Did you punish defectors effectively?
+3. Did you choose defect in the last round (optimum strategy)?
+4. What decision patterns would improve your win rate?
+
+
+Provide a concise, actionable reflection (2-3 sentences) that identifies the KEY lesson learned about strategy in IPD.
 
 Reflection:"""
 
@@ -204,99 +220,7 @@ Reflection:"""
             print(f"[IPDMemory] Error generating conversation reflection: {e}")
             return ""
 
-    def _generate_decision_reflection(self, decision_turns: List[Dict],
-                                      trial_rank: int, won: bool) -> str:
-        """Generate reflection on decision strategies"""
-        if not decision_turns:
-            return ""
-
-        # Build context from decision turns
-        decision_summary = self._summarize_decisions(decision_turns)
-
-        # Get previous decision reflections for context
-        previous_reflections = self.memory["decision_reflections"][-3:]
-        previous_text = ""
-        if previous_reflections:
-            previous_text = "\n\nPrevious decision reflections:\n"
-            for i, ref in enumerate(previous_reflections):
-                previous_text += f"{i+1}. {ref['reflection']}\n"
-
-        # Generate reflection prompt
-        prompt = f"""You are analyzing a Three Player Iterated Prisoner's Dilemma game's decision-making.
-
-OUTCOME: You finished rank {trial_rank} out of 3 players. {"You WON the game!" if won else "You did NOT win."}
-
-DECISION SUMMARY:
-{decision_summary}
-
-{previous_text}
-
-Based on this outcome, reflect on your decision strategy:
-1. Were you too cooperative or too aggressive?
-2. Did you correctly predict opponents' actions?
-3. Did you punish defectors effectively?
-4. Did you adapt your strategy based on game state (rank, remaining rounds)?
-5. What decision patterns would improve your win rate?
-
-Provide a concise, actionable reflection (2-3 sentences) that identifies the KEY lesson learned about decision-making in IPD.
-
-Reflection:"""
-
-        try:
-            reflection = self.api(input_messages=[
-                {"role": "system", "content": "You are an expert at analyzing game strategies and extracting actionable lessons."},
-                {"role": "user", "content": prompt}
-            ])
-            return reflection.strip()
-        except Exception as e:
-            print(f"[IPDMemory] Error generating decision reflection: {e}")
-            return ""
-
-    def _summarize_conversations(self, conversation_turns: List[Dict]) -> str:
-        """Summarize conversation turns"""
-        summary_parts = []
-
-        for i, turn in enumerate(conversation_turns[:10]):  # Limit to first 10 turns
-            obs = turn.get("observation", "")
-            final = turn.get("final_output", "")
-
-            # Extract round info
-            round_match = None
-            if "Round" in obs:
-                import re
-                round_match = re.search(r"Round (\d+)", obs)
-
-            round_info = f"Round {round_match.group(1)}" if round_match else f"Turn {i+1}"
-
-            if final:
-                summary_parts.append(f"{round_info}: You said: {final}")
-
-        return "\n".join(summary_parts) if summary_parts else "No conversation data available."
-
-    def _summarize_decisions(self, decision_turns: List[Dict]) -> str:
-        """Summarize decision turns"""
-        summary_parts = []
-
-        for i, turn in enumerate(decision_turns):
-            obs = turn.get("observation", "")
-            final = turn.get("final_output", "")
-
-            # Extract round results from observation
-            import re
-            round_match = re.search(r"Round (\d+)", obs)
-            round_info = f"Round {round_match.group(1)}" if round_match else f"Decision {i+1}"
-
-            if final:
-                summary_parts.append(f"{round_info}: Your decisions: {final}")
-
-            # Extract results if available
-            if "Results:" in obs:
-                results_section = obs.split("Results:")[1].split("Current scores:")[0]
-                summary_parts.append(f"  Results: {results_section.strip()[:200]}")
-
-        return "\n".join(summary_parts) if summary_parts else "No decision data available."
-
-    def update_memory_from_trial(self, trial_log_path: str, trial_rank: int,
+    def update_memory_from_trial(self, trial_rank: int,
                                  won: bool, should_reflect: bool = True):
         """
         Update memory after a trial
@@ -310,46 +234,22 @@ Reflection:"""
         # Only generate reflections if we didn't win or performed poorly
         if should_reflect and (not won or trial_rank > 1):
             print(f"\n[IPDMemory] Generating reflections for rank {trial_rank} trial...")
-            reflections = self.generate_reflection(trial_log_path, trial_rank, won)
+            reflections = self._generate_reflection(trial_rank, won)
 
             # Add conversation reflection
-            if reflections["conversation_reflection"]:
-                self.memory["conversation_reflections"].append({
-                    "reflection": reflections["conversation_reflection"],
-                    "trial_rank": trial_rank,
-                    "won": won,
-                    "timestamp": datetime.now().isoformat()
-                })
-                print(f"[IPDMemory] Conversation reflection: {reflections['conversation_reflection']}")
-
-            # Add decision reflection
-            if reflections["decision_reflection"]:
-                self.memory["decision_reflections"].append({
-                    "reflection": reflections["decision_reflection"],
-                    "trial_rank": trial_rank,
-                    "won": won,
-                    "timestamp": datetime.now().isoformat()
-                })
-                print(f"[IPDMemory] Decision reflection: {reflections['decision_reflection']}")
-
-            # Keep only last N reflections to avoid prompt bloat
-            max_reflections = 10
-            self.memory["conversation_reflections"] = self.memory["conversation_reflections"][-max_reflections:]
-            self.memory["decision_reflections"] = self.memory["decision_reflections"][-max_reflections:]
-
+            self.memory["memory"].append({
+                "strategy": reflections["strategy"],
+                "reflection": reflections["reflection"],
+                "opponent_analysis": reflections["opponent_analysis"],
+                "trial_rank": trial_rank,
+                "won": won,
+                "timestamp": datetime.now().isoformat()
+            })
+            print(f"[IPDMemory] reflection: {reflections['memory'][-1]['reflection']}")
             self.save()
 
-    def get_conversation_guidance(self, max_reflections: int = 3) -> str:
-        """
-        Get conversation guidance from past reflections
-
-        Args:
-            max_reflections: Maximum number of recent reflections to include
-
-        Returns:
-            Formatted string with reflection guidance
-        """
-        reflections = self.memory["conversation_reflections"][-max_reflections:]
+    def get_guidance(self, max_reflections: int = 3) -> str:
+        reflections = self.memory["memory"][-max_reflections:]
 
         if not reflections:
             return ""
@@ -357,32 +257,14 @@ Reflection:"""
         guidance = "\n### Lessons from Past Games (Conversation Strategy):\n"
         for i, ref in enumerate(reflections, 1):
             outcome = "WON" if ref["won"] else f"Rank {ref['trial_rank']}"
-            guidance += f"{i}. [{outcome}] {ref['reflection']}\n"
+            guidance += f"##########################################\n"
+            guidance += f"{i}. [{outcome}]\n"
+            # guidance += f"Our Strategy: {ref['strategy']}\n"
+            guidance += f"Reflection to our strategy: {ref['reflection']}\n"
+            guidance += f"Opponent behavior: {ref['opponent_analysis']}\n"
+            guidance += f"##########################################\n"
 
-        guidance += "\nApply these lessons to improve your conversation strategy.\n"
-        return guidance
-
-    def get_decision_guidance(self, max_reflections: int = 3) -> str:
-        """
-        Get decision guidance from past reflections
-
-        Args:
-            max_reflections: Maximum number of recent reflections to include
-
-        Returns:
-            Formatted string with reflection guidance
-        """
-        reflections = self.memory["decision_reflections"][-max_reflections:]
-
-        if not reflections:
-            return ""
-
-        guidance = "\n### Lessons from Past Games (Decision Strategy):\n"
-        for i, ref in enumerate(reflections, 1):
-            outcome = "WON" if ref["won"] else f"Rank {ref['trial_rank']}"
-            guidance += f"{i}. [{outcome}] {ref['reflection']}\n"
-
-        guidance += "\nApply these lessons to improve your decision-making.\n"
+        guidance += "\nApply these lessons to improve your strategy.\n"
         return guidance
 
     def get_statistics(self) -> Dict[str, Any]:
@@ -403,6 +285,5 @@ Reflection:"""
             "total_trials": len(trials),
             "win_rate": wins / len(trials) if trials else 0.0,
             "avg_rank": sum(ranks) / len(ranks) if ranks else 0.0,
-            "conversation_reflections": len(self.memory["conversation_reflections"]),
-            "decision_reflections": len(self.memory["decision_reflections"])
+            "memory": len(self.memory["memory"])
         }

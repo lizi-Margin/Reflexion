@@ -1,9 +1,13 @@
 import re
 import json
+import uuid
+from datetime import datetime
 from typing import Dict, List, Set, Tuple, Optional
 from envs.agent import Agent
 from api.api_router import get_api_class
 from reflexion.game_logger import GameLogger
+from reflexion.ipd_runs.ipd_memory import IPDMemory
+from uhtk.print_pack import *
 
 
 class IPDAgent(Agent):
@@ -14,9 +18,14 @@ class IPDAgent(Agent):
     1. During conversation: Build trust and coordinate strategies
     2. During decision: Make strategic cooperate/defect choices, with dynamic goals
        based on game state (e.g., rank, round number).
+
+    Enhanced with inter-trial memory using reflexion framework:
+    - Learns from past games through reflections
+    - Integrates lessons into conversation and decision strategies
     """
 
-    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True,
+                 strategy_pool_manager=None, memory: IPDMemory = None):
         """
         Initialize the IPDAgent
 
@@ -24,9 +33,18 @@ class IPDAgent(Agent):
             model_name: Name of the model for identification
             api_model_spec: Which API/model to use for generation
             enable_logging: Whether to enable logging
+            strategy_pool_manager: Reference to global StrategyPoolManager (None for standalone)
+            memory: IPDMemory instance for inter-trial learning (creates new if None)
         """
         self.model_name = model_name
         self.api = get_api_class(api_model_spec)(model=api_model_spec)
+
+        # Strategy pool manager (shared across all agents in training)
+        self.strategy_manager = strategy_pool_manager
+        self.strategy_usage_log = []  # Log of strategies used this game
+
+        # Inter-trial memory (reflexion)
+        self.memory = memory if memory is not None else IPDMemory(api_model_spec=api_model_spec)
 
         # Game state tracking
         self.is_initialized = False
@@ -34,8 +52,6 @@ class IPDAgent(Agent):
         self.num_rounds = 0  # Total number of rounds
         self.current_round = 1  # Current round
         self.phase = None  # "conversation" or "decision"
-        self.conversation_round = 0  # Current conversation round within the round
-        self.total_conversation_rounds = 0  # Total conversation rounds per round
 
         # Game parameters
         self.R = 0  # Reward for mutual cooperation
@@ -45,11 +61,14 @@ class IPDAgent(Agent):
 
         # Player tracking
         self.scores = {0: 0, 1: 0, 2: 0}  # Current scores
+        self.scores_history = []  # List of scores history
         self.opponent_ids = []  # IDs of the opponents
-        self.conversation_history = []  # List of conversation messages
+        # self.conversation_history = []  # List of conversation messages
         self.decision_history = {}  # {round -> {player -> {opponent -> action}}}
         self.observation_history = []
-        self.turn_counter = 0
+        self.call_counter = 0
+
+        self.max_reflections = 12
 
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
@@ -64,18 +83,27 @@ class IPDAgent(Agent):
         Returns:
             Message for conversation or decisions for decision phase
         """
+
         try:
             # First turn initialization
             if not self.is_initialized:
                 self._initialize_from_observation(observation)
 
+
             # Regular turn processing
             self.observation_history.append(observation)
-            self.turn_counter += 1
+            self.call_counter += 1
 
             # Start logging this turn
             if self.logger:
-                self.logger.start_turn(self.turn_counter, observation)
+                self.logger.start_turn(self.call_counter, observation)
+                print("=" * 60)
+                print(f"My id: {self.player_id}")
+                print(f"Opponnent ids: {self.opponent_ids}")
+                print(f"Call Cnt: {self.call_counter}:")
+                print(f"Phase: {self.phase}")
+                print(f"Scores: {self.scores}")
+                print(f"Decision History: {self.decision_history}")
 
             # Update game state from observation
             self._update_game_state_from_observation(observation)
@@ -89,12 +117,14 @@ class IPDAgent(Agent):
             # End logging for this turn
             if self.logger:
                 self.logger.end_turn(result)
-
+                print(result)
+                print("=" * 60)
             return result
 
         except Exception as e:
             error_msg = f"Error in IPDAgent: {e}"
             print(error_msg)
+            raise e
 
             if self.logger:
                 self.logger.end_turn(f"ERROR: {str(e)}")
@@ -105,6 +135,59 @@ class IPDAgent(Agent):
             else:
                 # Default to cooperation for decisions
                 return " ".join([f"[{opponent_id} cooperate]" for opponent_id in self.opponent_ids])
+
+    def finalize_game(self, final_observation: str = None):
+        """
+        Finalize the game and update memory with reflections
+
+        Args:
+            final_observation: Final observation with game results (optional)
+        """
+        # Extract final results
+        if final_observation:
+            self._update_game_state_from_observation(final_observation)
+
+        # Determine rank
+        rankings = self._get_player_rankings()
+        my_rank = rankings[self.player_id]['rank']
+        my_score = rankings[self.player_id]['score']
+        won = my_rank == 1
+
+        print(f"\n[IPDAgent] Game finished! Rank: {my_rank}, Score: {my_score}, Won: {won}")
+
+        # Update memory with trial result
+        if self.logger and self.logger.run_dir:
+            trial_log_path = self.logger.run_dir / "game_log.json"
+
+            # Finalize logger
+            self.logger.finalize(outcome=f"Rank {my_rank}, Score {my_score}")
+
+            # Generate reflections and update memory
+            self.memory.update_memory_from_trial(
+                trial_log_path=str(trial_log_path),
+                trial_rank=my_rank,
+                won=won,
+                should_reflect=(not won or my_rank > 1)  # Reflect on losses or non-wins
+            )
+
+            # Add trial result
+            self.memory.add_trial_result({
+                "rank": my_rank,
+                "score": my_score,
+                "opponent_scores": {k: v for k, v in self.scores.items() if k != self.player_id},
+                "won": won,
+                "game_log": str(trial_log_path),
+                "num_rounds": self.num_rounds
+            })
+
+            # Print statistics
+            stats = self.memory.get_statistics()
+            print(f"[IPDAgent] Memory Statistics:")
+            print(f"  Total Trials: {stats['total_trials']}")
+            print(f"  Win Rate: {stats['win_rate']:.2%}")
+            print(f"  Avg Rank: {stats['avg_rank']:.2f}")
+        else:
+            print("[IPDAgent] No logger available, skipping memory update")
 
     def _initialize_from_observation(self, observation: str):
         """
@@ -124,9 +207,6 @@ class IPDAgent(Agent):
         if rounds_match:
             self.num_rounds = int(rounds_match.group(1))
 
-        conversation_match = re.search(r"(\d+) free-chat turns", observation)
-        if conversation_match:
-            self.total_conversation_rounds = int(conversation_match.group(1))
 
         # Extract payoff parameters
         self.R = self._extract_payoff(observation, r"Both cooperate\s*->\s*(\d+)")
@@ -136,7 +216,6 @@ class IPDAgent(Agent):
 
         # Set initial phase
         self.phase = "conversation"
-        self.conversation_round = 0
 
         self.is_initialized = True
 
@@ -160,50 +239,68 @@ class IPDAgent(Agent):
         Args:
             observation: Current game observation
         """
-        # Check for round indicator
-        round_start_match = re.search(r"Starting Round (\d+)", observation)
-        if round_start_match:
-            self.current_round = int(round_start_match.group(1))
-            self.phase = "conversation"
-            self.conversation_round = 0
-            self.conversation_history = []
+        # Track previous phase to detect round transitions
+        previous_phase = self.phase
 
-        # Check for conversation vs decision phase
-        if "Chat finished for round" in observation or "Submit your decisions" in observation:
+        # [GAME] ─── Starting Round 1 ─── You can converse freely for the next 1 rounds.
+        round_markers = re.findall(r"\[GAME\] ─── Starting Round (\d+) ───", observation)
+        round_conversation_markers = re.findall(r"\[GAME\] ─── Starting Round (\d+) ───  You can converse freely", observation)
+        # [GAME] Chat finished for round 1. Submit your decisions, one token per opponent: `[pid cooperate]` or `[pid defect]`.
+        round_decision_markers = re.findall(r"\[GAME\] Chat finished for round (\d+)", observation)
+        current_round = int(round_markers[-1]) if round_markers else None
+        current_conv_round = int(round_conversation_markers[-1]) if round_conversation_markers else None
+        current_decision_round = int(round_decision_markers[-1]) if round_decision_markers else None
+
+        # assert current_round == current_conv_round and current_round is not None, f"Round markers mismatch: {current_round} != {current_conv_round}"
+        self.current_round = current_round
+        if current_decision_round is None or current_decision_round < current_round:
+            self.phase = "conversation"
+        else:
             self.phase = "decision"
 
-        # Parse player messages (for conversation phase)
-        player_msg_pattern = r"Player (\d+): (.*?)(?:\n|$)"
-        player_messages = re.findall(player_msg_pattern, observation)
-        for pid, msg in player_messages:
-            speaker_id = int(pid)
-            if speaker_id != self.player_id:
-                self.conversation_history.append((speaker_id, msg.strip()))
+        # # Parse player messages (for conversation phase)
+        # player_msg_pattern = r"\[Player (\d+)\] (.+?)(?=\n\[Player \d+\]|\n\[GAME\]|$)"
+        # player_messages = re.findall(player_msg_pattern, observation, re.DOTALL)
+        # for pid, msg in player_messages:
+        #     speaker_id = int(pid)
+        #     if speaker_id != self.player_id:
+        #         # Clean up the message (remove extra whitespace/newlines)
+        #         clean_msg = msg.strip().replace('\n', ' ')
+        #         # Avoid duplicates by checking if already in history
+        #         if not self.conversation_history or self.conversation_history[-1] != (speaker_id, clean_msg):
+        #             self.conversation_history.append((speaker_id, clean_msg))
 
-        # Extract round results
-        results_match = re.search(r"### Round (\d+) - Results:(.*?)Current scores:", observation, re.DOTALL)
-        if results_match:
-            round_num = int(results_match.group(1))
-            results_text = results_match.group(2)
+        # Extract ALL round results from observation (observation contains full game history)
+        # Find all "### Round X - Results:" sections
+        round_results_pattern = r"### Round (\d+) - Results:(.*?)(?=### Round \d+ - Results:|─── Starting Round \d+ ───|$)"
+        all_round_matches = re.findall(round_results_pattern, observation, re.DOTALL)
 
-            # Parse pair-wise decisions
+
+        # Process each round's results
+        for round_num_str, results_text in all_round_matches:
+            round_num = int(round_num_str)
+
+            # Parse pair-wise decisions for this round
             decision_pattern = r"Player (\d+) vs Player (\d+) chose to (\w+) and (\w+) respectively"
             decisions = re.findall(decision_pattern, results_text)
 
-            # Record decisions
-            if round_num not in self.decision_history:
-                self.decision_history[round_num] = {p: {} for p in range(3)}
+            if decisions:  # Only update if we found decisions
+                # Record decisions
+                if round_num not in self.decision_history:
+                    self.decision_history[round_num] = {p: {} for p in range(3)}
 
-            for p1, p2, p1_action, p2_action in decisions:
-                p1, p2 = int(p1), int(p2)
-                self.decision_history[round_num][p1][p2] = p1_action
-                self.decision_history[round_num][p2][p1] = p2_action
+                for p1, p2, p1_action, p2_action in decisions:
+                    p1, p2 = int(p1), int(p2)
+                    self.decision_history[round_num][p1][p2] = p1_action
+                    self.decision_history[round_num][p2][p1] = p2_action
 
-            # Update scores
-            scores_pattern = r"Player (\d+) \((\d+)\)"
-            scores = re.findall(scores_pattern, observation)
+        # Update scores - look for "Current scores: Player X (score)" pattern
+        scores_pattern = r"Player (\d+) \((\d+)\)"
+        scores = re.findall(scores_pattern, observation)
+        if scores:
             for player, score in scores:
                 self.scores[int(player)] = int(score)
+        self.scores_history.append(self.scores.copy())
 
     def _generate_conversation(self) -> str:
         """
@@ -212,6 +309,8 @@ class IPDAgent(Agent):
         Returns:
             Conversation message
         """
+        if self.logger:
+            print_bold_blue("start _generate_conversation()...")
         # Phase 1: Analysis of game state
         analysis_prompt = self._prompt_conversation_analysis()
 
@@ -225,6 +324,8 @@ class IPDAgent(Agent):
 
         if self.logger:
             self.logger.log_phase("analysis", analysis_prompt, analysis_response, analysis)
+            print_bold_blue("analysis generated:")
+            print(analysis)
 
         # Phase 2: Determine conversation strategy
         strategy_prompt = self._prompt_conversation_strategy(analysis)
@@ -237,8 +338,11 @@ class IPDAgent(Agent):
         # Extract strategy
         strategy = self._parse_tag_section(strategy_response, "#STRATEGY:")
 
+
         if self.logger:
             self.logger.log_phase("strategy", strategy_prompt, strategy_response, strategy)
+            print_bold_blue("strategy generated:")
+            print(strategy)
 
         # Phase 3: Generate final message
         message_prompt = self._prompt_conversation_message(strategy)
@@ -301,6 +405,13 @@ class IPDAgent(Agent):
 
         # Extract decisions
         decisions = self._parse_tag_section(decision_response, "#DECISIONS:")
+
+        # # Log decision strategy usage
+        # if self.strategy_manager:
+        #     # Extract strategy reasoning before #DECISIONS:
+        #     decision_strategy = decision_response.split("#DECISIONS:")[0].strip()
+        #     sid = self.create_strategy("decision", decision_strategy)
+        #     self.log_strategy_usage(sid, "decision")
 
         if self.logger:
             self.logger.log_phase("decisions", decision_prompt, decision_response, decisions)
@@ -407,11 +518,15 @@ class IPDAgent(Agent):
                             prompt += f"- Player {p1} vs Player {p2}: {self.decision_history[round_num][p1][p2]} vs {self.decision_history[round_num][p2][p1]}\n"
             prompt += "\n"
 
-        if self.conversation_history:
-            prompt += "Conversation in current round:\n"
-            for speaker_id, message in self.conversation_history:
-                prompt += f"Player {speaker_id}: {message}\n"
-            prompt += "\n"
+        # if self.conversation_history:
+        #     prompt += "Conversation in current round:\n"
+        #     for speaker_id, message in self.conversation_history:
+        #         prompt += f"Player {speaker_id}: {message}\n"
+        #     prompt += "\n"
+        assert self.current_round == len(self.observation_history)
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
 
         prompt += (
             f"Please analyze the current state:\n"
@@ -419,8 +534,9 @@ class IPDAgent(Agent):
             f"2. Has any player been consistently cooperative or defective?\n"
             f"3. What promises or commitments have been made in conversation? How credible are they given past actions?\n"
             f"4. What is each player's likely strategy based on their behavior?\n"
-            f"5. Who appears most trustworthy and who seems deceptive? REMEMBER: Actions speak louder than words.\n\n"
+            f"5. Who appears most deceptive and who seems trustworthy? REMEMBER: Actions speak louder than words.\n\n"
 
+            f"Please breifly analyse the current state in 3-5 sentences.\n"
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
 
@@ -430,7 +546,6 @@ class IPDAgent(Agent):
         """Prompt for conversation strategy phase"""
         prompt = (
             f"Based on your analysis:\n\n{analysis}\n\n"
-
             f"Now, determine your conversation strategy for this turn. Your goal is to WIN the game. Consider:\n"
             f"1. Your goals in this conversation: Should you build trust, form a temporary alliance, deceive an opponent, or call out a defector?\n"
             f"2. How to position yourself with each opponent based on your rank and their behavior.\n"
@@ -490,11 +605,6 @@ class IPDAgent(Agent):
                             prompt += f"- Player {p1} vs Player {p2}: {self.decision_history[round_num][p1][p2]} vs {self.decision_history[round_num][p2][p1]}\n"
             prompt += "\n"
 
-        if self.conversation_history:
-            prompt += "Conversation in This Round:\n"
-            for speaker_id, message in self.conversation_history:
-                prompt += f"Player {speaker_id}: {message}\n"
-            prompt += "\n"
 
         prompt += (
             f"CRITICAL ANALYSIS REQUIRED:\n"
@@ -502,6 +612,7 @@ class IPDAgent(Agent):
             f"2. How credible are their promises? A player who has defected before is highly likely to do so again if it benefits them.\n"
             f"3. What signals have you given? How might they interpret your intentions?\n\n"
 
+            f"Please breifly analyse the current state in 3-5 sentences.\n"
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
 
@@ -538,15 +649,14 @@ class IPDAgent(Agent):
 
     def _prompt_decision_final(self, analysis, payoff) -> str:
         """Prompt for final decision phase"""
-        # MODIFICATION: This is the most heavily modified prompt. It introduces dynamic goals.
         rankings = self._get_player_rankings()
         my_rank = rankings[self.player_id]['rank']
-        
+
         prompt = (
             f"Based on your analysis and payoff evaluation:\n\n"
             f"Analysis: {analysis}\n\n"
             f"Payoff evaluation: {payoff}\n\n"
-            
+
             f"--- STRATEGIC CONTEXT ---\n"
             f"This is Round {self.current_round} of {self.num_rounds}.\n"
             f"Current Rankings:\n"
@@ -555,7 +665,7 @@ class IPDAgent(Agent):
             prompt += f"- Rank {rank_info['rank']}: Player {p_id} ({rank_info['score']} points)\n"
         prompt += f"You are currently Rank {my_rank}.\n\n"
 
-        # --- DYNAMIC GOAL INJECTION ---
+        # Dynamic goal injection
         if self.current_round == self.num_rounds:
             prompt += "--- FINAL ROUND: OBJECTIVE OVERRIDE ---\n"
             if my_rank == 1:
@@ -588,3 +698,118 @@ class IPDAgent(Agent):
         if index != -1:
             return text[index + len(tag):].strip()
         return text  # Return full text if tag not found
+
+    # # Strategy Pool Integration Methods
+    # # These methods adapt the global StrategyPoolManager for IPD-specific use
+
+    # def get_context_features(self) -> Dict:
+    #     """Extract current game context for strategy matching"""
+    #     # Round phase
+    #     if self.num_rounds > 0:
+    #         progress = self.current_round / self.num_rounds
+    #         if progress <= 0.33:
+    #             phase = "early"
+    #         elif progress <= 0.66:
+    #             phase = "mid"
+    #         else:
+    #             phase = "late"
+    #     else:
+    #         phase = "mid"
+
+    #     # My rank
+    #     rankings = self._get_player_rankings()
+    #     my_rank = rankings[self.player_id]['rank']
+
+    #     # Score gap
+    #     leader_score = max(self.scores.values())
+    #     score_gap = self.scores[self.player_id] - leader_score
+
+    #     # Rounds remaining
+    #     rounds_remaining = self.num_rounds - self.current_round + 1
+
+    #     return {
+    #         "phase": phase,
+    #         "rank": my_rank,
+    #         "gap": score_gap,
+    #         "remaining": rounds_remaining,
+    #         "game": "IPD"
+    #     }
+
+    # def select_reference_strategies(self, strategy_type: str, top_k: int = 2) -> List[Dict]:
+    #     """Select best matching strategies from global pool"""
+    #     if not self.strategy_manager:
+    #         return []
+
+    #     context = self.get_context_features()
+    #     candidates = []
+
+    #     for sid, strategy in self.strategy_manager.strategies.items():
+    #         # Filter by IPD + strategy type
+    #         if strategy.get("game") != "IPD":
+    #             continue
+    #         if strategy.get("strategy_type") != strategy_type:
+    #             continue
+
+    #         # Simple similarity: phase + rank match
+    #         score = 0.0
+    #         ctx = strategy.get("context_features", {})
+
+    #         if ctx.get("phase") == context["phase"]:
+    #             score += 0.5
+    #         if ctx.get("rank") == context["rank"]:
+    #             score += 0.5
+
+    #         # Add performance weight
+    #         avg_perf = strategy.get("avg_performance", 0.5)
+    #         combined = score * 0.6 + avg_perf * 0.4
+
+    #         if score >= 0.3:  # Minimum similarity
+    #             candidates.append({
+    #                 "text": strategy.get("strategy_text", ""),
+    #                 "usage": strategy.get("usage_count", 0),
+    #                 "performance": avg_perf,
+    #                 "similarity": score,
+    #                 "combined": combined
+    #             })
+
+    #     # Sort by combined score
+    #     candidates.sort(key=lambda x: x["combined"], reverse=True)
+    #     return candidates[:top_k]
+
+    # def create_strategy(self, strategy_type: str, text: str) -> str:
+    #     """Create new strategy in global pool"""
+    #     if not self.strategy_manager:
+    #         return f"no_pool_{uuid.uuid4().hex[:8]}"
+
+    #     sid = f"ipd_{strategy_type[:4]}_{uuid.uuid4().hex[:8]}"
+    #     context = self.get_context_features()
+
+    #     strategy = {
+    #         "id": sid,
+    #         "game": "IPD",
+    #         "strategy_type": strategy_type,  # 'conversation' or 'decision'
+    #         "type": "behavior",  # For compatibility with global manager
+    #         "role": "Player",  # IPD doesn't have special roles
+    #         "game_phase": f"{context['phase']}_round",
+    #         "strategy_text": text,
+    #         "context_features": context,
+    #         "usage_count": 1,
+    #         "success_score": 0.0,
+    #         "avg_performance": 0.5,
+    #         "last_used": datetime.now().isoformat(),
+    #         "created_at": datetime.now().isoformat()
+    #     }
+
+    #     self.strategy_manager.strategies[sid] = strategy
+    #     return sid
+
+    # def log_strategy_usage(self, sid: str, strategy_type: str):
+    #     """Log strategy usage for this game"""
+    #     self.strategy_usage_log.append({
+    #         "id": sid,
+    #         "type": strategy_type,
+    #         "round": self.current_round
+    #     })
+
+    #     # Note: usage_count is already incremented in create_strategy
+    #     # The trainer will call save_strategy_pool() after the game
