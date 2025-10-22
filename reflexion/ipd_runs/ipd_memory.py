@@ -220,7 +220,7 @@ Reflection:"""
             print(f"[IPDMemory] Error generating conversation reflection: {e}")
             return ""
 
-    def update_memory_from_trial(self, trial_rank: int,
+    def update_memory_from_trial(self, agent: 'IPDAgent', trial_rank: int,
                                  won: bool, should_reflect: bool = True):
         """
         Update memory after a trial
@@ -234,7 +234,7 @@ Reflection:"""
         # Only generate reflections if we didn't win or performed poorly
         if should_reflect and (not won or trial_rank > 1):
             print(f"\n[IPDMemory] Generating reflections for rank {trial_rank} trial...")
-            reflections = self._generate_reflection(trial_rank, won)
+            reflections = self.generate_reflection(agent, trial_rank, won)
 
             # Add conversation reflection
             self.memory["memory"].append({

@@ -37,6 +37,7 @@ class IPDAgent(Agent):
             memory: IPDMemory instance for inter-trial learning (creates new if None)
         """
         self.model_name = model_name
+        self.api_model_spec = api_model_spec
         self.api = get_api_class(api_model_spec)(model=api_model_spec)
 
         # Strategy pool manager (shared across all agents in training)
@@ -161,6 +162,7 @@ class IPDAgent(Agent):
 
         # Generate reflections and update memory
         self.memory.update_memory_from_trial(
+            self,
             trial_rank=my_rank,
             won=won,
             should_reflect=(not won or my_rank > 1)  # Reflect on losses or non-wins

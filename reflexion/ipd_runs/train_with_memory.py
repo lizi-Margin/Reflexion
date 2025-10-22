@@ -12,7 +12,8 @@ import textarena as ta
 from reflexion.ipd_runs.ipd_agent import IPDAgent
 from reflexion.ipd_runs.ipd_agent import IPDAgent as BaselineAgent
 from reflexion.ipd_runs.ipd_memory import IPDMemory
-import sys
+import sys, random
+from uhtk.print_pack import *
 
 
 def create_baseline_agent(agent_id: int, api_model_spec: str = 'qwen3-8b'):
@@ -34,7 +35,7 @@ def create_selfplay_agent(agent_id: int, memory: IPDMemory, api_model_spec: str 
 
 
 def run_single_trial(trial_num: int, agent: IPDAgent, memory: IPDMemory, env_id: str = "ThreePlayerIPD-v0-train",
-                     api_model_spec: str = 'qwen3-8b', verbose: bool = True, selfplay: bool = True):
+                     api_model_spec: str = None, verbose: bool = True, selfplay: bool = True):
     """
     Run a single trial of IPD
 
@@ -52,6 +53,19 @@ def run_single_trial(trial_num: int, agent: IPDAgent, memory: IPDMemory, env_id:
     print(f"TRIAL {trial_num}")
     print(f"{'='*80}")
 
+    if api_model_spec is None:
+        all_available_models = [
+            'qwen3-8b',
+            'qwen3-8b',
+            'qwen3-8b',
+            'qwen3-4b',
+            'doubao-seed-1-6-lite-251015',
+            'gpt-5-chat-latest',
+            'gemini-2.5-flash-lite',
+            'deepseek-v3.1-250821'
+        ]
+        api_model_spec = random.choice(all_available_models)
+
     # Create baseline opponents
     if selfplay:
         print("Self-play mode enabled")
@@ -66,6 +80,9 @@ def run_single_trial(trial_num: int, agent: IPDAgent, memory: IPDMemory, env_id:
             1: create_baseline_agent(1, api_model_spec),
             2: create_baseline_agent(2, api_model_spec)
         }
+    
+    for a in agents.values():
+        print_red(f"Agent {a.model_name} API Model Spec: {a.api_model_spec}")
 
     # Create environment
     env = ta.make(env_id=env_id)
@@ -119,10 +136,12 @@ def main():
     # Configuration
     NUM_TRIALS = 5  # Number of trials to run
     ENV_ID = "ThreePlayerIPD-v0-train"
-    # API_MODEL_SPEC = "qwen3-8b"  # Change to your preferred model
-    API_MODEL_SPEC = "gpt-5-chat-latest"  # Change to your preferred model
+    API_MODEL_SPEC = "qwen3-8b"  # Change to your preferred model
+    # API_MODEL_SPEC = "gpt-5-chat-latest"  # Change to your preferred model
     # API_MODEL_SPEC = "kimi-k2-250905"  # Change to your preferred model
     VERBOSE = True
+    OPP_API_MODEL_SPEC = "qwen3-8b"  # Change to your preferred model
+    # OPP_API_MODEL_SPEC = None
 
     print(f"""
 {'='*80}
@@ -171,7 +190,7 @@ Watch how performance improves over trials!
             agent=agent,
             memory=memory,  # Shared memory!
             env_id=ENV_ID,
-            api_model_spec=API_MODEL_SPEC,
+            api_model_spec=OPP_API_MODEL_SPEC,
             verbose=VERBOSE
         )
 

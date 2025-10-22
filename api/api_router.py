@@ -2,6 +2,9 @@ from api.api import *
 
 def get_api_class(model_name):
     # a router to get correct API client class
+    if model_name == 'deepseek-v3.1-250821':
+        return OpenAI_API
+
     if 'qwen' in model_name:
         API_CLASS = WWXQ_API
     elif 'doubao' in model_name:
@@ -11,6 +14,8 @@ def get_api_class(model_name):
     elif 'deepseek' in model_name:
         API_CLASS = Volcano_API
     elif 'gpt' in model_name:
+        API_CLASS = OpenAI_API
+    elif 'gemini' in model_name:
         API_CLASS = OpenAI_API
     else:
         ## WWXQ by default
