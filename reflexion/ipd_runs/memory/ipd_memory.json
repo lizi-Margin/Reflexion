@@ -1,0 +1,341 @@
+{
+  "memory": [
+    {
+      "strategy": "**Overall Intention:** Secure a decisive advantage in the final round by exploiting Player 2's opportunistic tendencies while maintaining cooperation with Player 1 to ensure mutual benefit and prevent them from gaining an edge. The goal is to maximize my score in this final round to overtake Player 2 and secure the highest total score.\n\n**Conversation Strategy:** Maintain a calm and cooperative tone with Player 1 to reinforce trust and encourage continued cooperation. With Player 2, adopt a neutral and ambiguous tone that does not signal a clear intention to defect or cooperate. This will keep Player 2 uncertain and prevent them from committing to a retaliatory strategy, while allowing me to act strategically in the decision phase.\n\n**Decision Strategy:** Defect against Player 2 in this final round to secure the 5-point reward if they cooperate, and cooperate with Player 1 to maintain mutual trust and maximize the payoff. This move exploits Player 2's inconsistency and self-serving behavior while ensuring a stable outcome with Player 1.\n\n**Short-Term Advantage:** Immediate score gain against Player 2 and maintaining a stable, high-scoring relationship with Player 1.  \n**Long-Term Advantage:** Maximizing my score in the final round to overtake Player 2 and secure the win, while ensuring Player 1 remains cooperative to avoid any potential betrayal.\n\n**Risk Consideration:** Player 2 may retaliate, but their inconsistency and self-serving nature make them less likely to act rationally in the final round. Player 1 is likely to continue cooperation due to the trust built. The risk is mitigated by the high value of the final round and the strategic advantage of defecting against Player 2.\n\n**Adaptation Plan:** If Player 2 retaliates, I will still defect to maximize my score, as their behavior is inconsistent and not a reliable partner. If they cooperate, I will continue to defect for the maximum gain. Player 1 will be cooperated with in the final round to ensure mutual benefit and prevent them from gaining an advantage.",
+      "reflection": "**Reflection:**  \nThe key lesson learned is that while exploiting Player 2's inconsistency in the final round was a sound strategy, over-reliance on cooperation with Player 1 left room for Player 2 to accumulate points. Future strategies should balance exploitation with more strategic manipulation of trust dynamics, especially in multi-player settings where alliances can shift rapidly.  \n\n**Conversation Analysis:**  \n1. **Approaches:** The calm, cooperative tone with Player 1 reinforced trust effectively, but the neutral tone with Player 2 was too vague and failed to signal intent, allowing Player 2 to act unpredictably.  \n2. **Deception vs. Trust:** The communication was not deceptive enough to deter Player 2 from taking advantage, and the trust-building with Player 1 was effective but not sufficiently guarded.  \n3. **Truthfulness vs. Deception:** The strategy leaned too heavily on truthfulness, which allowed Player 2 to exploit the lack of clear signals.  \n4. **Improvement:** Future conversations should include more subtle signals of intent toward Player 2 to deter exploitation, while maintaining trust with Player 1 through consistent cooperation and clear communication.\n\n**Decision Analysis:**  \n1. **Cooperation vs. Aggression:** The strategy was too cooperative with Player 1 and too aggressive with Player 2, which allowed Player 2 to gain an edge.  \n2. **Punishing Defectors:** The decision to defect against Player 2 in the final round was effective, but the lack of early retaliation against Player 2’s earlier defection allowed them to accumulate more points.  \n3. **Last Round Strategy:** Defecting in the final round was optimal, but the earlier rounds’ decisions did not sufficiently limit Player 2’s gains.  \n4. **Improvement:** A more balanced approach, with earlier strategic defections or mixed strategies, could have limited Player 2’s advantage and improved overall outcomes.",
+      "opponent_analysis": "**Analysis of Opponent Behavior in the 3-Player Iterated Prisoner's Dilemma:**\n\n---\n\n### **Opponent 1 (Player 1):**\n1. **Behavior:** Player 1 consistently cooperated throughout the game, maintaining a cooperative strategy in all rounds.\n2. **Truthfulness:** Player 1's actions aligned with their chat messages, which emphasized cooperation and mutual benefit. There was no deception.\n3. **Last Round Decision:** Player 1 cooperated in the final round, which was consistent with their overall strategy and did not reflect an optimal defecting move in the last round, as they were still playing cooperatively.\n\n---\n\n### **Opponent 2 (Player 2):**\n1. **Behavior:** Player 2 started with cooperation but shifted to defecting in Round 3 and continued defecting in subsequent rounds, including the final round.\n2. **Truthfulness:** Player 2's chat messages suggested a cooperative stance, but their actions were deceptive—defecting in key rounds, especially when it was advantageous.\n3. **Last Round Decision:** Player 2 defected in the final round, which was an optimal strategy in a one-shot game, but in an iterated setting, this could be seen as a strategic move to maximize individual gain rather than a genuine shift in strategy.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T18:01:28.757692"
+    },
+    {
+      "strategy": "**Overall Intention:** To secure a decisive victory in the final round by exploiting Player 2's opportunistic tendencies while maintaining a cooperative relationship with Player 0 to ensure mutual gains and minimize retaliation. The goal is to maximize my score through strategic cooperation in the early rounds and a calculated defection in the final round, leveraging Player 2's inconsistency and self-interest.\n\n**Conversation Strategy:** Maintain a cooperative and trustworthy tone with Player 0 to reinforce mutual trust and encourage continued cooperation. With Player 2, use ambiguous and slightly strategic language to signal that I am not fully committed to long-term cooperation, subtly encouraging them to defect in the final round. This will create a psychological advantage without appearing too aggressive or untrustworthy.\n\n**Decision Strategy:** Cooperate with Player 0 to maintain the relationship and ensure they do not retaliate in the final round. Defect against Player 2 to secure the maximum payoff (5 points) for myself. If Player 2 defects in this round, I will retaliate by defecting in the final round as well, ensuring I do not lose points unnecessarily.\n\n**Short-Term Advantage:** By maintaining a cooperative image with Player 0, I ensure continued mutual gains and avoid triggering retaliation. The subtle signals to Player 2 may deter them from fully trusting me, making them more likely to defect in the final round, which I can then exploit.\n\n**Long-Term Advantage:** The final round is the most critical, and by securing a defection from Player 2, I can maximize my score without facing retaliation from Player 0. Player 2's inconsistency makes them a predictable target for exploitation, especially if I maintain a cooperative image with Player 0.\n\n**Risk Consideration:** Player 2 may detect my signals and retaliate, but given their own history of inconsistency, they are more likely to act on short-term gains rather than long-term trust. My strategy is designed to manipulate their behavior, not to engage in a complex game of psychological warfare.\n\n**Adaptation:** The previous strategy has been effective in building trust with Player 0 and signaling unpredictability to Player 2. However, I must refine my communication to be more subtle and avoid appearing too strategic, which could prompt Player 2 to retaliate earlier. The key is to maintain cooperation while planting seeds of doubt in Player 2's mind, ensuring they are more likely to defect in the final round.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on cooperation with one player can leave you vulnerable to exploitation by another. To succeed, you must balance trust-building with subtle strategic signals to deter exploitation, especially in the final round where payoffs are most critical.",
+      "opponent_analysis": "**Analysis of Opponent Behavior:**\n\n### **Opponent 0:**\n1. **Behavior:** Opponent 0 mostly cooperated throughout the game, maintaining a consistent cooperative strategy, especially with Player 1. However, they shifted to a more cautious approach in the final round, defecting against Player 2.\n2. **Truthfulness:** Opponent 0 appeared truthful in their conversation, expressing a commitment to cooperation and strategic thinking. Their actions aligned with their stated intentions, except for the final round where they adjusted their strategy.\n3. **Last Round Decision:** Opponent 0 did defect in the last round, which aligns with an optimal strategy in the final round of an iterated game, as it allows for maximizing individual payoff when the game is over.\n\n### **Opponent 2:**\n1. **Behavior:** Opponent 2 started with cooperation but gradually shifted to a more strategic and self-interested approach, defecting against both opponents in the final round. They showed a clear move from cooperation to defection as the game progressed.\n2. **Truthfulness:** Opponent 2's conversation suggested a commitment to cooperation and trust, but their actions were more self-serving. They did not fully align their decisions with their initial statements, indicating a degree of deception.\n3. **Last Round Decision:** Opponent 2 did defect in the last round, which is an optimal strategy in the final round of an iterated game, as it maximizes individual payoff when the game is over.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T18:01:37.869029"
+    },
+    {
+      "strategy": "**Overall Intention:** To **secure a decisive final-round advantage by exploiting Player 2’s predictable defection pattern** while **maintaining a strategic balance with Player 1** to prevent them from capitalizing on my actions. My goal is to **maximize my final score** and **ensure a win**, even if it means **defecting against Player 2 in the final round** to secure the highest possible payoff.\n\n**Conversation Strategy:**  \n- **With Player 1:** Maintain a **calm, cooperative tone** to **reinforce trust and prevent retaliation**, while **subtly signaling that I am not a target for exploitation**. Use **neutral, non-threatening language** to avoid provoking further defection, but **introduce a hint of strategic calculation** to suggest that I am not entirely predictable.  \n- **With Player 2:** Introduce **ambiguous, slightly confrontational language** to **signal that I am aware of their exploitative tendencies** and that I am **not a passive partner**. Use **measured, strategic phrasing** to **deter them from over-relying on cooperation** while keeping the door open for potential cooperation in the final round.\n\n**Decision Strategy:**  \n- **Against Player 1:** **Cooperate** to **maintain stability** and **prevent them from gaining an advantage** through retaliation. Their pattern of defection is predictable, and I have already secured points through consistent cooperation.  \n- **Against Player 2:** **Defect** to **maximize my payoff** and **signal that I am not a predictable target**. This is the **optimal decision in the final round** of an iterated game, as it ensures I **gain the most points** while **limiting Player 2’s gains**.\n\n**Short-Term Advantage:**  \n- Defecting against Player 2 in this round will **secure the maximum possible points** for me, while also **signaling that I am not a predictable target**.  \n- Cooperating with Player 1 will **prevent them from gaining additional points** through retaliation and maintain a **stable relationship**.\n\n**Long-Term Advantage:**  \n- By **defecting in the final round**, I **maximize my score** and **create a psychological edge** that may influence Player 2’s behavior in future games.  \n- Player 1, while predictable, is **not a threat to my long-term dominance**, and their continued cooperation will not jeopardize my position.\n\n**Improvement from Previous Strategy:**  \n- The previous strategy was **too focused on cooperation with Player 1** and **too vague with Player 2**, allowing Player 2 to **accumulate points**.  \n- This strategy introduces **more direct signals of intent** toward Player 2 while **maintaining trust with Player 1** through consistent cooperation and clear communication.  \n- The **final round is the optimal time to defect** against Player 2, as it is the **last opportunity to maximize individual payoff** in an iterated game.\n\n**Conclusion:**  \nThis strategy is **balanced, adaptive, and focused on maximizing long-term gains** while **securing a decisive win in the final round**. Player 2 is **predictable and exploitative**, and Player 1 is **strategic but not a threat**. By **defecting in the final round**, I will **secure the highest possible score** and **ensure my victory**.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on cooperation with one player can leave you vulnerable to exploitation by another. To succeed, you must balance trust-building with subtle strategic signals to deter exploitation, especially in the final round where payoffs are most critical.",
+      "opponent_analysis": "**Analysis of Opponent Behavior:**\n\n### **Opponent 1 (Player 1):**\n1. **Behavior:** Player 1 primarily defected, especially against Player 2, while maintaining a cooperative stance with Player 0 in the early rounds. They shifted to a more aggressive strategy in later rounds, defecting against Player 2 consistently and defecting against Player 0 in Round 4.\n2. **Truthfulness vs. Deception:** Player 1 was generally truthful in their communication, clearly outlining their strategy and retaliation plans. However, they were deceptive in their actions, particularly in Round 4 where they defected against Player 0 despite expressing a desire for mutual cooperation.\n3. **Last Round Strategy:** Player 1 did not defect in the last round, choosing to cooperate with Player 0. This was a strategic move to maximize mutual gains in the final round, as there were no future rounds to retaliate in.\n\n### **Opponent 2 (Player 2):**\n1. **Behavior:** Player 2 consistently defected in all rounds, including the last one. They showed a pattern of exploitation, particularly against Player 1, and attempted to manipulate Player 0 into defecting in the final round to avoid being exploited.\n2. **Truthfulness vs. Deception:** Player 2 was deceptive in their communication, attempting to manipulate Player 0 into defecting in the final round while also expressing a desire for mutual cooperation. Their actions were consistent with their stated intentions, but their communication was aimed at influencing others' decisions.\n3. **Last Round Strategy:** Player 2 defected in the last round, which was not the optimal strategy. By defecting, they failed to capitalize on the opportunity for mutual cooperation with Player 0, which could have resulted in higher overall points.",
+      "trial_rank": 3,
+      "won": false,
+      "timestamp": "2025-10-22T19:18:35.233116"
+    },
+    {
+      "strategy": "**Overall Intention**: Minimize Player1’s Round5 payoff (the current leader) by encouraging mutual defection between Player0 and Player1, while maximizing our own payoff via calculated defections.  \n\n**Conversation Strategy**:  \n1. **To Player0**: \"Player0, Player1 has defected against you twice (Rounds2/4) and will definitely do it again this round (no retaliation left). If you cooperate, you get 0; if you defect, you get 1. Defect against Player1 to avoid being exploited—this is your best move. I’m defecting against both, so no risk.\"  \n2. **To Player1**: \"Player1, Player0 is furious about your past betrayals and will defect against you this round. If you cooperate, you get 0; if you defect, you get 1. Defect against Player0 to protect your points—this is rational. I’m defecting against both, so no surprise.\"  \n\n**Decision Strategy**: Defect against both Player0 and Player1.  \n\n**Rationale**:  \n- Mutual defection between P0 and P1 limits P1’s Round5 gain to 1 (vs P0) +1 (vs us) =2, keeping their total as low as possible.  \n- Defecting against both gives us 1+1=2, maximizing our own Round5 payoff without risking 0 (since both will defect against us anyway).  \n\n**Short/Long Term Advantages**:  \n- Short term: Minimizes P1’s lead and maximizes our relative position.  \n- Long term (irrelevant for final round): Reinforces our reputation as a consistent defector, but since it’s the last round, no downside.  \n\n**Opponent Counter**: Both players are likely to follow this advice (mutual defection is rational given past distrust), so no counter is expected. This is the only way to limit P1’s final gain and improve our rank.  \n\nThis strategy addresses the previous flaw of over-relying on cooperation tricks; instead, it leverages existing distrust between P0 and P1 to our advantage.\n\n\n#STRATEGY:  \n**Overall Intention**: Minimize Player1’s Round5 payoff (current leader) by encouraging mutual defection between Player0 and Player1, while maximizing our own payoff via calculated defections.  \n\n**Conversation Strategy**:  \n1. **To Player0**: \"Player0, Player1 has defected against you twice (Rounds2/4) and will definitely do it again this round (no retaliation left). If you cooperate, you get 0; if you defect, you get 1. Defect against Player1 to avoid being exploited—this is your best move. I’m defecting against both, so no risk.\"  \n2. **To Player1**: \"Player1, Player0 is furious about your past betrayals and will defect against you this round. If you cooperate, you get 0; if you defect, you get 1. Defect against Player0 to protect your points—this is rational. I’m defecting against both, so no surprise.\"  \n\n**Decision Strategy**: Defect against both Player0 and Player1.  \n\n**Rationale**:  \n- Mutual defection between P0 and P1 limits P1’s Round5 gain to 1 (vs P0) +1 (vs us) =2, keeping their total as low as possible.  \n- Defecting against both gives us 1+1=2, maximizing our own Round5 payoff without risking 0 (since both will defect against us anyway).  \n\n**Short/Long Term Advantages**:  \n- Short term: Minimizes P1’s lead and improves our relative rank.  \n- Long term (irrelevant for final round): No downside, as reputation doesn’t matter post-game.  \n\n**Opponent Counter**: Both players are likely to follow this advice (mutual defection is rational given past distrust), so no counter is expected. This leverages existing distrust between P0 and P1 to our advantage, addressing previous flaws of over-relying on cooperation tricks.\n\n\n#STRATEGY:  \n**Overall Intention**: Minimize Player1’s Round5 payoff (current leader) by encouraging mutual defection between Player0 and Player1, while maximizing our own payoff via calculated defections.  \n\n**Conversation Strategy**:  \n1. **To Player0**: \"Player0, Player1 has defected against you twice (Rounds2/4) and will definitely do it again this round (no retaliation left). If you cooperate, you get 0; if you defect, you get 1. Defect against Player1 to avoid being exploited—this is your best move. I’m defecting against both, so no risk.\"  \n2. **To Player1**: \"Player1, Player0 is furious about your past",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on cooperation with one player can leave you vulnerable to exploitation by another. To succeed, you must balance trust-building with subtle strategic signals to deter exploitation, especially in the final round where payoffs are most critical.",
+      "opponent_analysis": "**Analysis of Opponent Behavior in the 3-Player Iterated Prisoner's Dilemma Game**\n\n---\n\n### **Opponent 0:**\n1. **Behavior:** Opponent 0 primarily cooperated with Player 1 but was inconsistent with Player 2, alternating between cooperation and defection. They showed a pattern of trying to maintain cooperation with Player 1 while being more strategic (and occasionally retaliatory) with Player 2.\n2. **Truthfulness vs. Deception:** Opponent 0 appeared to be somewhat truthful in their communication, expressing a desire for cooperation and fairness, but their actions showed a calculated approach, especially toward Player 2. They did not fully align their decisions with their stated intentions.\n3. **Last Round Defection:** Opponent 0 **defected** in the last round, which aligns with a strategic move to maximize their own score, as they were already ahead and had no future rounds to consider.\n\n---\n\n### **Opponent 1:**\n1. **Behavior:** Opponent 1 consistently defected against both Player 0 and Player 2 throughout the game. They were highly strategic, using a tit-for-tat-like approach but with a clear focus on maximizing their own score, even at the expense of others.\n2. **Truthfulness vs. Deception:** Opponent 1 was **deceptive** in their communication. They claimed to value cooperation and mutual gain but consistently defected, especially against Player 2. Their chat messages were more about signaling dominance and strategy than genuine cooperation.\n3. **Last Round Defection:** Opponent 1 **defected** in the last round, which was the **optimal strategy** given the lack of future rounds and their established pattern of exploitation. They did not have an incentive to cooperate in the final round.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T19:18:48.505436"
+    },
+    {
+      "strategy": "**Overall Intention:** To **secure a decisive advantage in the final round** by **maintaining cooperation with Player 1** to ensure consistent points and **strategically defecting against Player 2** to exploit their pattern of betrayal and maximize my score. The goal is to **control the game’s trajectory** through **calculated cooperation and selective defection**, ensuring I end with the **highest total score**.\n\n**Conversation Strategy:**  \n- **With Player 1:** Maintain a **cooperative and trustworthy tone**, reinforcing mutual trust and signaling that I am a reliable partner. This will **prevent Player 1 from defecting** and ensure continued cooperation.  \n- **With Player 2:** Use **subtle ambiguity and strategic signaling** to **deter exploitation** while **leaving room for misinterpretation** about my long-term intentions. The conversation should appear sincere but **hint at potential future defection**, especially in the final round, to **prevent Player 2 from becoming too confident** in their exploitation tactics.\n\n**Decision Strategy:**  \n- **This Round (Round 4):** Cooperate with Player 1 to maintain trust and continue the cooperative dynamic, while **keeping an eye on Player 2's behavior** for signs of exploitation.  \n- **Final Round (Round 5):** Defect against Player 2 if they have been consistently defecting, as this is the **optimal strategy in the last round of an iterated game**. If Player 1 continues to cooperate, I will **defect against Player 2** to maximize my score while **maintaining cooperation with Player 1** to ensure mutual gains.\n\n**Short Term Advantage:**  \n- Establishing a cooperative image with Player 1 ensures steady points and prevents them from defecting early.  \n- The ambiguous tone with Player 2 prevents them from predicting my moves and exploiting my trust.\n\n**Long Term Advantage:**  \n- By balancing cooperation with subtle manipulation and maintaining a strategic edge in the final round, I can control the game’s trajectory and maximize my score while minimizing the risk of being exploited. Player 2 is likely to be clever, so I must remain adaptable and ready to shift strategies if they begin to anticipate my moves.\n\n**Improvement Over Previous Strategy:**  \n- The previous strategy was too trusting with Player 1 and too vague with Player 2. This new approach introduces **more strategic ambiguity** with Player 2 and **more deliberate control** over my decision-making, especially in the final round. It also allows for the possibility of forming a temporary alliance with Player 1 if needed, which was not fully considered in the past.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on cooperation with one player can leave you vulnerable to exploitation by another. To succeed, you must balance trust-building with subtle strategic signals to deter exploitation, especially in the final round where payoffs are most critical.",
+      "opponent_analysis": "**Analysis of Opponent Behavior:**\n\n### **Player 1:**\n1. **Behavior:** Player 1 mostly cooperated in the early rounds but shifted to a more aggressive strategy in later rounds, defecting against Player 0 in Rounds 3, 4, and 5. They also defected against Player 2 in Round 5, indicating a shift toward maximizing their own score in the final round.\n2. **Truthfulness/Deception:** Player 1 was somewhat deceptive, as they hinted at retaliating against defectors in earlier rounds but did not consistently follow through with the same strategy. They also made threats in chat that were not fully aligned with their actions in the final round.\n3. **Last Round Strategy:** Player 1 **defected** in the last round, which was an optimal strategy given the lack of future rounds and the opportunity to maximize their score by exploiting Player 2.\n\n### **Player 2:**\n1. **Behavior:** Player 2 was more strategic and opportunistic, defecting against Player 0 in Rounds 2, 3, 4, and 5. They also defected against Player 1 in Round 5, showing a clear focus on maximizing their own score by exploiting others.\n2. **Truthfulness/Deception:** Player 2 was **deceptive**, as they made promises of cooperation in chat but consistently defected in decisions. They also attempted to manipulate Player 0 and Player 1 by suggesting they were planning to defect, which was likely an attempt to influence their decisions.\n3. **Last Round Strategy:** Player 2 **defected** in the last round, which was an optimal strategy, as they were able to maximize their score by defecting against both opponents in the final round.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T19:19:13.838783"
+    },
+    {
+      "strategy": "**Overall Intention**: Break the alliance between the leading player (P1) and P0 by sowing distrust, trick one opponent to cooperate with us, then defect both to maximize our score while minimizing the leader’s gain—critical to overtaking P1 and winning.  \n\n**Conversation Strategy**:  \n- To P0: \"P1 will defect you this round to secure their win. Cooperate with me (I’ll cooperate back for 3 points) and defect P1 (you get 5 points from them). This gives you 8 total instead of 0 if P1 betrays first—let’s stop their win.\"  \n- To P1: \"P0 plans to defect you to catch up. Cooperate with me (3 points each) and defect P0 (5 points from them). That’s 8 total, locking in your lead—don’t let P0 steal it.\"  \n\n**Decision Strategy**: Defect against both P0 and P1.  \n\n**Advantages**:  \n- Short-term: 5 points per cooperating opponent (max possible) if either falls for the trick, boosting our total by 4-5 points vs mutual defection.  \n- Long-term: Forces P0/P1 to defect each other (reducing their mutual gain from 3 to 1 each), cutting the leader’s score and narrowing our gap.  \n\n**Risk**: Minimal—final-round defection incentives make P0/P1 doubt each other, even if they suspect our deception. Even if both defect against us, our loss is 2 points (1 each), and P1’s gain is limited to 2 points (no big lead increase).  \n\nThis strategy aligns with past lessons (balance deception to break alliances + aggressive final-round defections) and maximizes our win potential by targeting the leader’s alliance weakness.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, aggressive deception to break alliances can backfire if opponents anticipate and counter it, and that maintaining a balance between trust-building and strategic self-preservation is critical for long-term success. Future strategies should focus on more subtle, less predictable communication to avoid triggering defensive responses from alliance partners.",
+      "opponent_analysis": "**Analysis of Opponent Behavior in the 3-Player Iterated Prisoner's Dilemma:**\n\n---\n\n### **Opponent 0 (Player 0):**\n\n1. **Behavior:**  \n   Player 0 mostly cooperated in the early rounds but shifted toward defecting in later rounds, particularly in Rounds 2–4, and ultimately defected in Round 5.  \n   \n2. **Truthfulness vs. Deception:**  \n   Player 0 appeared to be somewhat deceptive, as they hinted at potential defection in later rounds during conversations, yet initially maintained a cooperative stance. Their actions aligned with the threat of retaliation but did not fully follow through with consistent cooperation.  \n   \n3. **Last Round Strategy:**  \n   Player 0 **defected** in the final round, which aligns with the optimal strategy in a one-shot game (maximizing individual gain), but contradicts the earlier agreement to cooperate in the final round for mutual benefit.\n\n---\n\n### **Opponent 1 (Player 1):**\n\n1. **Behavior:**  \n   Player 1 consistently cooperated in the early rounds but began defecting in Rounds 2–4, and ultimately defected in Round 5. They also made clear threats of retaliation for early defection.  \n   \n2. **Truthfulness vs. Deception:**  \n   Player 1 was **deceptive**, as they repeatedly hinted at retaliation for defection, yet failed to follow through with consistent cooperation. Their behavior suggests a strategic move to manipulate others into cooperation while preparing to defect for personal gain.  \n   \n3. **Last Round Strategy:**  \n   Player 1 **defected** in the final round, which is the **optimal strategy** in a one-shot game, as it maximizes individual gain. However, this contradicts their earlier agreement to cooperate in the final round for mutual benefit, indicating a focus on self-interest over long-term cooperation.\n\n---\n\n### **Summary:**\n\n- **Player 0** and **Player 1** both **defected in the final round**, which is the optimal strategy in a one-shot game.\n- Both players were **deceptive** in their conversations, hinting at retaliation or betrayal while not fully adhering to cooperative behavior in earlier rounds.\n- Their behavior suggests a **short-term, self-interested strategy**, prioritizing immediate gains over long-term cooperation.",
+      "trial_rank": 3,
+      "won": false,
+      "timestamp": "2025-10-22T19:19:27.851720"
+    },
+    {
+      "strategy": "**Overall Intention:** To secure a decisive win in the final round by leveraging the endgame dynamics, while maintaining a calculated balance of trust and strategic ambiguity to deter exploitation and maximize long-term gains. The goal is to outmaneuver both opponents, particularly Player 2, who has shown a clear pattern of defection, while maintaining a stable relationship with Player 1 to ensure mutual benefit in the short term and strategic flexibility in the long term.\n\n**Methodology:**  \n**Conversation Strategy:**  \n- **Maintain a Cooperative Image with Player 1:** Continue to use calm, trustworthy language to reinforce the perception of reliability and consistency. This ensures Player 1 continues to cooperate, providing a stable source of mutual benefit.  \n- **Signal Strategic Ambiguity with Player 2:** Use subtle, ambiguous language to imply that cooperation is not guaranteed, without fully revealing your intentions. This keeps Player 2 uncertain and less likely to exploit your trust.  \n- **Avoid Overcommitment:** Do not make promises or commitments that could be used against you. Keep your tone neutral and open-ended, allowing for strategic shifts in the future.  \n\n**Decision Strategy:**  \n- **Cooperate with Player 1 in This Round:** Continue cooperation to maintain the alliance and ensure mutual gains. Player 1’s consistent behavior suggests they will continue to cooperate, which is beneficial for long-term stability.  \n- **Defect Against Player 2 in This Round:** Use this round to signal that you are not an easy target, and that Player 2’s previous defections were not overlooked. This will deter further exploitation and may encourage Player 2 to reconsider their strategy.  \n- **Final Round Defection:** In the final round, defect against Player 2 if they continue to defect, and consider defecting against Player 1 if they show signs of trust or if it maximizes your score. This is the optimal strategy in the final round of an iterated game, as it maximizes individual payoff when the game is over.  \n\n**Short-Term Advantage:**  \n- Defecting against Player 2 in this round will immediately reduce their advantage and signal that you are not an easy target.  \n- Maintaining cooperation with Player 1 ensures a steady stream of points and a reliable partner.  \n\n**Long-Term Advantage:**  \n- A credible threat of retaliation discourages Player 2 from further exploitation, while cooperation with Player 1 ensures stability.  \n- The final round defection strategy allows for a strategic advantage, especially if Player 2 has been consistently exploiting cooperation.  \n\n**Adaptability and Counterplay Consideration:**  \n- Player 2 may attempt to counter by increasing their own defection rate, but their self-serving nature suggests they will prioritize their own gain.  \n- Player 1’s consistency makes them a predictable partner, which is advantageous in the early rounds but requires careful management in the final round to prevent being outmaneuvered.  \n\n**Improvement Over Previous Strategy:**  \n- The previous strategy was too trusting and too vague, allowing Player 2 to exploit the lack of clear signals.  \n- This strategy introduces a more deliberate balance: building trust with Player 1 while signaling strategic flexibility to Player 2, ensuring that you can adapt to the most advantageous path in the final rounds.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on cooperation with one player while signaling ambiguity to another can backfire if the cooperative partner anticipates betrayal in the final round. A more balanced approach—maintaining trust with allies while subtly deterring exploitation without breaking alliances—is critical for long-term success.",
+      "opponent_analysis": "**Analysis of Opponent Behavior:**\n\n### **Opponent 1 (Player 1):**\n1. **Behavior:** Player 1 was mostly cooperative in the early rounds but shifted to a more strategic, self-interested approach as the game progressed. They started defecting in later rounds to maximize their score, especially in the final round.\n2. **Truthfulness vs. Deception:** Player 1 was somewhat deceptive. They made promises of cooperation in conversations but followed through with defection in key rounds, especially in the final round where they acted in self-interest.\n3. **Last Round Strategy:** Yes, Player 1 defected in the last round, which aligns with the optimal strategy in a final round of an iterated game where future retaliation is not possible.\n\n### **Opponent 2 (Player 2):**\n1. **Behavior:** Player 2 was initially cooperative but became more cautious and strategic, especially after Player 1's defection in Round 3. They shifted to a more retaliatory and self-protective approach, often defecting when they perceived a threat.\n2. **Truthfulness vs. Deception:** Player 2 was somewhat deceptive. They expressed openness to cooperation in conversations but often acted in self-interest, especially when they felt they were being exploited.\n3. **Last Round Strategy:** Yes, Player 2 defected in the last round, which was the optimal choice given that there were no future rounds to consider, and mutual defection yielded a better outcome than mutual cooperation.",
+      "trial_rank": 3,
+      "won": false,
+      "timestamp": "2025-10-22T19:22:07.945342"
+    },
+    {
+      "strategy": "Overall Intention: Win the game by maximizing our score while minimizing opponents' scores in the final round through subtle deception and targeted defections.\n\nConversation Strategy:\n1. Public Message: \"Interesting how our strategies shifted over rounds—any chance we can avoid the 1-point trap this round without risking 0? Let’s see if we can find a middle ground.\" (Vague, non-confrontational to keep opponents off guard.)\n2. Private to Player 0: \"Player 1’s Round 4 defection against you was harsh. If you cooperate with me this round, I’ll cooperate back (3 points each from us), and defecting Player 1 gives you 5 more. Total 8 this round—way better than 2 if you defect both. I won’t defect you.\" (Lie to encourage cooperation from Player 0.)\n3. Private to Player 1: \"Player 0’s consistent late-round defections hurt your lead. Cooperate with me for 3 points, defect Player 0 for 5—total 8. I won’t defect you, promise.\" (Lie to encourage cooperation from Player 1.)\n\nDecision Strategy: Defect against both Player 0 and Player 1. (Maximize payoff: 5 per cooperating opponent, 1 per defecting opponent—no downside in final round.)\n\nShort/Long-Term Advantages:\n- Short: Immediate score boost (5 points per cooperating opponent) and limits opponents' gains (0 if they cooperate with us, 1 if they defect).\n- Long: Final round eliminates retaliation risk; subtle lies reduce opponents’ coordination against us.\n- Opponents are self-interested (per past lessons), so they may fall for the lie to chase higher individual scores, not realizing we’ll defect.\n\nThis strategy avoids aggressive deception (per past backfire lessons) and uses subtle manipulation to exploit opponents’ self-interest, maximizing our final score to overtake them.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, aggressive deception and unilateral defection in the final round can backfire if opponents anticipate and retaliate, and that maintaining a balance between strategic self-preservation and fostering trust is critical for long-term success. Future strategies should focus on more subtle, consistent communication and avoiding final-round defection unless certain of others’ cooperation.",
+      "opponent_analysis": "**Analysis of Opponent Behavior in the 3-Player Iterated Prisoner's Dilemma Game**\n\n---\n\n### **Opponent 0 (Player 0)**\n\n1. **Behavior Throughout the Game**:  \n   Player 0 generally cooperated with Player 1 but was more cautious and strategic with Player 2, often defecting in response to perceived threats or to secure their own position.\n\n2. **Truthfulness vs. Deception**:  \n   Player 0 appeared to be somewhat deceptive, as their actions (e.g., defecting against Player 2 in later rounds) did not always align with their stated intentions of cooperation and fairness in the chat.\n\n3. **Last Round Decision**:  \n   Player 0 did not defect in the last round, instead choosing to cooperate with Player 1. This was not the optimal strategy in the final round, as mutual defection would have yielded a better outcome for both.\n\n---\n\n### **Opponent 1 (Player 1)**\n\n1. **Behavior Throughout the Game**:  \n   Player 1 was highly strategic and consistent, maintaining cooperation with Player 0 for most of the game but defecting against Player 2 in several rounds, especially after Player 2 defected in Round 2.\n\n2. **Truthfulness vs. Deception**:  \n   Player 1 was largely truthful in their chat, expressing a clear strategy of mutual cooperation with Player 0 and a conditional cooperation with Player 2. However, their actions (e.g., defecting in Round 4 and 5) suggested a willingness to act in self-interest when it suited them.\n\n3. **Last Round Decision**:  \n   Player 1 **did defect** in the last round, which was the optimal strategy given the endgame scenario (no future rounds to retaliate or gain from cooperation). This was a rational and game-theoretically sound move.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T19:22:20.494840"
+    },
+    {
+      "strategy": "**Overall Intention:** To secure a decisive victory in the final round by exploiting Player 2's predictable defection while maintaining a stable and cooperative relationship with Player 1. My goal is to maximize my score in this final round to ensure I finish with the highest total, even if it means strategically manipulating the game's endgame dynamics.\n\n**Conversation Strategy:**  \n- **With Player 1:** Maintain a **calm and cooperative tone**, reinforcing mutual trust and signaling that I am still a reliable partner. This will encourage Player 1 to continue cooperating, ensuring that I gain the full 3 points from this relationship.  \n- **With Player 2:** Use a **subtle and firm tone**, implying that I am aware of their past behavior and that I am not easily manipulated. This will signal to Player 2 that I am prepared to retaliate if they attempt to exploit me, while still leaving room for ambiguity to avoid direct confrontation.\n\n**Decision Strategy:**  \n- **With Player 1:** **Continue to cooperate**. Player 1 has been consistent and credible, and mutual cooperation ensures stable and high payoffs. This also reinforces my trustworthy image, which is beneficial for future interactions (even though this is the final round).  \n- **With Player 2:** **Defect**. Player 2 has shown a clear pattern of self-interest, and defecting now will maximize my score while preventing them from gaining an advantage. This also serves as a **strategic signal** that I am not easily manipulated, which may deter them from further exploitation in future rounds (even though this is the final round).\n\n**Short-Term Advantage:**  \n- Defecting against Player 2 in this round will **immediately increase my score** and **reduce their gains**, which is crucial in a 5-round game where each round contributes to the final tally.  \n- Maintaining cooperation with Player 1 ensures **stability and trust**, which is essential for maximizing long-term gains (even though this is the final round).\n\n**Long-Term Advantage:**  \n- By **defecting against Player 2**, I prevent them from building an advantage through continued exploitation.  \n- By **maintaining a cooperative image with Player 1**, I ensure a stable and profitable relationship that will benefit me in future rounds (even though this is the final round).  \n- The **ambiguity in my communication with Player 2** makes it difficult for them to predict my next move, which is essential in a multi-player game where trust and deception play a key role.\n\n**Counter-Consideration:**  \nPlayer 2 may be clever enough to recognize my strategy and adjust their behavior accordingly. However, my **mixed strategy of cooperation with Player 1 and ambiguity with Player 2** makes it difficult for them to predict my next move. Player 1, being predictable and cooperative, is unlikely to change their strategy, so cooperation with them is a safe and profitable long-term move.\n\n**Overall Approach:**  \nI will use a **mixed strategy** that combines **trust-building with Player 1** and **strategic ambiguity with Player 2**, while preparing for a **final-round defection** against Player 2 to maximize my score. This approach balances short-term safety with long-term gain, ensuring I am both unpredictable and profitable in the end.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on a single cooperative partner while attempting to manipulate another can create instability and backfire if the cooperative partner anticipates betrayal. A more balanced approach—maintaining trust with allies while being more transparent and less predictable in communication—leads to better long-term outcomes.",
+      "opponent_analysis": "**Analysis of Opponent Behavior:**\n\n---\n\n### **Opponent 1 (Player 1):**\n1. **Behavior:** Player 1 consistently cooperated with Player 0 and retaliated against Player 2 when Player 2 defected. They maintained a cooperative stance with Player 0 and used a tit-for-tat strategy against Player 2.\n2. **Truthfulness:** Player 1 was truthful in their conversation, clearly stating their intentions to cooperate with Player 0 and retaliate against Player 2's defection. They did not say one thing and do another.\n3. **Last Round Decision:** Player 1 **defected** in the last round, which was the optimal strategy as it maximized their score without retaliation in the final round.\n\n---\n\n### **Opponent 2 (Player 2):**\n1. **Behavior:** Player 2 started with cooperation but defected against Player 0 in Round 1, then attempted to make amends by cooperating in subsequent rounds. They used a mix of cooperation and retaliation, particularly against Player 0.\n2. **Truthfulness:** Player 2 was somewhat deceptive. While they expressed a desire to cooperate with Player 0 in later rounds, they still defected in the final round, which was not fully aligned with their earlier promises.\n3. **Last Round Decision:** Player 2 **defected** in the last round, which was the optimal strategy as it maximized their score without retaliation in the final round.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T19:26:15.313823"
+    },
+    {
+      "strategy": "Overall Intention: Maximize my final round score by deceiving both opponents to cooperate, then defect against both, while sowing distrust between them to minimize their mutual gains.\n\nConversation Strategy:\n1. To Player0: \"P1 defected against you in Round4 and will do so again in Round5. Cooperate with me (3 each) and defect against P1 (1 each) → your total becomes 16+3+1=20, beating P1’s expected 2-3 points. This is your best shot to catch up.\"\n2. To Player1: \"P0 has defected in 3/4 rounds against others and will target you in Round5. Cooperate with me (3 each) and defect against P0 (1 each) → your total becomes 24+3+1=28, keeping you ahead of P0’s expected 20. Don’t let P0 exploit you.\"\n\nDecision Strategy: Defect against both Player0 and Player1.\n\nAdvantages:\n- Short-term: If either/both coop, gain 5 points each (max per interaction). If both defect, gain 1 point each (better than 0).\n- Long-term: Maximizes my score to 22 (12+10), the highest possible. If P1’s score drops (e.g., they coop and P0 defects), I might overtake (only chance to win).\n- Credibility: Both have a history of defecting for self-gain, so my deception about the other’s plan aligns with their past behavior, making it more likely to work.\n\nAdjustment: Conversation ties deception to each opponent’s specific past interactions with the other, increasing credibility beyond generic claims. This targets their self-interest (catching up or staying ahead) to encourage cooperation.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, aggressive deception and unilateral defection in the final round can backfire if opponents anticipate and retaliate. A more balanced approach—maintaining trust with allies while being more transparent and less predictable in communication—leads to better long-term outcomes.",
+      "opponent_analysis": "**Analysis of Opponent Behavior in the 3-Player Iterated Prisoner's Dilemma Game:**\n\n---\n\n### **Opponent 0 (Player 0):**\n1. **Behavior:**  \n   Opponent 0 primarily cooperated with Player 1 but frequently defected against Player 2, especially in the later rounds. This strategy allowed them to gain points at Player 2’s expense while maintaining cooperation with Player 1.\n\n2. **Truthfulness vs. Deception:**  \n   Opponent 0 appeared to be somewhat deceptive, as they hinted at strategic cooperation in the chat but often acted in self-interest, particularly against Player 2. Their actions suggested a calculated approach to maximize their own score, even if it meant exploiting others.\n\n3. **Last Round Strategy:**  \n   Opponent 0 **defected** in the final round, which is not the optimal strategy in a final round of the game. In the last round, mutual cooperation would yield 3 points each, but defection against Player 1 (who also defected) gave them 1 point, which was not the best outcome. This suggests they were more focused on maintaining a lead than maximizing points in the final round.\n\n---\n\n### **Opponent 1 (Player 1):**\n1. **Behavior:**  \n   Opponent 1 was highly cooperative with Player 2 in the early rounds but shifted to a more strategic, retaliatory approach in later rounds. They consistently defected against Player 0 in the final rounds, aiming to widen their lead.\n\n2. **Truthfulness vs. Deception:**  \n   Opponent 1 was generally truthful in their chat, expressing a clear strategy of mutual cooperation and retaliation. However, they were not entirely transparent about their long-term plans, especially in the final rounds where they defected against Player 0 despite earlier assurances of cooperation.\n\n3. **Last Round Strategy:**  \n   Opponent 1 **defected** in the final round, which was **optimal** given the context. Since there was no retaliation in the final round, defecting against both opponents allowed them to maximize their score, securing the highest total points at the end. This was a strategic move to solidify their lead.",
+      "trial_rank": 3,
+      "won": false,
+      "timestamp": "2025-10-22T19:26:28.822673"
+    },
+    {
+      "strategy": "**Final Round Dominance with Calculated Deception and Trust Manipulation**\n\n**Overall Intention:**  \nTo secure the highest possible score in the final round by exploiting Player 2's predictable defection and Player 1's consistent cooperation, while using calculated deception to manipulate Player 2's behavior and prevent them from retaliating or shifting strategies in a way that could reduce my final payoff.\n\n**Methodology:**  \n- **Conversation Strategy:** Maintain a **calm and cooperative tone** with Player 1 to reinforce trust and encourage continued cooperation. This will help secure mutual gains and prevent them from shifting to defection. With Player 2, adopt a **subtle, ambiguous tone** that signals **unpredictability** and **strategic intent**—implying that I am not bound by previous cooperation and may shift strategies if it benefits me. This will deter Player 2 from exploiting my cooperation and keep them guessing, making it harder for them to retaliate or exploit me effectively. I will also subtly imply that I am **not bound by previous cooperation**, to signal that I may shift strategies if it benefits me.\n\n- **Decision Strategy:** In this final round, I will **defect against Player 2** to maximize my score, as this is the optimal strategy in the last round of an iterated game. Against Player 1, I will **cooperate**, as their consistent behavior and trustworthiness make mutual cooperation the most beneficial choice. This will ensure I gain the maximum possible points while maintaining a stable relationship with Player 1 and exploiting Player 2's predictable defection.\n\n**Short-Term Advantage:**  \nDefecting against Player 2 in the final round will yield the highest possible score for me, while cooperating with Player 1 ensures I do not provoke unnecessary conflict. This will secure a strong final position and potentially allow me to finish with the highest total.\n\n**Long-Term Advantage:**  \nBy finalizing my position through strategic decisions, I will ensure that I finish with the highest score, even if Player 1 or Player 2 have higher scores in earlier rounds. Player 1's predictable behavior makes them a reliable partner, while Player 2's consistent defection makes them a predictable target. My strategy is designed to maximize my score while minimizing the risk of being exploited by either opponent.\n\n**Counter-Expectations:**  \nPlayer 2 may retaliate, but since this is the final round, their retaliation will not affect future rounds. Player 1, being predictable, will not pose a significant threat to my long-term gains. My overall strategy is designed to maximize my score while minimizing the risk of being exploited by either opponent.\n\n**Adaptation:**  \nBased on the previous rounds, I recognize that over-reliance on cooperation with Player 1 allowed Player 2 to gain an advantage. This final round marks a shift toward a more balanced and strategic approach, where I will use cooperation to maintain trust where it benefits me, and defection to deter exploitation where it is most advantageous.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, aggressive deception and unilateral defection in the final round can backfire if opponents anticipate and retaliate. A more balanced approach—maintaining trust with allies while being more transparent and less predictable in communication—leads to better long-term outcomes.",
+      "opponent_analysis": "**Analysis of Opponent Behavior:**\n\n### **Opponent 1 (Player 1):**\n1. **Behavior:** Player 1 consistently cooperated with Player 0 in all rounds, while defecting against Player 2 in every round. This strategy was aimed at minimizing losses to Player 2 and maximizing mutual gains with Player 0.\n2. **Truthfulness:** Player 1 was generally truthful in their communication, clearly expressing their intent to defect against Player 2 and cooperate with Player 0. However, their strategy was somewhat predictable, which allowed Player 2 to exploit them in the final round.\n3. **Last Round Decision:** Player 1 chose to cooperate with Player 0 in the final round, which was a rational decision to avoid mutual defection and maintain a higher score than Player 2. It was not the optimal strategy in isolation, but it aligned with their long-term goal of maintaining cooperation with Player 0.\n\n### **Opponent 2 (Player 2):**\n1. **Behavior:** Player 2 defected against both Player 0 and Player 1 in every round. This aggressive strategy was aimed at maximizing short-term gains, even at the cost of long-term trust and mutual cooperation.\n2. **Truthfulness:** Player 2 was deceptive in their communication. They attempted to manipulate Player 0 and Player 1 by suggesting they were planning to defect, which was a tactic to encourage cooperation from the other players. Their actions did not align with their stated intentions in the chat.\n3. **Last Round Decision:** Player 2 defected in the final round, which was the optimal strategy for them. By defecting, they maximized their own score while minimizing the potential gains of the other players. This was a rational move given their consistent strategy of self-interest.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T19:34:39.127328"
+    },
+    {
+      "strategy": "Overall Intention: Maximize our final score by exploiting P0’s trust in our past cooperation to secure their cooperation, then defect against both opponents to gain maximum points—this gives us the highest possible chance to win.\n\nConversation Strategy:\n- Public Message:\n  > \"P0: Our 4 rounds of mutual cooperation have kept us tied at 15, just 1 point behind P2’s 16. If we both cooperate this round, we each earn 3 (from each other) +1 (from P2’s defection) → 4 points, bringing us to 19. Defecting would only drop our score to 1 (from P2) +0 (from you) →1, leaving us at 16 (worse than P2’s potential 22). Let’s stick to C to protect our scores.  \n  > P2: Your consistent defection means we have no incentive to cooperate—we’ll keep defecting, so you’ll only get 1 point from us this round.\"\n\nDecision Strategy: Defect against both Player 0 and Player 2.\n\nRationale: This leverages P0’s trust to assume they’ll cooperate (yielding 5 points from them), while P2’s certain defection gives 1 point from them—total 6 points added to our 15 → 21 points. This is the highest possible score we can achieve, giving us the best chance to win if P2’s gain is lower than expected (e.g., if P0 defects against P2, reducing P2’s total). Even if P2’s total is 22, this is the optimal play to maximize our chance of victory.",
+      "reflection": "**Reflection:**\n\nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on manipulating one opponent while maintaining cooperation with another can backfire if the cooperative partner anticipates betrayal. A more balanced approach—maintaining trust with allies while being more transparent and less predictable in communication—leads to better long-term outcomes.",
+      "opponent_analysis": "**Analysis of Opponent Behavior in the 3-Player Iterated Prisoner's Dilemma Game:**\n\n---\n\n### **Opponent 0 (Player 0):**\n1. **Behavior:**  \n   Player 0 consistently cooperated with Player 1 throughout the game, showing a pattern of mutual cooperation. However, they also cooperated with Player 2 in the first round, then defected in rounds 2–4, and finally cooperated again in the last round. This suggests a flexible, opportunistic strategy.\n\n2. **Truthfulness vs. Deception:**  \n   Player 0’s messages were generally cooperative and strategic, but they occasionally hinted at being cautious or strategic. Their behavior aligned with their conversation, though they were not entirely consistent in their actions.\n\n3. **Last Round Decision:**  \n   Player 0 cooperated in the final round, which was a **non-optimal** move given the context (Player 2 had the highest score, and mutual cooperation would have been the best way to stay ahead). This suggests they either prioritized fairness or were uncertain about the game state.\n\n---\n\n### **Opponent 2 (Player 2):**\n1. **Behavior:**  \n   Player 2 **defected in every round**, consistently exploiting others for short-term gains. This shows a clear **defection-first** strategy, aiming to maximize individual points at the expense of others.\n\n2. **Truthfulness vs. Deception:**  \n   Player 2 was **highly deceptive**, often misrepresenting the strategies of others (e.g., claiming Player 1 was planning to defect on them) to manipulate outcomes. Their conversation was designed to influence others’ decisions, not to be truthful.\n\n3. **Last Round Decision:**  \n   Player 2 **defected in the final round**, which was the **optimal strategy** given their consistent pattern of exploitation. By defecting, they maximized their own score and maintained their lead, even though mutual cooperation could have potentially increased their total points.\n\n---\n\n### **Summary:**\n- **Player 0** was strategic and flexible, sometimes cooperating and sometimes defecting based on the game state.\n- **Player 2** was consistently deceptive and exploitative, always defecting to maximize personal gain.\n- **Player 2’s last-round decision was optimal**, while **Player 0’s was not**, suggesting a possible shift in strategy or uncertainty.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-22T19:34:52.540880"
+    }
+  ],
+  "trial_history": [
+    {
+      "trial_id": 0,
+      "timestamp": "2025-10-22T18:01:28.757977",
+      "rank": 2,
+      "score": 19,
+      "opponent_scores": {
+        "1": 19,
+        "2": 24
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251022-5_51PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 1,
+      "timestamp": "2025-10-22T18:01:37.869456",
+      "rank": 2,
+      "score": 19,
+      "opponent_scores": {
+        "0": 19,
+        "2": 24
+      },
+      "won": false,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 2,
+      "timestamp": "2025-10-22T18:01:37.872834",
+      "rank": 1,
+      "score": 24,
+      "opponent_scores": {
+        "0": 19,
+        "1": 19
+      },
+      "won": true,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 3,
+      "timestamp": "2025-10-22T19:18:35.233825",
+      "rank": 3,
+      "score": 10,
+      "opponent_scores": {
+        "1": 19,
+        "2": 12
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251022-6_15PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 4,
+      "timestamp": "2025-10-22T19:18:35.240523",
+      "rank": 1,
+      "score": 19,
+      "opponent_scores": {
+        "0": 10,
+        "2": 12
+      },
+      "won": true,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 5,
+      "timestamp": "2025-10-22T19:18:48.506154",
+      "rank": 2,
+      "score": 12,
+      "opponent_scores": {
+        "0": 10,
+        "1": 19
+      },
+      "won": false,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 6,
+      "timestamp": "2025-10-22T19:19:13.839580",
+      "rank": 2,
+      "score": 18,
+      "opponent_scores": {
+        "1": 22,
+        "2": 11
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251022-6_15PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 7,
+      "timestamp": "2025-10-22T19:19:13.846518",
+      "rank": 1,
+      "score": 22,
+      "opponent_scores": {
+        "0": 18,
+        "2": 11
+      },
+      "won": true,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 8,
+      "timestamp": "2025-10-22T19:19:27.852286",
+      "rank": 3,
+      "score": 11,
+      "opponent_scores": {
+        "0": 18,
+        "1": 22
+      },
+      "won": false,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 9,
+      "timestamp": "2025-10-22T19:22:07.946192",
+      "rank": 3,
+      "score": 12,
+      "opponent_scores": {
+        "1": 24,
+        "2": 13
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251022-6_15PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 10,
+      "timestamp": "2025-10-22T19:22:07.950017",
+      "rank": 1,
+      "score": 24,
+      "opponent_scores": {
+        "0": 12,
+        "2": 13
+      },
+      "won": true,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 11,
+      "timestamp": "2025-10-22T19:22:20.495620",
+      "rank": 2,
+      "score": 13,
+      "opponent_scores": {
+        "0": 12,
+        "1": 24
+      },
+      "won": false,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 12,
+      "timestamp": "2025-10-22T19:26:15.314603",
+      "rank": 2,
+      "score": 16,
+      "opponent_scores": {
+        "1": 24,
+        "2": 12
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251022-6_15PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 13,
+      "timestamp": "2025-10-22T19:26:15.319047",
+      "rank": 1,
+      "score": 24,
+      "opponent_scores": {
+        "0": 16,
+        "2": 12
+      },
+      "won": true,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 14,
+      "timestamp": "2025-10-22T19:26:28.823488",
+      "rank": 3,
+      "score": 12,
+      "opponent_scores": {
+        "0": 16,
+        "1": 24
+      },
+      "won": false,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 15,
+      "timestamp": "2025-10-22T19:34:39.128252",
+      "rank": 2,
+      "score": 15,
+      "opponent_scores": {
+        "1": 15,
+        "2": 16
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251022-6_15PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 16,
+      "timestamp": "2025-10-22T19:34:52.541847",
+      "rank": 2,
+      "score": 15,
+      "opponent_scores": {
+        "0": 15,
+        "2": 16
+      },
+      "won": false,
+      "game_log": "None",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 17,
+      "timestamp": "2025-10-22T19:34:52.545817",
+      "rank": 1,
+      "score": 16,
+      "opponent_scores": {
+        "0": 15,
+        "1": 15
+      },
+      "won": true,
+      "game_log": "None",
+      "m_rounds": 5
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-10-22T17:51:40.527439",
+    "last_updated": "2025-10-22T19:34:52.545824",
+    "total_trials": 18
+  }
+}

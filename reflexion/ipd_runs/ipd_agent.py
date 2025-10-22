@@ -69,7 +69,7 @@ class IPDAgent(Agent):
         self.observation_history = []
         self.call_counter = 0
 
-        self.max_reflections = 2
+        self.max_reflections = 6
 
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
@@ -169,13 +169,18 @@ class IPDAgent(Agent):
         )
 
         # Add trial result
+
+        if self.logger:
+            trial_log_path = self.logger.run_dir / "game_log.json"
+        else:
+            trial_log_path = 'None'
         self.memory.add_trial_result({
             "rank": my_rank,
             "score": my_score,
             "opponent_scores": {k: v for k, v in self.scores.items() if k != self.player_id},
             "won": won,
             "game_log": str(trial_log_path),
-            "num_rounds": self.num_rounds
+            "m_rounds": self.num_rounds
         })
 
         # Print statistics
@@ -187,7 +192,7 @@ class IPDAgent(Agent):
 
         # Update memory with trial result
         if self.logger and self.logger.run_dir:
-            trial_log_path = self.logger.run_dir / "game_log.json"
+            
 
             # Finalize logger
             self.logger.finalize(outcome=f"Rank {my_rank}, Score {my_score}")

@@ -134,7 +134,7 @@ class Volcano_API(API):
         super().__init__(
             api_key=api_key or os.getenv("ARK_API_KEY"),
             model=model,
-            url='https://ark.cn-beijing.volces.com/api/v3'
+            url='https://ark.cn-beijing.volces.com/api/v3',
             **kwargs
         )
         self.client = OpenAI(
