@@ -5,7 +5,6 @@ You (human player) will be player 0, and the AI model will be player 1.
 
 import textarena as ta
 from envs.agent import LLMAgent
-from corleone.family import Vito
 from reflexion.track2_router import create_track2_agent
 from reflexion.codename_runs.codenames_agent import CodenamesAgent
 import sys
@@ -13,8 +12,10 @@ import io
 import os
 
 try:
-  from uhtk.print_pack import print_bold_green as print
-except: pass
+  from uhtk.print_pack import print_bold_green, print_purple
+except: 
+    print_bold_green = print
+    print_purple = print
 
 
 def create_agents(env_id, npc_num, model_name='test', api_model_spec='qwen3-8b', enable_logging=True):
@@ -74,22 +75,28 @@ def play_game(env_id, agents, verbose=True):
     while not done:
         step += 1
         if verbose:
-            print(f"Step {step} start! ------------------------------------------------>")
+            print_bold_green(f"Step {step} start! ------------------------------------------------>")
         player_id, observation = env.get_observation()
         if verbose:
-            print(f"Player {player_id} observation: {observation}")
+            print_bold_green(f"Player {player_id}:")
+            print(f"Player {player_id} observation[-400:]: {observation[-400:]}")
         action = agents[player_id](observation)
         if verbose:
-            print(f"Player {player_id} action: {action}")
+            print_purple(f"Player {player_id} action: {action}")
         done, step_info = env.step(action=action)
         if verbose:
-            print(f"Step {step} end! ------------------------------------------------>")
+            print_bold_green(f"Step {step} end! ------------------------------------------------>")
 
     rewards, game_info = env.close()
 
     if verbose:
         print(f"Rewards: {rewards}")
         print(f"Game Info: {game_info}")
+
+    # Finalize agents that support it (for reflexion learning)
+    for agent in agents.values():
+        if hasattr(agent, 'finalize_game'):
+            agent.finalize_game(rewards=rewards, game_info=game_info)
 
     return rewards, game_info
 
@@ -98,8 +105,8 @@ def main():
     """Main function for single game play"""
     # Configure environment
     # env_id = "Codenames-v0-train"; npc_num = 3  # 2v2
-    # env_id = "ColonelBlotto-v0-train"; npc_num = 1  # 1v1
-    env_id = "ThreePlayerIPD-v0-train"; npc_num = 2  # 3 players
+    env_id = "ColonelBlotto-v0-train"; npc_num = 1  # 1v1
+    # env_id = "ThreePlayerIPD-v0-train"; npc_num = 2  # 3 players
 
     # Create agents
     agents = create_agents(

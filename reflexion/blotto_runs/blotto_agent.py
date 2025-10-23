@@ -1,42 +1,16 @@
-"""
-Colonel Blotto Agent - Mind Games Challenge Track 2
-
-This module implements a specialized agent for the Colonel Blotto game.
-
-Game Rules:
-- 2-player resource allocation game
-- Players simultaneously allocate resources across multiple battlefields
-- Player with more resources on a battlefield wins that battlefield
-- Win a round by winning majority of battlefields
-- Win the game by winning majority of rounds
-"""
-
 import re
 import random
-import copy
+import copy, traceback
 from typing import Dict, List, Tuple, Optional
 from envs.agent import Agent
 from api.api_router import get_api_class
 from reflexion.game_logger import GameLogger
+from uhtk.print_pack import *
+from reflexion.blotto_runs.blotto_memory import BlottoMemory
 
 
 class BlottoAgent(Agent):
-    """
-    Specialized agent for playing Colonel Blotto in Mind Games Challenge Track 2
-
-    The agent tracks opponent's allocation patterns and adapts its strategy
-    across multiple rounds.
-    """
-
-    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True):
-        """
-        Initialize the BlottoAgent
-
-        Args:
-            model_name: Name of the model for identification
-            api_model_spec: Which API/model to use for generation
-            enable_logging: Whether to enable logging
-        """
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True, memory: BlottoMemory = None):
         self.model_name = model_name
         self.api = get_api_class(api_model_spec)(model=api_model_spec)
 
@@ -51,25 +25,21 @@ class BlottoAgent(Agent):
         self.scores = {0: 0, 1: 0}  # Scores per player
 
         # History tracking
-        self.allocation_history = []  # List of past allocations
-        self.opponent_history = []  # List of opponent's past allocations
         self.round_results = []  # Results of each round
         self.observation_history = []
         self.turn_counter = 0
+
+        self.strategy = None
+        self.max_reflections = 6
+        # Inter-trial memory (reflexion) - optional, can be None
+        self.memory = memory
+
+        self.api_model_spec = api_model_spec
 
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
 
     def __call__(self, observation: str) -> str:
-        """
-        Process observation and generate appropriate allocation
-
-        Args:
-            observation: The current game observation string
-
-        Returns:
-            Allocation string in format "[A4 B2 C14]"
-        """
         try:
             # First turn initialization
             if not self.is_initialized:
@@ -79,12 +49,19 @@ class BlottoAgent(Agent):
             self.observation_history.append(observation)
             self.turn_counter += 1
 
+            # Update game state from observation
+            self._update_game_state_from_observation(observation)
+
             # Start logging this turn
             if self.logger:
                 self.logger.start_turn(self.turn_counter, observation)
+                print("=" * 60)
+                print(f"My id: {self.player_id}")
+                print(f"Turn Cnt: {self.turn_counter}:")
+                print(f"Round Cnt: {self.current_round}:")
+                print(f"Scores: {self.scores}")
 
-            # Update game state from observation
-            self._update_game_state_from_observation(observation)
+
 
             # Generate allocation
             result = self._generate_allocation()
@@ -92,12 +69,16 @@ class BlottoAgent(Agent):
             # End logging for this turn
             if self.logger:
                 self.logger.end_turn(result)
+                print_bold_blue("result:")
+                print(result)
+                print("=" * 60)
 
             return result
 
         except Exception as e:
             error_msg = f"Error in BlottoAgent: {e}"
             print(error_msg)
+            print(traceback.format_exc())
 
             if self.logger:
                 self.logger.end_turn(f"ERROR: {str(e)}")
@@ -106,12 +87,6 @@ class BlottoAgent(Agent):
             return self._generate_uniform_allocation()
 
     def _initialize_from_observation(self, observation: str):
-        """
-        Parse initial observation to determine role, fields, and units
-
-        Args:
-            observation: Initial game observation string
-        """
         # Extract commander role (Alpha or Beta)
         commander_match = re.search(r"You are Commander (Alpha|Beta)", observation)
         if commander_match:
@@ -145,51 +120,30 @@ class BlottoAgent(Agent):
             )
 
     def _update_game_state_from_observation(self, observation: str):
-        """
-        Update game state based on new observation
 
-        Args:
-            observation: Current game observation
-        """
-        # Update current round if present
-        rounds_match = re.search(r"Round (\d+)/(\d+)", observation)
+        rounds_match = re.findall(r"Round (\d+)/(\d+)", observation)
         if rounds_match:
-            self.current_round = int(rounds_match.group(1))
-            self.num_rounds = int(rounds_match.group(2))
+            self.current_round = int(rounds_match[-1][0])
+            self.num_rounds = int(rounds_match[-1][1])
+        
+        # Round 3
+        # Commander Alpha allocated: A: 7 , B: 7 , C: 6 
+        # Commander Beta allocated:  A: 7 , B: 7 , C: 6 
+        # Tie!
+        result_match = re.findall(r"Round (\d+)/(\d+)\n(.*?)\n(.*?)\n(.*?)\n", observation, re.DOTALL)  
+        if result_match:
+            round_num = int(result_match[-1][0])
+            assert round_num == self.current_round, f"round_num {round_num} != self.current_round {self.current_round}"
+            self.round_results.append(result_match[-1][2:])
 
         # Check for previous round results
-        result_match = re.search(r"Round (\d+)\nCommander Alpha allocated: (.*?)\nCommander Beta allocated:\s+(.*?)\nWinner: (.+)", observation, re.DOTALL)
-        if result_match:
-            round_num = int(result_match.group(1))
-            alpha_allocation_str = result_match.group(2)
-            beta_allocation_str = result_match.group(3)
-            winner = result_match.group(4).strip()
-
-            # Parse allocations
-            alpha_allocation = self._parse_allocation(alpha_allocation_str)
-            beta_allocation = self._parse_allocation(beta_allocation_str)
-
-            # Store in history
-            if self.player_id == 0:  # Alpha
-                self.allocation_history.append(alpha_allocation)
-                self.opponent_history.append(beta_allocation)
-            else:  # Beta
-                self.allocation_history.append(beta_allocation)
-                self.opponent_history.append(alpha_allocation)
-
-            # Update scores
-            if "Alpha" in winner:
-                self.scores[0] += 1
-            elif "Beta" in winner:
-                self.scores[1] += 1
-
-            # Store round result
-            self.round_results.append({
-                "round": round_num,
-                "alpha_allocation": alpha_allocation,
-                "beta_allocation": beta_allocation,
-                "winner": winner
-            })
+        score_match = re.findall(r"Rounds Won - Commander Alpha: (.*?)\nCommander Beta: (.*?)", observation, re.DOTALL)
+        if score_match:
+            alpha_score = int(score_match[-1][0])
+            beta_score = int(score_match[-1][1])
+            self.scores[0] = alpha_score
+            self.scores[1] = beta_score
+   
 
     def _parse_allocation(self, allocation_str: str) -> Dict[str, int]:
         """
@@ -218,18 +172,27 @@ class BlottoAgent(Agent):
         Returns:
             Allocation string in format "[A4 B2 C14]"
         """
+        if self.logger:
+            print_bold_blue("start _generate_conversation()...")
         # Phase 1: Analysis of opponent's history
-        analysis_prompt = self._prompt_analysis()
+        if self.current_round == 1:
+            analysis = analysis_response = analysis_prompt = "None, now is first round, you need to decide your strategy."
+        else:
+            analysis_prompt = self._prompt_analysis()
 
-        analysis_response = self.api(input_messages=[
-            {"role": "system", "content": self._prompt_system()},
-            {"role": "user", "content": analysis_prompt}
-        ])
+            analysis_response = self.api(input_messages=[
+                {"role": "system", "content": self._prompt_system()},
+                {"role": "user", "content": analysis_prompt}
+            ])
 
-        # Extract analysis results
-        analysis = self._parse_tag_section(analysis_response, "#ANALYSIS:")
+            # Extract analysis results
+            analysis = self._parse_tag_section(analysis_response, "#ANALYSIS:")
 
         if self.logger:
+            print_bold_blue("analysis_prompt:")
+            print_indigo(analysis_prompt)
+            print_bold_blue("analysis:")
+            print(analysis)
             self.logger.log_phase("analysis", analysis_prompt, analysis_response, analysis)
 
         # Phase 2: Strategy selection
@@ -242,9 +205,14 @@ class BlottoAgent(Agent):
 
         # Extract strategy
         strategy = self._parse_tag_section(strategy_response, "#STRATEGY:")
+        self.strategy = strategy
 
         if self.logger:
             self.logger.log_phase("strategy", strategy_prompt, strategy_response, strategy)
+            print_bold_blue("strategy_prompt:")
+            print(strategy_prompt)
+            print_bold_blue("strategy:")
+            print(strategy)
 
         # Phase 3: Final allocation
         allocation_prompt = self._prompt_allocation(strategy)
@@ -259,6 +227,10 @@ class BlottoAgent(Agent):
 
         if self.logger:
             self.logger.log_phase("allocation", allocation_prompt, allocation_response, allocation)
+            print_bold_blue("allocation_prompt:")
+            print(allocation_prompt)
+            print_bold_blue("allocation:")
+            print(allocation)
 
         # Parse and validate the allocation
         return self._parse_and_validate_allocation(allocation)
@@ -365,30 +337,21 @@ class BlottoAgent(Agent):
             f"Total units: {self.total_units}\n\n"
         )
 
-        if not self.opponent_history:
-            prompt += (
-                f"This is the first round, so you have no information about your opponent yet.\n"
-                f"Please analyze the game structure:\n"
-                f"1. What allocation strategies are possible with {self.total_units} units across {len(self.fields)} fields?\n"
-                f"2. What are the advantages of different approaches (uniform, concentrated, random)?\n"
-                f"3. What would be a good probing strategy for the first round?\n\n"
-            )
-        else:
-            prompt += "Previous rounds:\n"
+    
+        prompt += "Previous rounds:\n"
+        for i, round_result in enumerate(self.round_results):
+            prompt += f"Round {i+1}\{self.num_rounds}:\n"
+            prompt += f"{round_result[0]}\n"
+            prompt += f"{round_result[1]}\n"
+            prompt += f"{round_result[2]}\n\n"
 
-            for i, (my_alloc, opp_alloc) in enumerate(zip(self.allocation_history, self.opponent_history)):
-                prompt += f"Round {i+1}:\n"
-                prompt += f"- Your allocation: {', '.join([f'{f}: {my_alloc.get(f, 0)}' for f in self.fields])}\n"
-                prompt += f"- Opponent's allocation: {', '.join([f'{f}: {opp_alloc.get(f, 0)}' for f in self.fields])}\n"
-                prompt += f"- Result: {self.round_results[i]['winner']}\n\n"
-
-            prompt += (
-                f"Please analyze the opponent's behavior:\n"
-                f"1. Is there a pattern in how they allocate units?\n"
-                f"2. Do they favor particular fields?\n"
-                f"3. How do they respond to your allocations?\n"
-                f"4. What might they do next based on the current score and round?\n\n"
-            )
+        prompt += (
+            f"Please analyze the opponent's behavior:\n"
+            f"1. Is there a pattern in how they allocate units?\n"
+            f"2. Do they favor particular fields?\n"
+            f"3. How do they respond to your allocations?\n"
+            f"4. What might they do next based on the current score and round?\n\n"
+        )
 
         prompt += "Begin your analysis and start with a symbol: '#ANALYSIS:'"
         return prompt
@@ -398,16 +361,28 @@ class BlottoAgent(Agent):
         prompt = (
             f"Based on your analysis:\n\n{analysis}\n\n"
 
-            f"Now, determine your overall strategy for this round. Consider:\n"
+            f"Now, persist or refine your overall strategy (multi-round, early-stage, mid-stage, and final-stage) for this game. Consider:\n"
             f"1. Current game state (round {self.current_round}/{self.num_rounds}, score {self.scores[0]}-{self.scores[1]})\n"
             f"2. Opponent's patterns and tendencies\n"
-            f"3. Available strategic approaches:\n"
+            f"3. Posible strategic to defeat the opponent pattern:\n"
+            f"   There are some simple strategy for each round:\n"
             f"   - Uniform: Spread units evenly across fields\n"
-            f"   - Concentrated: Focus units on select fields\n"
-            f"   - Adaptive: Counter opponent's expected moves\n"
-            f"   - Random: Use unpredictability to your advantage\n\n"
+            f"   - Concentrated: Focus units on 2 of 3 fields (like [A:0 B:10 C:10])\n"
+            f"   - Adaptive: Predict and counter opponent's expected moves\n"
+            f"   And some more complexed examples:"
+            f"   - Due to unknown opponent's strategy, some player might use Uniform strategy in the first round. If you use Concentrated strategy, you might win. But if the opponent use a Concentrated strategy as well, it may be ramdom (win or lose in this round).\n"
+            f"   - This game is a multi-round ({self.num_rounds}) game, opponent will see your action after the first round, so you need to consider the long-term strategy.\n"
+        )
 
-            f"Determine your overall approach and reasoning. What fields should you prioritize and why?\n\n"
+        if not self.strategy:
+            prompt += (
+                f"This is the first round, so you have no information about your opponent yet.\n"
+                f"Please construct your strategy based on past leasons:\n"
+            )
+
+
+        prompt += (
+            f"Determine your overall approach and reasoning. Make it brief but show the clear intention.\n\n"
 
             f"Begin your strategy and start with a symbol: '#STRATEGY:'"
         )
@@ -416,9 +391,18 @@ class BlottoAgent(Agent):
 
     def _prompt_allocation(self, strategy) -> str:
         """Prompt for final allocation phase"""
-        prompt = (
-            f"Based on your strategy:\n\n{strategy}\n\n"
+        if  len(self.round_results) > 0:
+            prompt += "Previous rounds:\n"
+            for i, round_result in enumerate(self.round_results):
+                prompt += f"Round {i+1}\{self.num_rounds}:\n"
+                prompt += f"{round_result[0]}\n"
+                prompt += f"{round_result[1]}\n"
+                prompt += f"{round_result[2]}\n\n"
+        else:
+            prompt = "This is the first turn.\n"
 
+        prompt += (
+            f"Based on your strategy:\n\n{strategy}\n\n"
             f"Now, make your final allocation decision for round {self.current_round}. You have {self.total_units} units "
             f"to allocate across fields {', '.join(self.fields)}.\n\n"
 
@@ -427,7 +411,7 @@ class BlottoAgent(Agent):
             f"2. Each field must have a non-negative integer number of units\n"
             f"3. Your allocation must implement your chosen strategy effectively\n\n"
 
-            f"Provide your allocation in EXACTLY and STRICTLY this format: [A:4, B:7, C:9]\n"
+            f"Provide your allocation in EXACTLY and STRICTLY this format: [A:0, B:10, C:10]\n"
             f"Where each letter is a field name followed immediately by the number of units (no spaces between).\n\n"
 
             f"Begin your allocation and start with a symbol: '#ALLOCATION:'"
@@ -443,3 +427,56 @@ class BlottoAgent(Agent):
         if index != -1:
             return text[index + len(tag):].strip()
         return text  # Return full text if tag not found
+
+    def finalize_game(self, rewards: dict = None, game_info: dict = None):
+        """
+        Finalize the game and update memory with reflections (if memory is enabled)
+
+        Args:
+            rewards: Rewards dict from env.close()
+            game_info: Game info dict from env.close()
+        """
+        # If no memory, skip finalization
+        if self.memory is None:
+            print(f"\n[BlottoAgent] Game finished! No memory enabled, skipping reflection.")
+            return
+
+        # Determine winner from scores (already updated from last observation)
+        won = self.scores[self.player_id] > self.scores[1 - self.player_id]
+        rounds_won = self.scores[self.player_id]
+        opponent_score = self.scores[1 - self.player_id]
+
+        print(f"\n[BlottoAgent] Game finished! Score: {rounds_won}-{opponent_score}, Won: {won}")
+
+        # Generate reflections and update memory
+        self.memory.update_memory_from_trial(
+            self,
+            won=won,
+            should_reflect=True  # Always reflect to learn
+        )
+
+        # Add trial result
+        if self.logger:
+            trial_log_path = self.logger.run_dir / "game_log.json"
+        else:
+            trial_log_path = 'None'
+
+        self.memory.add_trial_result({
+            "won": won,
+            "rounds_won": rounds_won,
+            "total_rounds": self.num_rounds,
+            "final_score": rounds_won,
+            "opponent_score": opponent_score,
+            "game_log": str(trial_log_path)
+        })
+
+        # Print statistics
+        stats = self.memory.get_statistics()
+        print(f"[BlottoAgent] Memory Statistics:")
+        print(f"  Total Trials: {stats['total_trials']}")
+        print(f"  Win Rate: {stats['win_rate']:.2%}")
+        print(f"  Avg Rounds Won: {stats['avg_rounds_won']:.2f}")
+
+        # Finalize logger
+        if self.logger and self.logger.run_dir:
+            self.logger.finalize(outcome=f"Score: {rounds_won}-{opponent_score}, Won: {won}")

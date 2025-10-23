@@ -123,16 +123,22 @@ class CodenamesAgent(Agent):
         player_id_match = re.search(r"Player (\d+)", observation)
         if player_id_match:
             self.player_id = int(player_id_match.group(1))
+            print(f"DEBUG: Matched player ID: {self.player_id}")
+        else:
+            print(f"DEBUG: NO PLAYER ID MATCH in observation: {observation}")
 
         # Determine role and team based on player ID
         if self.player_id in [0, 2]:
             self.player_role = "Spymaster"
             self.team = "Red" if self.player_id == 0 else "Blue"
+            print(f"DEBUG: Role set as Spymaster, Team: {self.team}")
         else:
             self.player_role = "Operative"
             self.team = "Red" if self.player_id == 1 else "Blue"
+            print(f"DEBUG: Role set as Operative, Team: {self.team}")
 
         # Parse initial board state
+        print("DEBUG: Parsing initial board state...")
         self._parse_board_state(observation)
 
         self.is_initialized = True
@@ -145,6 +151,9 @@ class CodenamesAgent(Agent):
                 self.team
             )
 
+        # Debug print full initialization details
+        print(f"DEBUG: Initialization complete - ID: {self.player_id}, Role: {self.player_role}, Team: {self.team}")
+
     def _parse_board_state(self, observation: str):
         """
         Parse board state from observation
@@ -155,13 +164,16 @@ class CodenamesAgent(Agent):
         # Extract words and their teams (if visible)
         words_section = re.search(r"Codenames Words:(.*?)(?:\n\n|\Z)", observation, re.DOTALL)
         if not words_section:
+            print(f"DEBUG: No words section found in observation: {observation[:200]}...")
             return
 
         word_lines = words_section.group(1).strip().split('\n')
+        print(f"DEBUG: Found {len(word_lines)} word lines")
 
         for line in word_lines:
             parts = line.strip().split()
             if not parts:
+                print(f"DEBUG: Skipping empty line: '{line}'")
                 continue
 
             word = parts[0].lower()
@@ -170,14 +182,22 @@ class CodenamesAgent(Agent):
             # For Spymasters, team labels are visible
             if len(parts) > 1 and parts[1] in ['R', 'B', 'N', 'A']:
                 team_label = parts[1]
+                print(f"DEBUG: Word '{word}' with team label '{team_label}'")
 
             # Add to board
             if word not in self.board and word:
                 self.board[word] = team_label
+                print(f"DEBUG: Added '{word}' to board with label '{team_label}'")
 
             # Check if word is revealed
             if "revealed" in line:
                 self.guessed_words.add(word)
+                print(f"DEBUG: Word '{word}' marked as revealed")
+
+        # Final board state debug print
+        print("DEBUG: Final Board State:")
+        for word, label in self.board.items():
+            print(f"  {word}: {label}")
 
     def _update_game_state_from_observation(self, observation: str):
         """
