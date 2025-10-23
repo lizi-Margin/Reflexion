@@ -173,7 +173,7 @@ class BlottoAgent(Agent):
             Allocation string in format "[A4 B2 C14]"
         """
         if self.logger:
-            print_bold_blue("start _generate_conversation()...")
+            print_bold_blue("start _generate_allocation()...")
         # Phase 1: Analysis of opponent's history
         if self.current_round == 1:
             analysis = analysis_response = analysis_prompt = "None, now is first round, you need to decide your strategy."
@@ -379,6 +379,14 @@ class BlottoAgent(Agent):
                 f"This is the first round, so you have no information about your opponent yet.\n"
                 f"Please construct your strategy based on past leasons:\n"
             )
+        else:
+            prompt += (
+                f"Please consider your strategy based on past leasons:\n"
+            )
+        if self.memory:
+            prompt += self.memory.get_guidance(max_reflections=self.max_reflections)
+        else:
+            prompt += "None, you have no past leasons.\n"
 
 
         prompt += (

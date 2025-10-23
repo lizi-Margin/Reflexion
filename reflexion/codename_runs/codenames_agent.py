@@ -164,16 +164,13 @@ class CodenamesAgent(Agent):
         # Extract words and their teams (if visible)
         words_section = re.search(r"Codenames Words:(.*?)(?:\n\n|\Z)", observation, re.DOTALL)
         if not words_section:
-            print(f"DEBUG: No words section found in observation: {observation[:200]}...")
             return
 
         word_lines = words_section.group(1).strip().split('\n')
-        print(f"DEBUG: Found {len(word_lines)} word lines")
 
         for line in word_lines:
             parts = line.strip().split()
             if not parts:
-                print(f"DEBUG: Skipping empty line: '{line}'")
                 continue
 
             word = parts[0].lower()
@@ -182,22 +179,14 @@ class CodenamesAgent(Agent):
             # For Spymasters, team labels are visible
             if len(parts) > 1 and parts[1] in ['R', 'B', 'N', 'A']:
                 team_label = parts[1]
-                print(f"DEBUG: Word '{word}' with team label '{team_label}'")
 
-            # Add to board
+            # Add to board if not already present
             if word not in self.board and word:
                 self.board[word] = team_label
-                print(f"DEBUG: Added '{word}' to board with label '{team_label}'")
 
             # Check if word is revealed
             if "revealed" in line:
                 self.guessed_words.add(word)
-                print(f"DEBUG: Word '{word}' marked as revealed")
-
-        # Final board state debug print
-        print("DEBUG: Final Board State:")
-        for word, label in self.board.items():
-            print(f"  {word}: {label}")
 
     def _update_game_state_from_observation(self, observation: str):
         """
