@@ -13,6 +13,34 @@
       "opponent_analysis": "Analysis:  \nThe opponent used a **consistent, uniform strategy**, distributing units evenly across all fields. They **did not favor any specific field**, suggesting a balanced approach. They **played independently**, showing no clear adaptation to your moves.  \n**Pattern to exploit:** Prioritize concentrating units in key fields to outmaneuver a uniform distribution.",
       "won": false,
       "timestamp": "2025-10-24T01:46:02.334244"
+    },
+    {
+      "strategy": "Adopt a **mid-game adaptive, flexible, and unpredictable** approach. In the final round, prioritize **targeting under-defended fields** while maintaining a slight edge in two key areas to secure a majority. Avoid uniformity and over-concentration to prevent predictability. Use the final round to **exploit opponent’s uniform strategy** by **concentrating on two fields** and **leaving one as a fallback**. This balances aggression with strategic depth, ensuring a higher chance of securing the majority.",
+      "reflection": "**Reflection:**  \nThe strategy was overly concentrated in the early rounds, limiting flexibility, and the final round was too predictable and uniform, allowing the opponent to counter effectively. The key lesson is to prioritize **mid-game adaptability** and maintain **strategic unpredictability** in the final round to exploit opponent weaknesses and secure a decisive advantage.",
+      "opponent_analysis": "Analysis:  \nThe opponent used a **concentrated strategy**, heavily favoring **Field B** across all rounds. They did **not respond to your moves**, indicating independent play. To exploit this in future games, focus on **diversifying your allocations** and **targeting under-allocated fields** like A or C.",
+      "won": false,
+      "timestamp": "2025-10-24T01:54:40.917002"
+    },
+    {
+      "strategy": "Adopt a **mid-game adaptive, balanced yet unpredictable** approach. In the final round, focus on **targeting under-defended fields** while maintaining a **flexible allocation** to counter a potential uniform opponent strategy. Allocate **7-6-7** to maximize field control without overcommitting. This ensures **two fields are strongly contested**, while the third remains a strategic wildcard to exploit opponent predictability.",
+      "reflection": "**Reflection:**  \nThe **7-6-7** allocation was too uniform and predictable, allowing the opponent to counter effectively in the final round. The key lesson is to **prioritize mid-game adaptability and maintain strategic unpredictability** in the final round to exploit opponent weaknesses and secure a decisive advantage.",
+      "opponent_analysis": "1. The opponent used a **consistent strategy**—likely **uniform**, distributing units evenly across all fields.  \n2. They did **not favor specific fields**, maintaining similar allocations across A, B, and C.  \n3. They played **independently**, showing no clear response to your moves.  \n4. You could exploit by **concentrating forces on one or two fields** to outmaneuver their uniform distribution.",
+      "won": false,
+      "timestamp": "2025-10-24T01:54:40.917606"
+    },
+    {
+      "strategy": "Adaptive Mid-Game Flexibility with Final Round Unpredictability\n\nGiven the lessons from past losses, I will adopt a **mid-game adaptive strategy** with a **final-round unpredictable twist**. In the early rounds, I will focus on **diversifying my allocations** to avoid predictability and test the opponent's response. By round 5–6, I will begin to **identify patterns** in their allocation and adjust accordingly.\n\nIn the final round (round 9), I will **break from uniformity** and **concentrate forces on one or two fields**—specifically those that appear under-allocated or less favored by the opponent. This will exploit their **uniform or independent strategy** and increase the chances of securing a majority.\n\n**Round 9 Allocation:**\n- **Field A**: 8 units  \n- **Field B**: 6 units  \n- **Field C**: 6 units  \n\nThis allocation targets **Field A** with a slight advantage, while still maintaining a strong presence in B and C. It balances **aggression** with **flexibility**, ensuring I can win at least one field decisively and have a strong chance to win two.",
+      "reflection": "**Reflection:**  \nThe **mid-game adaptability** was effective in testing the opponent’s response, but the **final-round unpredictability** was not sufficiently disruptive. The allocation in round 9 was still too **predictable in its concentration**, failing to fully exploit the opponent’s uniform strategy. **Key lesson:** Prioritize **radical final-round deviation** from earlier patterns, targeting **under-allocated fields with high concentration** to maximize disruption and secure a majority.",
+      "opponent_analysis": "1. The opponent used a **consistent strategy**—likely **uniform**, distributing resources evenly across all fields.  \n2. They did **not favor specific fields**, maintaining a balanced allocation across A, B, and C.  \n3. They played **independently**, without clear response to your moves.  \n4. You could exploit by **targeting under-allocated fields** in future games or using an **adaptive strategy** to counter uniform distribution.",
+      "won": false,
+      "timestamp": "2025-10-24T01:59:00.545922"
+    },
+    {
+      "strategy": "Given the final round (9/9) and a tied score, I will adopt a **strategically unpredictable yet focused** approach to maximize my chances of securing a majority. Based on past lessons, I must avoid uniformity and over-concentration, while also avoiding predictability that could allow the opponent to counter effectively.\n\nSince the opponent has shown a **consistent, uniform strategy** across previous rounds, I will **exploit their lack of adaptability** by **concentrating forces on one or two fields** to outmaneuver their balanced allocation. This will force them into a position where they cannot defend all fields effectively.\n\n**Allocation:**\n- **Field A: 8 units**  \n- **Field B: 7 units**  \n- **Field C: 5 units**\n\nThis allocation focuses on two fields while leaving one under-allocated, exploiting the opponent’s uniform strategy. It also maintains enough flexibility to adapt if needed, while increasing the likelihood of securing two fields and winning the round.",
+      "reflection": "**Reflection:**  \nThe allocation was **too concentrated** on two fields, making it predictable and allowing the opponent to counter effectively. While the strategy aimed to exploit their uniformity, it failed to account for their ability to adapt in the final round. **Key lesson:** In the final round, balance unpredictability with strategic focus, ensuring enough flexibility to counter opponent adjustments without over-committing to a single front.",
+      "opponent_analysis": "1. The opponent used a **consistent strategy**, likely **uniform**, distributing units evenly across all fields.  \n2. They did **not favor specific fields**, maintaining a balanced allocation across A, B, and C.  \n3. They played **independently**, without clear response to your moves.  \n4. You could exploit by **targeting under-defended fields** or **introducing variability** in your own allocations to disrupt their uniform approach.",
+      "won": false,
+      "timestamp": "2025-10-24T01:59:00.613454"
     }
   ],
   "trial_history": [
@@ -35,11 +63,51 @@
       "final_score": 0,
       "opponent_score": 0,
       "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_41AM/game_log.json"
+    },
+    {
+      "trial_id": 2,
+      "timestamp": "2025-10-24T01:54:40.918076",
+      "won": false,
+      "rounds_won": 0,
+      "total_rounds": 9,
+      "final_score": 0,
+      "opponent_score": 0,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_50AM/game_log.json"
+    },
+    {
+      "trial_id": 3,
+      "timestamp": "2025-10-24T01:54:40.919004",
+      "won": false,
+      "rounds_won": 0,
+      "total_rounds": 9,
+      "final_score": 0,
+      "opponent_score": 0,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_50AM/game_log.json"
+    },
+    {
+      "trial_id": 4,
+      "timestamp": "2025-10-24T01:59:00.546518",
+      "won": false,
+      "rounds_won": 0,
+      "total_rounds": 9,
+      "final_score": 0,
+      "opponent_score": 0,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_54AM/game_log.json"
+    },
+    {
+      "trial_id": 5,
+      "timestamp": "2025-10-24T01:59:00.614135",
+      "won": false,
+      "rounds_won": 0,
+      "total_rounds": 9,
+      "final_score": 0,
+      "opponent_score": 0,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_54AM/game_log.json"
     }
   ],
   "metadata": {
     "created_at": "2025-10-24T01:41:34.903930",
-    "last_updated": "2025-10-24T01:46:02.334700",
-    "total_trials": 2
+    "last_updated": "2025-10-24T01:59:00.614143",
+    "total_trials": 6
   }
 }

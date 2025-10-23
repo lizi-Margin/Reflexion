@@ -152,7 +152,7 @@ def run_single_trial(trial_num: int, agent: BlottoAgent, memory: BlottoMemory, e
 def main():
     """Main training loop with multi-threading support"""
     # Configuration
-    NUM_TRIALS = 10  # Number of trials to run
+    NUM_TRIALS = 400  # Number of trials to run
     MAX_WORKERS = 2  # Number of concurrent threads (adjust based on your needs)
     ENV_ID = "ColonelBlotto-v0-train"
     API_MODEL_SPEC = "qwen3-8b"  # Change to your preferred model

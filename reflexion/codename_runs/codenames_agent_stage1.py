@@ -30,17 +30,14 @@ class CodenamesAgent(Agent):
     - Operative (players 1, 3): Guesses words based on clues
     """
 
-    def __init__(self, model_name: str, api_model_spec='qwen3-8b',
-                 memory=None, enable_logging: bool = True, verbose: bool = True):
+    def __init__(self, model_name: str, api_model_spec='qwen3-8b', enable_logging: bool = True, verbose: bool = True):
         """
         Initialize the CodenamesAgent
 
         Args:
             model_name: Name of the model for identification
             api_model_spec: Which API/model to use for generation
-            memory: Optional memory system for reflexion
             enable_logging: Whether to enable logging
-            verbose: Whether to print verbose output
         """
         self.model_name = model_name
         self.api = get_api_class(api_model_spec)(model=api_model_spec)
@@ -57,67 +54,9 @@ class CodenamesAgent(Agent):
         self.observation_history = []
         self.turn_counter = 0
 
-        # Reflexion memory system
-        self.memory = memory
-        self.max_reflections = 6
-
         # Initialize logger
         self.logger = GameLogger() if enable_logging else None
         self.verbose = verbose
-
-    def finalize_game(self, rewards: dict = None, game_info: dict = None):
-        """
-        Finalize the game and update memory with reflections (if memory is enabled)
-
-        Args:
-            rewards: Rewards dict from env.close()
-            game_info: Game info dict from env.close()
-        """
-        # If no memory, skip finalization
-        if self.memory is None:
-            print(f"\n[CodenamesAgent] Game finished! No memory enabled, skipping reflection.")
-            return
-
-        # Simple win determination based on game context
-        won = False
-        if game_info and 'rewards' in game_info:
-            # Adjust win condition based on Codenames game specifics
-            won = game_info['rewards'][self.player_id] > 0
-
-        print(f"\n[CodenamesAgent] Game finished! Won: {won}")
-
-        # Generate reflections and update memory
-        self.memory.update_memory_from_trial(
-            self,
-            won=won,
-            should_reflect=True  # Always reflect to learn
-        )
-
-        # Add trial result
-        trial_log_path = (
-            self.logger.run_dir / "game_log.json"
-            if self.logger and self.logger.run_dir
-            else 'None'
-        )
-
-        self.memory.add_trial_result({
-            "won": won,
-            "team": self.team,
-            "role": self.player_role,
-            "final_score": None,  # Add logic to capture final score
-            "opponent_score": None,
-            "game_log": str(trial_log_path)
-        })
-
-        # Print statistics
-        stats = self.memory.get_statistics()
-        print(f"[CodenamesAgent] Memory Statistics:")
-        print(f"  Total Trials: {stats['total_trials']}")
-        print(f"  Win Rate: {stats['win_rate']:.2%}")
-
-        # Finalize logger
-        if self.logger and self.logger.run_dir:
-            self.logger.finalize(outcome=f"Won: {won}")
 
     def __call__(self, observation: str) -> str:
         """
