@@ -1959,6 +1959,13 @@
       "opponent_analysis": "1. **Strategy Consistency**: The opponent used an **adaptive** strategy, adjusting allocations in response to Alpha's moves, particularly favoring **Field A** in some rounds and **Field C** in others.  \n2. **Field Preference**: The opponent showed a **preference for Field A** in early rounds and **Field C** in later rounds, suggesting a shift in focus.  \n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, especially in rounds where Alpha concentrated forces in a field, indicating strategic adaptation.  \n4. **Exploitable Pattern**: Alpha could exploit the opponent's **inconsistent focus** by **balancing allocations across fields** and **targeting fields the opponent neglected**, especially **Field B**, which was under-allocated in many rounds.",
       "won": true,
       "timestamp": "2025-10-24T10:36:02.419413"
+    },
+    {
+      "strategy": "**Intention:** Disrupt Beta's predictable focus on A and B, exploit their neglect of C, and maintain fluidity to prevent adaptation.  \n**Methodology:**  \n- **Early Stage (Rounds 1–3):** Use **Uniform** allocation to disrupt Beta’s expected focus on A and B, forcing them to respond.  \n- **Mid-Stage (Rounds 4–6):** Shift to **Adaptive** strategy, targeting fields Beta under-allocates (C) and occasionally mirroring their focus on A/B to test their response.  \n- **Late Stage (Rounds 7–9):** Employ **Concentrated-2** with a twist—allocate heavily to C and one of A/B, but not the same one each round, to keep Beta guessing and prevent them from locking in a counter-strategy.  \n\nThis approach leverages Beta’s predictable pattern while maintaining enough unpredictability to avoid falling into their adaptive trap.",
+      "reflection": "1. **Allocation patterns:** The uniform strategy in the early rounds effectively disrupted Beta’s focus on A and B, but the shift to concentrated allocations in the late stage introduced a predictable pattern, allowing Beta to adapt.  \n2. **Balance of strategy:** The strategy leaned too heavily into concentrated allocations in the late stage, sacrificing fluidity for intensity, which gave Beta an opportunity to counter.  \n3. **Prediction of opponent moves:** While Beta’s initial focus on A and B was predictable, their adaptation in later rounds showed they were capable of adjusting, indicating a need for more dynamic and less patterned responses.  \n4. **Adjustments:** Maintain a higher degree of fluidity throughout the game, avoiding the appearance of concentration or pattern, and ensure that even late-stage allocations remain unpredictable to prevent Beta from locking in a counter-strategy.\n\n**Key Lesson:** True fluidity is essential—avoiding even the appearance of patterns ensures sustained unpredictability and prevents the opponent from adapting effectively.",
+      "opponent_analysis": "1. **Strategy Consistency**: The opponent used a **concentrated strategy**, heavily favoring Fields A and B in most rounds, with minimal allocation to Field C.  \n2. **Field Preference**: They consistently prioritized **Fields A and B**, suggesting a strategic focus on these fields over C.  \n3. **Response to Moves**: The opponent **did not significantly adapt** to Alpha’s allocations, maintaining a consistent allocation pattern across rounds.  \n4. **Exploitable Pattern**: Future games could exploit the opponent’s **overcommitment to A and B** by **underallocating to these fields and focusing on C**, where the opponent was weakest.",
+      "won": false,
+      "timestamp": "2025-10-24T13:39:35.263749"
     }
   ],
   "trial_history": [
@@ -4761,11 +4768,21 @@
       "final_score": 3,
       "opponent_score": 2,
       "game_log": "/home/hulc/Desktop/Corleone/runs/251024-10_32AM/game_log.json"
+    },
+    {
+      "trial_id": 280,
+      "timestamp": "2025-10-24T13:39:35.271300",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_36PM/game_log.json"
     }
   ],
   "metadata": {
     "created_at": "2025-10-24T01:41:34.903930",
-    "last_updated": "2025-10-24T10:36:02.429871",
-    "total_trials": 280
+    "last_updated": "2025-10-24T13:39:35.271313",
+    "total_trials": 281
   }
 }

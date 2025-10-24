@@ -16,8 +16,13 @@ git submodule update --init --recursive
 ```
 
 2. Install dependencies:
+if you are using pip:
 ```bash
 pip install -r requirements.txt
+```
+if you are using mamba or micromamba (recommended):
+```bash
+mamba env create -f ./mamba_env.yml -n MindGameCorleone
 ```
 
 ## Running the Agent

@@ -110,7 +110,7 @@ def run_single_game_offline(
     # Update agent memory with rewards and game_info
     for agent_id, agent_instance in agents.items():
         if hasattr(agent_instance, 'finalize_game'):
-            # agent_instance.finalize_game(rewards=rewards, game_info=game_info)
+            agent_instance.finalize_game(rewards=rewards, game_info=game_info)
             pass
         else:
             assert False, f"{agent_instance.__class__.__name__} does not have finalize_game method."
