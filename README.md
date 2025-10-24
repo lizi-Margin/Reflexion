@@ -38,7 +38,7 @@ python run_competition.py --games <num_games>
 ```
 
 **Arguments**:
-- `--games`: Number of games to play per environment (default: 1)
+- `--games`: Number of games to play (default: 1)
 
 **Example**:
 ```bash
