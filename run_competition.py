@@ -17,7 +17,7 @@ DEFAULT_TEAM_HASH = "MG25-F5C82328D3"
 DEFAULT_MODEL_NAME = "Default_k2"
 DEFAULT_MODEL_DESCRIPTION = "This agent is for Track 2 - Generalization (Multiple environments)."
 
-small_category = True
+SMALL_CATEGORY = True
 
 # # Game environments for Track 2
 # TRACK2_GAMES = [
@@ -34,17 +34,6 @@ def run_single_game(
     api_model_spec: str,
     small_category: bool = False
 ):
-    """
-    Run a single game match
-
-    Args:
-        game_env_name: Name of the game environment
-        model_name: Unique model identifier
-        model_description: Model description
-        team_hash: Team verification code
-        api_model_spec: API model specification
-        small_category: Whether to use efficient division
-    """
     print(f"\n{'='*60}")
     print(f"Model Name: {model_name}")
     print(f"Model: {api_model_spec}")
@@ -127,8 +116,6 @@ def main():
     print("="*60 + "\n")
 
     # Run games
-    all_results = {}
-
     game_results = []
 
     for game_num in range(args.games):
@@ -140,7 +127,7 @@ def main():
                 model_description=DEFAULT_MODEL_DESCRIPTION,
                 team_hash=DEFAULT_TEAM_HASH,
                 api_model_spec=DEFAULT_MODEL,
-                small_category=small_category
+                small_category=SMALL_CATEGORY
             )
 
             game_results.append({
@@ -154,12 +141,16 @@ def main():
             import traceback
             traceback.print_exc()
 
-    all_results[str(game_num)] = game_results
-    print(all_results)
-
     # Print summary
     print("\n" + "="*60)
     print("Competition Summary")
+    print("="*60)
+
+    total_games = len(game_results)
+    successful_games = sum(1 for result in game_results if result.get("rewards") is not None)
+
+    print(f"Total games played: {total_games}")
+    print(f"Successful games: {successful_games}")
     print("="*60)
 
 if __name__ == "__main__":

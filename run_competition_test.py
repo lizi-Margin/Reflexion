@@ -17,7 +17,7 @@ DEFAULT_TEAM_HASH = "MG25-F5C82328D3"
 DEFAULT_MODEL_NAME = "Default_k2"
 DEFAULT_MODEL_DESCRIPTION = "This agent is for Track 2 - Generalization (Multiple environments)."
 
-small_category = True
+SMALL_CATEGORY = True
 
 # Game environments for Track 2
 TRACK2_GAMES = [
@@ -170,7 +170,7 @@ def main():
                 model_description=DEFAULT_MODEL_DESCRIPTION,
                 team_hash=DEFAULT_TEAM_HASH,
                 api_model_spec=DEFAULT_MODEL,
-                small_category=small_category
+                small_category=SMALL_CATEGORY
             )
 
             game_results.append({
