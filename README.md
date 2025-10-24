@@ -39,20 +39,27 @@ python run_competition.py --games 3
 ```
 
 ### Offline Testing
+#### Suggested Method
 
 Test agents locally without connecting to the online arena:
 
 ```bash
-python offline_play.py
+python run_competition_test.py --games 100
 ```
+This script will run self-play games locally.
 
+#### Alternative Method
 Edit `offline_play.py` to select the environment:
 - `env_id = "Codenames-v0-train"; npc_num = 3` for Codenames (2v2)
 - `env_id = "ColonelBlotto-v0-train"; npc_num = 1` for Colonel Blotto (1v1)
 - `env_id = "ThreePlayerIPD-v0-train"; npc_num = 2` for Three Player IPD
 
+```bash
+python offline_play.py
+```
+
 ## API Keys
-All Agents use API keys for LLM providers (Already configured). If there are any issues, please contact the team.
+All Agents use API keys for LLM providers (Already configured). If there are any network issues, please contact the team.
 
 ## Contact
 
