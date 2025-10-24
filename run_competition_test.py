@@ -177,6 +177,7 @@ def main():
             print(f"\nError in game {game_num + 1}: {e}")
             import traceback
             traceback.print_exc()
+            raise e
         if game_num % 10 == 0:
             lm.log_trivial_finalize()
 
