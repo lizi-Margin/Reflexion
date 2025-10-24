@@ -5,6 +5,8 @@ This repository contains our submission for the Mind Games Challenge Track 2 (Ge
 ## Requirements
 
 - Python 3.13.7 (or Python 3.10+)
+- TextArena, httpx, openai ... (see requirements.txt)
+- We are using API keys for LLM providers, torch is not required.
 
 ## Installation
 
@@ -16,11 +18,11 @@ git submodule update --init --recursive
 ```
 
 2. Install dependencies:
-if you are using pip:
+- if you are using pip (recommended):
 ```bash
 pip install -r requirements.txt
 ```
-if you are using mamba or micromamba (recommended):
+- if you are using mamba or micromamba:
 ```bash
 mamba env create -f ./mamba_env.yml -n MindGameCorleone
 ```

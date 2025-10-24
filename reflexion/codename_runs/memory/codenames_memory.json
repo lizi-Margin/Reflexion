@@ -53,6 +53,15 @@
       "role": "Spymaster",
       "team": "Red",
       "timestamp": "2025-10-24T11:19:01.401061"
+    },
+    {
+      "strategy": "time",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and thematically relevant clues, guiding their Operative toward high-value words. Their strategic focus on exploiting ambiguous terms and maintaining a steady pace likely disrupted our coordination and contributed to our loss.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T13:53:28.365284"
     }
   ],
   "trial_history": [
@@ -115,11 +124,21 @@
       "final_score": null,
       "opponent_score": null,
       "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_18AM/game_log.json"
+    },
+    {
+      "trial_id": 6,
+      "timestamp": "2025-10-24T13:53:28.366040",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_39PM/game_log.json"
     }
   ],
   "metadata": {
     "created_at": "2025-10-24T02:08:28.186455",
-    "last_updated": "2025-10-24T11:19:01.401684",
-    "total_trials": 6
+    "last_updated": "2025-10-24T13:53:28.366048",
+    "total_trials": 7
   }
 }
