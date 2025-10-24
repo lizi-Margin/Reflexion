@@ -170,7 +170,6 @@ def main():
                 'game_num': game_num + 1,
                 'reward_0': reward_0,
                 'win_rate': game_info['stats']['win_rate'],
-                'avg_rounds_won': game_info['stats']['avg_rounds_won'],
             })
 
         except Exception as e:
