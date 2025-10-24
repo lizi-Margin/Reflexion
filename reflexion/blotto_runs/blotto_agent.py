@@ -359,7 +359,7 @@ class BlottoAgent(Agent):
             f"3. How do they respond to your allocations?\n"
             f"4. What might they do next based on the current score and round?\n\n"
 
-            f"You can briefly anayze the opponent's behavior in Past rounds, Now round, Future predictions\n"
+            f"You can briefly anayze the opponent's behavior in Past rounds, Now round, Future predictions (it is okay to say unpredictable or random)\n"
             f"State the status briefly and clearly, DO NOT suggest any strategy since they will be considered later.\n\n"
         )
 

@@ -15,7 +15,7 @@ __pycache__
 
 reflexion/alfworld_runs
 
-VISUALIZE_logdir
+VISUALIZE_logdir*
 
 /*.txt
-/offline_play_codenames.py
+/offline_play_codenames*.py

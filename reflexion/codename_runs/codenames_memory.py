@@ -160,7 +160,7 @@ Key Observations:
 3. Were there any notable strategic decisions by the opposing team?
 4. What communication or guessing patterns did you notice from the opposing team?
 
-Provide a concise analysis focusing on the opponent's strategic approach.
+Provide a brief analysis focusing on the opponent's strategic approach, 1-2 sentences.
 
 Opponent Analysis:"""
 

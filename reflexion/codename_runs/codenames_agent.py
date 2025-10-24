@@ -19,6 +19,7 @@ from typing import Dict, List, Set, Tuple, Optional
 from envs.agent import Agent
 from api.api_router import get_api_class
 from reflexion.game_logger import GameLogger
+from reflexion.codename_runs.codenames_memory import CodenamesMemory
 
 
 class CodenamesAgent(Agent):
@@ -31,7 +32,7 @@ class CodenamesAgent(Agent):
     """
 
     def __init__(self, model_name: str, api_model_spec='qwen3-8b',
-                 memory=None, enable_logging: bool = True, verbose: bool = True):
+                 memory: Optional[CodenamesMemory] = None, enable_logging: bool = True, verbose: bool = True):
         """
         Initialize the CodenamesAgent
 
@@ -514,6 +515,12 @@ class CodenamesAgent(Agent):
 
     def _prompt_spymaster_candidates(self, analysis, team_words, opponent_words, neutral_words, assassin_word) -> str:
         """Prompt for Spymaster candidate generation phase"""
+        # Initialize memory guidance
+        memory_guidance = ""
+        if self.memory and self.memory.memory['memory']:
+            memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
+            memory_guidance = f"\n\nPrevious Strategic Lessons:\n{memory_guidance}"
+
         prompt = (
             f"Based on your analysis:\n\n{analysis}\n\n"
 
@@ -534,6 +541,8 @@ class CodenamesAgent(Agent):
             f"- Clues must be a single word\n"
             f"- Clues cannot be any form of the words on the board\n"
             f"- Aim for clues that connect the most team words safely\n\n"
+
+            f"{memory_guidance}\n\n"
 
             f"Begin your candidate list and start with a symbol: '#CANDIDATES:'"
         )
@@ -584,6 +593,12 @@ class CodenamesAgent(Agent):
 
     def _prompt_operative_ranking(self, clue, clue_number, analysis, available_words) -> str:
         """Prompt for Operative word ranking phase"""
+        # Initialize memory guidance
+        memory_guidance = ""
+        if self.memory and self.memory.memory['memory']:
+            memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
+            memory_guidance = f"\n\nPrevious Strategic Lessons:\n{memory_guidance}"
+
         prompt = (
             f"Based on your analysis of the clue '{clue}' with number {clue_number}:\n\n{analysis}\n\n"
 
@@ -596,6 +611,8 @@ class CodenamesAgent(Agent):
             f"1. [word] - Confidence: [score] - Reason: [brief explanation]\n"
             f"2. [word] - Confidence: [score] - Reason: [brief explanation]\n"
             f"...\n\n"
+
+            f"{memory_guidance}\n\n"
 
             f"Begin your ranking and start with a symbol: '#RANKING:'"
         )
