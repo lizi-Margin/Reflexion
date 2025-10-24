@@ -91,10 +91,15 @@ def run_single_game_offline(
     turn_count = 0
     while not done:
         player_id, observation = env.get_observation()
-        if hasattr(agents[player_id], '__IS_ROUTER'):
+        if hasattr(agents[player_id], '_IS_ROUTER'):
             REAL = agents[player_id].get(observation)
+            # print("aaa" * 1000)
             if REAL is not None:
                 agents[player_id] = REAL
+        # print("bbb" * 1000)
+        from uhtk.print_pack import print_dict
+        # print(agents[player_id].__class__.__name__)
+        print_dict(agents[player_id].__dict__)
             
         action = agents[player_id](observation)
         done, step_info = env.step(action=action)
@@ -105,7 +110,8 @@ def run_single_game_offline(
     # Update agent memory with rewards and game_info
     for agent_id, agent_instance in agents.items():
         if hasattr(agent_instance, 'finalize_game'):
-            agent_instance.finalize_game(rewards=rewards, game_info=game_info)
+            # agent_instance.finalize_game(rewards=rewards, game_info=game_info)
+            pass
         else:
             assert False, f"{agent_instance.__class__.__name__} does not have finalize_game method."
 

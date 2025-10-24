@@ -78,7 +78,7 @@ def run_single_game(
     turn_count = 0
     while not done:
         player_id, observation = env.get_observation()
-        if hasattr(agent, '__IS_ROUTER'):
+        if hasattr(agent, '_IS_ROUTER'):
             REAL = agent.get(observation)
             if REAL is not None:
                 agent = REAL
