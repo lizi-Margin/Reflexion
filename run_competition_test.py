@@ -22,8 +22,8 @@ SMALL_CATEGORY = True
 # Game environments for Track 2
 TRACK2_GAMES = [
     "Codenames-v0-train",
-    "ColonelBlotto-v0-train",
-    "ThreePlayerIPD-v0-train"
+    # "ColonelBlotto-v0-train",
+    # "ThreePlayerIPD-v0-train"
 ]
 
 # Number of NPCs for each game
@@ -112,8 +112,8 @@ def run_single_game_offline(
         if hasattr(agent_instance, 'finalize_game'):
             agent_instance.finalize_game(rewards=rewards, game_info=game_info)
             pass
-        else:
-            assert False, f"{agent_instance.__class__.__name__} does not have finalize_game method."
+        # else:
+            # assert False, f"{agent_instance.__class__.__name__} does not have finalize_game method."
 
     stats = agents[0].memory.get_statistics()
     game_info['stats'] = stats

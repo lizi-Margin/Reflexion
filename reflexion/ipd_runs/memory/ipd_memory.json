@@ -95,6 +95,14 @@
       "trial_rank": 2,
       "won": false,
       "timestamp": "2025-10-22T19:34:52.540880"
+    },
+    {
+      "strategy": "**Overall Intention:** To secure the highest total score by exploiting Player 2’s predictable defection while ensuring I do not get exploited by Player 1. I will maintain a reputation of strategic cooperation with Player 1 to sustain their trust, while subtly signaling to Player 2 that I am prepared to retaliate if they continue to defect. My goal is to maximize my score in the final round by defecting against Player 1 and cooperating with Player 2, ensuring I do not fall behind in the final standings.\n\n**Methodology:**  \n- **Conversation Strategy:** I will adopt a **calm and confident tone**, reinforcing my reputation as a **strategic and reliable player** to maintain Player 1’s cooperation. I will **avoid direct deception** but will use **nuanced language** to suggest that I am not easily manipulated, encouraging Player 2 to reconsider their strategy. This will help me maintain a **balanced dynamic** with both players, ensuring that neither forms a strong alliance against me.\n\n- **Decision Strategy:** In this final round, I will **defect against Player 1** to prevent them from gaining an unfair advantage through mutual cooperation, while **cooperating with Player 2** to avoid mutual defection and secure a better outcome. This decision is based on the **game-theoretic optimal outcome** for the final round: mutual defection yields 1 point each, but if I defect against Player 1 (who is likely to cooperate with me) and cooperate with Player 2 (who is likely to defect), I will gain 5 points against Player 1 and 0 points against Player 2. This is not ideal, but it is **the best possible outcome given the current state of the game and the likely behaviors of my opponents**.\n\n**Short Term Advantages:**  \n- Defecting against Player 1 ensures I do not allow them to gain an unfair advantage in the final round.  \n- Cooperating with Player 2 prevents mutual defection, which would reduce my score further.\n\n**Long Term Advantages:**  \n- Maintaining a reputation as a strategic and unpredictable player can influence future interactions if this game were extended.  \n- Avoiding mutual defection with Player 2 ensures I do not lose points unnecessarily.\n\n**Adaptation Based on Opponent Behavior:**  \n- Player 1 is likely to cooperate with me in the final round, so I will defect to maximize my score.  \n- Player 2 is likely to defect, so I will cooperate to avoid mutual defection and secure a better outcome.\n\n**Why This Works:**  \nBy defecting against Player 1 and cooperating with Player 2, I am making the **optimal decision for the final round** based on the known behaviors of my opponents. This strategy ensures I do not allow Player 1 to gain an unfair advantage while also avoiding the risk of mutual defection with Player 2, which would have been detrimental to my score. This is a **balanced, game-theoretically sound approach** that maximizes my chances of winning the game.",
+      "reflection": "**Reflection:**  \nThe key lesson learned is that in a three-player Iterated Prisoner's Dilemma, over-reliance on manipulating one player while maintaining cooperation with another can backfire if the cooperative partner anticipates betrayal. A more balanced approach—maintaining trust with allies while being more transparent and less predictable in communication—leads to better long-term outcomes.",
+      "opponent_analysis": "**Analysis:**\n\n**Player 1:**\n- Mostly cooperated, but shifted to defecting in the final round, indicating a strategic move to maximize points.\n- Generally truthful in conversation, aligning with actions, though slightly more cautious than Player 2.\n- Defected in the last round, which aligns with the optimal strategy in the final round of an iterated game.\n\n**Player 2:**\n- Consistently defected, showing a dominant, self-interested strategy throughout the game.\n- Deceptive in conversation, suggesting cooperation while acting in self-interest.\n- Defected in the last round, which is consistent with a purely self-interested strategy.",
+      "trial_rank": 3,
+      "won": false,
+      "timestamp": "2025-10-24T15:32:14.464584"
     }
   ],
   "trial_history": [
@@ -331,11 +339,50 @@
       "won": true,
       "game_log": "None",
       "m_rounds": 5
+    },
+    {
+      "trial_id": 18,
+      "timestamp": "2025-10-24T15:05:01.131369",
+      "rank": 1,
+      "score": 15,
+      "opponent_scores": {
+        "1": 15,
+        "2": 16
+      },
+      "won": true,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-2_54PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 19,
+      "timestamp": "2025-10-24T15:14:58.476688",
+      "rank": 1,
+      "score": 22,
+      "opponent_scores": {
+        "1": 22,
+        "2": 15
+      },
+      "won": true,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_05PM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 20,
+      "timestamp": "2025-10-24T15:32:14.465695",
+      "rank": 3,
+      "score": 16,
+      "opponent_scores": {
+        "1": 24,
+        "2": 17
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_22PM/game_log.json",
+      "m_rounds": 5
     }
   ],
   "metadata": {
     "created_at": "2025-10-22T17:51:40.527439",
-    "last_updated": "2025-10-22T19:34:52.545824",
-    "total_trials": 18
+    "last_updated": "2025-10-24T15:32:14.465710",
+    "total_trials": 21
   }
 }
