@@ -115,9 +115,9 @@ class TrackTwoAutoAgent(Agent):
         self.enable_logging = enable_logging
         self.specialized_agent = None
         self.memory = memory
-
-    def __call__(self, observation: str) -> str:
-        # If first observation, detect game type and create specialized agent
+        self.__IS_ROUTER = True
+    
+    def get(self, observation: str) -> object:
         if self.specialized_agent is None:
             game_type = detect_game_from_observation(observation)
             print(f"Detected game type: {game_type}")
@@ -129,6 +129,11 @@ class TrackTwoAutoAgent(Agent):
                 enable_logging=self.enable_logging,
                 memory=self.memory
             )
+            return self.specialized_agent
+
+    def __call__(self, observation: str) -> str:
+        # If first observation, detect game type and create specialized agent
+        self.get(observation)        
 
         # Delegate to specialized agent
         return self.specialized_agent(observation)

@@ -91,6 +91,11 @@ def run_single_game_offline(
     turn_count = 0
     while not done:
         player_id, observation = env.get_observation()
+        if hasattr(agents[player_id], '__IS_ROUTER'):
+            REAL = agents[player_id].get(observation)
+            if REAL is not None:
+                agents[player_id] = REAL
+            
         action = agents[player_id](observation)
         done, step_info = env.step(action=action)
         turn_count += 1
@@ -101,6 +106,8 @@ def run_single_game_offline(
     for agent_id, agent_instance in agents.items():
         if hasattr(agent_instance, 'finalize_game'):
             agent_instance.finalize_game(rewards=rewards, game_info=game_info)
+        else:
+            assert False, f"{agent_instance.__class__.__name__} does not have finalize_game method."
 
     stats = agents[0].memory.get_statistics()
     game_info['stats'] = stats
