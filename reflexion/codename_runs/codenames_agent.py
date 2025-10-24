@@ -82,9 +82,9 @@ class CodenamesAgent(Agent):
 
         # Simple win determination based on game context
         won = False
-        if game_info and 'rewards' in game_info:
+        if rewards:
             # Adjust win condition based on Codenames game specifics
-            won = game_info['rewards'][self.player_id] > 0
+            won = rewards[self.player_id] > 0
 
         print(f"\n[CodenamesAgent] Game finished! Won: {won}")
 

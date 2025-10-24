@@ -134,10 +134,9 @@ def run_single_trial(trial_num: int, agent: IPDAgent, memory: IPDMemory, env_id:
     rewards, game_info = env.close()
 
     # Update agent memory
-    final_obs = game_info.get('final_observation', '')
     # agent.finalize_game(final_observation=final_obs)
     for agent_id in agents:
-        agents[agent_id].finalize_game(final_observation=final_obs)
+        agents[agent_id].finalize_game(rewards=rewards, game_info=game_info)
 
     if verbose:
         thread_print(f"\n{'='*80}")

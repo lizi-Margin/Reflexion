@@ -1,4 +1,4 @@
-import re
+import re, random
 import json
 import uuid
 from datetime import datetime
@@ -99,6 +99,11 @@ class IPDAgent(Agent):
             self.observation_history.append(observation)
             self.call_counter += 1
 
+
+            # Update game state from observation
+            self._update_game_state_from_observation(observation)
+
+
             # Start logging this turn
             if self.logger:
                 self.logger.start_turn(self.call_counter, observation)
@@ -109,9 +114,6 @@ class IPDAgent(Agent):
                 print(f"Phase: {self.phase}")
                 print(f"Scores: {self.scores}")
                 print(f"Decision History: {self.decision_history}")
-
-            # Update game state from observation
-            self._update_game_state_from_observation(observation)
 
             # Generate response based on phase
             if self.phase == "conversation":
@@ -129,7 +131,6 @@ class IPDAgent(Agent):
         except Exception as e:
             error_msg = f"Error in IPDAgent: {e}"
             print(error_msg)
-            raise e
 
             if self.logger:
                 self.logger.end_turn(f"ERROR: {str(e)}")
@@ -139,9 +140,10 @@ class IPDAgent(Agent):
                 return "I propose we all cooperate to maximize our collective score."
             else:
                 # Default to cooperation for decisions
-                return " ".join([f"[{opponent_id} cooperate]" for opponent_id in self.opponent_ids])
+                # return " ".join([f"[{opponent_id} cooperate]" for opponent_id in self.opponent_ids])
+                return " ".join([f"[{opponent_id} {random.choice(['cooperate','cooperate','defect'])}]" for opponent_id in self.opponent_ids])
 
-    def finalize_game(self, final_observation: str = None):
+    def finalize_game(self, rewards: dict, game_info: dict):
         """
         Finalize the game and update memory with reflections
 
@@ -150,15 +152,22 @@ class IPDAgent(Agent):
         """
         if not self.memory:
             return
-        # Extract final results
-        if final_observation:
-            self._update_game_state_from_observation(final_observation)
+        
+        if rewards[0] == rewards[1] == rewards[2]:
+            won = False  # draw
+            my_rank = 1
+        else:
+            rewards_list = list(rewards.values())
+            rewards_list.sort(reverse=True)
+            # won = rewards[self.player_id] >= max(rewards_list)
+            won = rewards[self.player_id] > 0
+            my_rank = rewards_list.index(rewards[self.player_id]) + 1
 
-        # Determine rank
+        # # Determine rank
         rankings = self._get_player_rankings()
-        my_rank = rankings[self.player_id]['rank']
+        # my_rank = rankings[self.player_id]['rank']
         my_score = rankings[self.player_id]['score']
-        won = my_rank == 1
+        # won = my_rank == 1
 
         print(f"\n[IPDAgent] Game finished! Rank: {my_rank}, Score: {my_score}, Won: {won}")
 

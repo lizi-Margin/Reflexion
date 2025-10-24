@@ -464,6 +464,9 @@ class BlottoAgent(Agent):
         rounds_won = self.scores[self.player_id]
         opponent_score = self.scores[1 - self.player_id]
 
+        if rewards:
+            won = rewards[self.player_id] > 0
+
         print(f"\n[BlottoAgent] Game finished! Score: {rounds_won}-{opponent_score}, Won: {won}")
 
         # Generate reflections and update memory
