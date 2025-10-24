@@ -45,7 +45,8 @@ def create_track2_agent(
     model_name: str,
     api_model_spec: str,
     env_name: Optional[str] = None,
-    enable_logging: bool = True
+    enable_logging: bool = True,
+    memory: bool = True
 ) -> Agent:
     """
     Factory function to create appropriate agent based on environment
@@ -63,21 +64,40 @@ def create_track2_agent(
         ImportError: If required agent module isn't available
         ValueError: If environment can't be determined
     """
+
+    if env_name is None or env_name == "auto-detect":
+        # Will detect from first observation during initialization
+        print("Environment auto-detection enabled. Will determine game type from first observation.")
+        return TrackTwoAutoAgent(model_name, api_model_spec, enable_logging=enable_logging)
+
+
     # Import specialized agents (lazy import)
     # This prevents circular imports and allows importing only what's needed
     # Known environment, create specific agent
     if "Codenames" in env_name:
         from reflexion.codename_runs.codenames_agent import CodenamesAgent
-        return CodenamesAgent(model_name, api_model_spec, enable_logging=enable_logging)
+        from reflexion.codename_runs.codenames_memory import CodenamesMemory
+        if memory:
+            return CodenamesAgent(model_name, api_model_spec, enable_logging=enable_logging, memory=CodenamesMemory(api_model_spec=api_model_spec))
+        else:
+            return CodenamesAgent(model_name, api_model_spec, enable_logging=enable_logging)
     elif "ColonelBlotto" in env_name:
         from reflexion.blotto_runs.blotto_agent import BlottoAgent
-        return BlottoAgent(model_name, api_model_spec, enable_logging=enable_logging)
-    elif "ThreePlayerIPD" in env_name:
-        if model_name.startswith('bsl'):
-            from reflexion.ipd_runs.ipd_agent_baseline import IPDAgent
-            return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging)
+        from reflexion.blotto_runs.blotto_memory import BlottoMemory
+        if memory:
+            return BlottoAgent(model_name, api_model_spec, enable_logging=enable_logging, memory=BlottoMemory(api_model_spec=api_model_spec))
         else:
-            from reflexion.ipd_runs.ipd_agent import IPDAgent
+            return BlottoAgent(model_name, api_model_spec, enable_logging=enable_logging)
+    elif "ThreePlayerIPD" in env_name:
+        # if model_name.startswith('bsl'):
+        #     from reflexion.ipd_runs.ipd_agent_baseline import IPDAgent
+        #     return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging)
+        # else:
+        from reflexion.ipd_runs.ipd_agent import IPDAgent
+        from reflexion.ipd_runs.ipd_memory import IPDMemory
+        if memory:
+            return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging, memory=IPDMemory(api_model_spec=api_model_spec))
+        else:
             return IPDAgent(model_name, api_model_spec, enable_logging=enable_logging)
     else:
         raise ValueError(f"Unknown environment: {env_name}")
@@ -105,7 +125,8 @@ class TrackTwoAutoAgent(Agent):
                 model_name=self.model_name,
                 api_model_spec=self.api_model_spec,
                 env_name=game_type,
-                enable_logging=self.enable_logging
+                enable_logging=self.enable_logging,
+                memory=True
             )
 
         # Delegate to specialized agent

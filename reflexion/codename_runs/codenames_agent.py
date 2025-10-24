@@ -20,6 +20,7 @@ from envs.agent import Agent
 from api.api_router import get_api_class
 from reflexion.game_logger import GameLogger
 from reflexion.codename_runs.codenames_memory import CodenamesMemory
+from uhtk.print_pack import *
 
 
 class CodenamesAgent(Agent):
@@ -148,6 +149,15 @@ class CodenamesAgent(Agent):
             # Process observation and update game state
             self._update_game_state_from_observation(observation)
 
+            if self.logger:
+                print("=" * 60)
+                print(f"My id: {self.player_id}")
+                print(f"Turn Cnt: {self.turn_counter}:")
+                print(f"self.last_clue: {self.last_clue}")
+                print(f"self.last_clue_number: {self.last_clue_number}")
+                print(f"self.guessed_words: {self.guessed_words}")
+                print(f"self.board: {self.board}")
+
             # Generate action based on role
             if self.player_role == "Spymaster":
                 result = self._generate_spymaster_clue()
@@ -185,22 +195,22 @@ class CodenamesAgent(Agent):
         player_id_match = re.search(r"Player (\d+)", observation)
         if player_id_match:
             self.player_id = int(player_id_match.group(1))
-            print(f"DEBUG: Matched player ID: {self.player_id}")
-        else:
-            print(f"DEBUG: NO PLAYER ID MATCH in observation: {observation}")
+        #     print(f"DEBUG: Matched player ID: {self.player_id}")
+        # else:
+        #     print(f"DEBUG: NO PLAYER ID MATCH in observation: {observation}")
 
         # Determine role and team based on player ID
         if self.player_id in [0, 2]:
             self.player_role = "Spymaster"
             self.team = "Red" if self.player_id == 0 else "Blue"
-            print(f"DEBUG: Role set as Spymaster, Team: {self.team}")
+            # print(f"DEBUG: Role set as Spymaster, Team: {self.team}")
         else:
             self.player_role = "Operative"
             self.team = "Red" if self.player_id == 1 else "Blue"
-            print(f"DEBUG: Role set as Operative, Team: {self.team}")
+            # print(f"DEBUG: Role set as Operative, Team: {self.team}")
 
         # Parse initial board state
-        print("DEBUG: Parsing initial board state...")
+        # print("DEBUG: Parsing initial board state...")
         self._parse_board_state(observation)
 
         self.is_initialized = True
@@ -213,8 +223,8 @@ class CodenamesAgent(Agent):
                 self.team
             )
 
-        # Debug print full initialization details
-        print(f"DEBUG: Initialization complete - ID: {self.player_id}, Role: {self.player_role}, Team: {self.team}")
+        # # Debug print full initialization details
+        # print(f"DEBUG: Initialization complete - ID: {self.player_id}, Role: {self.player_role}, Team: {self.team}")
 
     def _parse_board_state(self, observation: str):
         """
@@ -308,6 +318,8 @@ class CodenamesAgent(Agent):
 
         if self.logger:
             self.logger.log_phase("analysis", analysis_prompt, analysis_response, analysis)
+            print_bold_blue(f"Analysis:")
+            print(analysis)
 
         # Phase 2: Candidate generation prompt
         candidate_prompt = self._prompt_spymaster_candidates(
@@ -325,6 +337,8 @@ class CodenamesAgent(Agent):
 
         if self.logger:
             self.logger.log_phase("candidates", candidate_prompt, candidate_response, candidates)
+            print_bold_blue(f"Candidates:")
+            print(candidates)
 
         # Phase 3: Final clue selection prompt
         final_prompt = self._prompt_spymaster_final(candidates)
@@ -339,6 +353,8 @@ class CodenamesAgent(Agent):
 
         if self.logger:
             self.logger.log_phase("final_clue", final_prompt, final_response, final_clue)
+            print_bold_blue(f"Final Clue:")
+            print(final_clue)
 
         # Make sure output matches required format [word number]
         clue_match = re.search(r'\[(\w+)\s+(\d+)\]', final_clue)

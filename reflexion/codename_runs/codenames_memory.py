@@ -42,6 +42,7 @@ class CodenamesMemory:
             memory_dir = Path(__file__).parent / "memory"
             memory_dir.mkdir(exist_ok=True)
             memory_file = memory_dir / "codenames_memory.json"
+            print(memory_file)
 
         self.memory_file = Path(memory_file)
         self.api = get_api_class(api_model_spec)(model=api_model_spec)
