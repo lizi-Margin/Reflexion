@@ -11,10 +11,12 @@ from reflexion.track2_router import create_track2_agent
 DEFAULT_MODEL = "qwen3-8b"
 DEFAULT_TEAM_HASH = "MG25-F5C82328D3"
 
-DEFAULT_MODEL_NAME = "VitoTrack2-Adv"
 # DEFAULT_MODEL_NAME = "VitoTrack2-Adv-ds_v31"
-# DEFAULT_MODEL_NAME = "Default_k2_x1"
-DEFAULT_MODEL_DESCRIPTION = "Advanced multi-phase specialized agents for Track 2 - Generalization"
+# DEFAULT_MODEL_DESCRIPTION = "Advanced multi-phase specialized agents for Track 2 - Generalization"
+
+DEFAULT_MODEL_NAME = "Default_k2"
+DEFAULT_MODEL_DESCRIPTION = "This agent is for Track 2 - Generalization (Multiple environments)."
+
 small_category = True
 
 # # Game environments for Track 2

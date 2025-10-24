@@ -5,7 +5,6 @@ This repository contains our submission for the Mind Games Challenge Track 2 (Ge
 ## Requirements
 
 - Python 3.13.7 (or Python 3.10+)
-- API keys for LLM providers (see Configuration section)
 
 ## Installation
 
@@ -51,6 +50,9 @@ Edit `offline_play.py` to select the environment:
 - `env_id = "Codenames-v0-train"; npc_num = 3` for Codenames (2v2)
 - `env_id = "ColonelBlotto-v0-train"; npc_num = 1` for Colonel Blotto (1v1)
 - `env_id = "ThreePlayerIPD-v0-train"; npc_num = 2` for Three Player IPD
+
+## API Keys
+All Agents use API keys for LLM providers (Already configured). If there are any issues, please contact the team.
 
 ## Contact
 
