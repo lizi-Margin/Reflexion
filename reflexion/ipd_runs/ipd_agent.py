@@ -45,7 +45,8 @@ class IPDAgent(Agent):
         self.strategy_usage_log = []  # Log of strategies used this game
 
         # Inter-trial memory (reflexion)
-        self.memory = memory if memory is not None else IPDMemory(api_model_spec=api_model_spec)
+        # self.memory = memory if memory is not None else IPDMemory(api_model_spec=api_model_spec)
+        self.memory = memory
 
         # Game state tracking
         self.is_initialized = False
@@ -147,6 +148,8 @@ class IPDAgent(Agent):
         Args:
             final_observation: Final observation with game results (optional)
         """
+        if not self.memory:
+            return
         # Extract final results
         if final_observation:
             self._update_game_state_from_observation(final_observation)
@@ -566,7 +569,10 @@ class IPDAgent(Agent):
         """Prompt for conversation strategy phase"""
 
         # Get memory guidance
-        memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
+        if self.memory:
+            memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
+        else:
+            memory_guidance = "No Memory, No Lessons now."
         prompt = ""
         if self.decision_history:
             prompt += "Previous rounds:\n"
@@ -697,8 +703,10 @@ class IPDAgent(Agent):
         """Prompt for final decision phase"""
 
         # Get memory guidance
-        memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
-
+        if self.memory:
+            memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
+        else:
+            memory_guidance = "No Memory, No Lessons now."
      
 
         rankings = self._get_player_rankings()

@@ -68,7 +68,7 @@ def create_track2_agent(
     if env_name is None or env_name == "auto-detect":
         # Will detect from first observation during initialization
         print("Environment auto-detection enabled. Will determine game type from first observation.")
-        return TrackTwoAutoAgent(model_name, api_model_spec, enable_logging=enable_logging)
+        return TrackTwoAutoAgent(model_name, api_model_spec, enable_logging=enable_logging, memory=memory)
 
 
     # Import specialized agents (lazy import)
@@ -109,11 +109,12 @@ class TrackTwoAutoAgent(Agent):
     This is a wrapper that creates the appropriate specialized agent on first observation.
     """
 
-    def __init__(self, model_name: str, api_model_spec: str, enable_logging: bool = True):
+    def __init__(self, model_name: str, api_model_spec: str, enable_logging: bool = True, memory: bool = True):
         self.model_name = model_name
         self.api_model_spec = api_model_spec
         self.enable_logging = enable_logging
         self.specialized_agent = None
+        self.memory = memory
 
     def __call__(self, observation: str) -> str:
         # If first observation, detect game type and create specialized agent
@@ -126,7 +127,7 @@ class TrackTwoAutoAgent(Agent):
                 api_model_spec=self.api_model_spec,
                 env_name=game_type,
                 enable_logging=self.enable_logging,
-                memory=True
+                memory=self.memory
             )
 
         # Delegate to specialized agent

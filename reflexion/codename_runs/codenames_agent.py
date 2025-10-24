@@ -92,7 +92,8 @@ class CodenamesAgent(Agent):
         self.memory.update_memory_from_trial(
             self,
             won=won,
-            should_reflect=True  # Always reflect to learn
+            # should_reflect=True  # Always reflect to learn
+            should_reflect=(not won)
         )
 
         # Add trial result
