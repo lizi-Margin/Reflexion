@@ -1987,6 +1987,146 @@
       "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, focusing heavily on specific fields (especially A and C) across multiple rounds, indicating a preference for dominating key areas rather than spreading resources uniformly.\n\n2. **Field Preference**: The opponent **favored fields A and C**, often allocating large numbers there, while underinvesting in field B, suggesting a strategic emphasis on these fields.\n\n3. **Response to Moves**: The opponent **did not consistently respond to your allocations**, maintaining a similar pattern across rounds, indicating a **pre-planned, independent strategy** rather than adaptive play.\n\n4. **Exploitable Pattern**: You could **exploit the opponent's underinvestment in field B** by allocating more resources there in future games, potentially disrupting their strategy and improving your chances of winning.",
       "won": false,
       "timestamp": "2025-10-24T15:22:16.500510"
+    },
+    {
+      "strategy": "Adaptive Fluidity with Targeted Disruption\n\n**Intention:** To maintain unpredictability while exploiting the opponent's known underinvestment in Field B and their overcommitment to Fields A and C.\n\n**Methodology:**  \n- **Early Stage (Rounds 1-3):** Use **Uniform Allocation** to disrupt the opponent’s potential early focus and gather baseline data on their tendencies.  \n- **Mid-Stage (Rounds 4-6):** Shift to **Adaptive Allocation**, slightly increasing units in Field B while maintaining a balanced spread across all fields. This subtly pressures the opponent’s under-invested field without revealing a clear pattern.  \n- **Late Stage (Rounds 7-9):** Employ **Concentrated-2** strategy, focusing on **Fields B and C**. This exploits the opponent’s known weakness in B and their overcommitment to C, while keeping the allocation from being too predictable.  \n- **Long-Term:** Maintain fluidity and avoid any discernible pattern, even in late rounds, to prevent the opponent from locking in a counter-strategy.  \n\nThis approach balances disruption, exploitation, and unpredictability, aligning with the lessons learned from past games.",
+      "reflection": "**Reflection:**  \nThe strategy’s early uniform allocation disrupted Beta’s focus, but the shift to concentrated allocations introduced predictable patterns, allowing Beta to adapt effectively. The key lesson is to maintain **true fluidity** throughout the game—avoiding even the appearance of concentration or pattern—to sustain unpredictability and prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, heavily favoring Fields A and B in most rounds, with minimal or zero allocation to Field C.  \n2. **Field Preference**: The opponent consistently prioritized **Fields A and B**, suggesting a strong preference or perceived strategic value in those areas.  \n3. **Response to Moves**: The opponent did **not consistently adapt** to Alpha’s allocations, maintaining a similar pattern across rounds, indicating a **fixed or independent strategy**.  \n4. **Exploitable Pattern**: Future strategies could focus on **overcommitting to Field C** to exploit the opponent’s neglect, while balancing A and B to avoid overextension.",
+      "won": false,
+      "timestamp": "2025-10-24T21:26:55.358997"
+    },
+    {
+      "strategy": "**Intention:** Maintain fluidity and unpredictability to disrupt Commander Beta's adaptive and opportunistic tendencies, while exploiting their inconsistent field preferences and underinvestment in certain areas.  \n\n**Methodology:**  \n- **Early Stage (Rounds 1-3):** Use **Uniform Allocation** to disrupt Beta’s potential patterns and prevent them from locking in a strategy.  \n- **Mid-Stage (Rounds 4-6):** Shift to **Adaptive Allocation**, closely observing Beta’s responses and counter their focus on Fields A or C by balancing or under-allocating to those fields. Prioritize Field B, which Beta has historically under-invested in.  \n- **Late Stage (Rounds 7-9):** Employ **Concentrated-2** strategy, targeting Fields A and C based on Beta’s historical focus, while maintaining a slight edge in Field B to secure a win. This keeps Beta guessing and prevents them from locking in a counter-strategy.  \n\nBy avoiding predictable patterns and leveraging Beta’s inconsistency, the goal is to maximize battlefield control and close the score gap in the final rounds.",
+      "reflection": "**Reflection:**  \nThe early uniform allocations effectively disrupted Beta’s initial strategy, but the shift to concentrated allocations introduced predictable patterns, allowing Beta to adapt. The key lesson is to maintain **true fluidity** throughout the game—avoiding even the appearance of concentration or pattern—to sustain unpredictability and prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing forces in fields where they previously lost.  \n2. **Field Preference**: They showed a strong preference for **Field A**, often allocating high units there, and **Field C** was frequently under-resourced.  \n3. **Response to Moves**: The opponent **responded to your allocations**, especially increasing in Field A when you focused on other fields.  \n4. **Exploitable Pattern**: Future games could exploit by **consistently allocating more to Field C** and **balancing Field A** to avoid overcommitting, while pressuring the opponent’s weak fields.",
+      "won": false,
+      "timestamp": "2025-10-24T21:39:20.668192"
+    },
+    {
+      "strategy": "Adaptive Fluidity with Targeted Pressure\n\n**Intention:** To maintain unpredictability while strategically pressuring Beta's weaker fields, especially C, to exploit their inconsistent focus and underinvestment.\n\n**Methodology:**\n- **Early Stage (Rounds 1-3):** Use a **Uniform** allocation to disrupt Beta's potential focus on A and C, forcing them to react without clear direction.\n- **Mid-Stage (Rounds 4-6):** Shift to a **Concentrated-2** strategy, focusing on **Fields A and C** in alternating rounds. This pressures Beta's known preferences and forces them to adjust without clear pattern.\n- **Late Stage (Rounds 7-9):** Employ an **Adaptive** strategy, closely observing Beta’s responses and adjusting to target their weakest field (C) when they underinvest, while maintaining enough flexibility to counter their shifting focus.\n\n**Key Insight:** Beta's strategy is reactive and inconsistent, with no clear long-term plan. By maintaining fluidity and selectively pressuring their underinvested fields, I can exploit their lack of strategic coherence and secure the final victory.",
+      "reflection": "**Reflection:**\n\nThe uniform early allocations effectively disrupted Beta’s initial focus, but the shift to concentrated strategies introduced predictable patterns, allowing Beta to adapt. The key lesson is to maintain **true fluidity** throughout the game—avoiding even the appearance of concentration or pattern—to sustain unpredictability and prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations across rounds in response to Alpha's moves.  \n2. **Field Preference**: They favored **Field A** early on, but shifted focus to **Field C** in later rounds, indicating no consistent field preference.  \n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, particularly in rounds where Alpha changed distributions, suggesting strategic adaptation.  \n4. **Exploitable Pattern**: Alpha could exploit the opponent’s **inconsistent focus** by targeting fields where the opponent allocated fewer resources in later rounds, especially **Field C**.",
+      "won": false,
+      "timestamp": "2025-10-24T22:47:43.284912"
+    },
+    {
+      "strategy": "**Intention:** To maintain fluidity and unpredictability while exploiting the opponent's inconsistent focus and lack of clear strategy.  \n\n**Methodology:**  \n- **Early Rounds (Rounds 1-3):** Use **Uniform Allocation** to disrupt any potential pattern and gather intelligence on Beta's tendencies.  \n- **Mid-Rounds (Rounds 4-6):** Shift to **Adaptive Allocation**, focusing on fields where Beta has historically underinvested (e.g., Field B or C), while occasionally mirroring their focus on Field A to avoid predictability.  \n- **Final Rounds (Rounds 7-9):** Employ **Concentrated-2** strategy, allocating 10 units to two fields (e.g., A and C) to maximize the chance of winning a majority, while keeping the opponent guessing.  \n\nThis approach balances disruption, adaptation, and pressure on weak fields, ensuring that Beta cannot lock in a consistent counter-strategy.",
+      "reflection": "**Reflection:**  \nThe uniform early allocations disrupted Beta’s focus, but the shift to concentrated strategies introduced predictable patterns, allowing Beta to adapt effectively. The key lesson is to maintain **true fluidity** throughout the game—avoiding even the appearance of concentration or pattern—to sustain unpredictability and prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing units in fields where they previously lost.  \n2. **Field Preference**: They favored **Field A**, consistently allocating high numbers there, suggesting it was a priority or a strong field for them.  \n3. **Response to Moves**: The opponent **responded to your allocations**, often increasing units in fields where you had strong presence, indicating strategic adaptation.  \n4. **Exploitable Pattern**: Focus on **balancing your allocations** across fields, especially **Field C**, which the opponent underallocated in some rounds, potentially leaving it vulnerable.",
+      "won": false,
+      "timestamp": "2025-10-24T23:05:14.748183"
+    },
+    {
+      "strategy": "**Intention:** To exploit Commander Beta's inconsistency and lack of strategic coherence by maintaining fluid, unpredictable allocations that force them into reactive, less effective choices.  \n\n**Methodology:**  \n- **Early Stage (Rounds 1-3):** Use **Uniform** allocation to disrupt any potential patterns and prevent Beta from gaining a foothold.  \n- **Mid-Stage (Rounds 4-6):** Shift to **Adaptive** strategy, subtly targeting fields where Beta has shown inconsistency (e.g., Field C) while maintaining enough balance to avoid predictability.  \n- **Late Stage (Rounds 7-9):** Employ **Concentrated-2** strategy with a focus on **Fields A and C**, leveraging Beta’s historical underinvestment in C and their inconsistent focus on A. This forces Beta to overcommit or underallocate, creating opportunities for victory.  \n\nBy maintaining fluidity and exploiting Beta’s lack of a coherent strategy, I aim to win the majority of battlefields in the final rounds and reverse the current score.",
+      "reflection": "**Reflection:**  \nThe uniform early allocations effectively disrupted Beta’s initial strategy, but the shift to concentrated allocations introduced predictable patterns, allowing Beta to adapt. The key lesson is to maintain **true fluidity** throughout the game—avoiding even the appearance of concentration or pattern—to sustain unpredictability and prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing units in Field A when Alpha focused there.  \n2. **Field Preference**: The opponent **favored Field A**, consistently allocating high units there, suggesting it was a priority or a strong field for them.  \n3. **Response to Moves**: The opponent **responded to Alpha’s allocations**, especially in Round 4 and 6, indicating they were tracking and countering Alpha’s strategy.  \n4. **Exploitable Pattern**: Focus on **diversifying allocations** and **avoiding overcommitting to Field A**, while using **surprise allocations** in other fields to disrupt the opponent’s expected responses.",
+      "won": false,
+      "timestamp": "2025-10-24T23:55:25.003322"
+    },
+    {
+      "strategy": "**Intention:** To exploit Beta's predictable focus on Fields A and B while maintaining fluidity to prevent Beta from adapting effectively.  \n\n**Methodology:**  \n- **Early Stage (Rounds 1-3):** Use **Uniform Allocation** to disrupt Beta's expected focus and gather data on their responses.  \n- **Mid-Stage (Rounds 4-6):** Shift to **Adaptive Allocation**, increasing units in Field C while slightly reducing A/B to force Beta to respond.  \n- **Late Stage (Rounds 7-9):** Employ **Concentrated-2** strategy, allocating 10 to C and 10 to B, to exploit Beta’s underinvestment in C and pressure their strong field (B).  \n\nThis approach balances unpredictability with targeted exploitation, leveraging Beta’s fixed strategy while avoiding patterns that could be countered.",
+      "reflection": "**Reflection:**\n\nThe uniform early allocations effectively disrupted Beta’s focus, but the shift to concentrated strategies introduced predictable patterns, allowing Beta to adapt. The key lesson is to maintain **true fluidity** throughout the game—avoiding even the appearance of concentration or pattern—to sustain unpredictability and prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, heavily favoring Fields A and B in most rounds, with minimal or no allocation to Field C.  \n2. **Field Preference**: The opponent **strongly favored Fields A and B**, often allocating the majority of their units there, suggesting these were their priority targets.  \n3. **Response to Moves**: The opponent **did not significantly respond** to Alpha’s allocations, maintaining a consistent focus on A and B across all rounds.  \n4. **Exploitable Pattern**: In future games, **targeting Field C** could disrupt the opponent’s strategy, as they consistently under-allocated to it, allowing for potential points.",
+      "won": false,
+      "timestamp": "2025-10-25T00:07:30.757067"
+    },
+    {
+      "strategy": "**Intention:** Disrupt Beta's focus on B and C by exploiting their neglect of A, while maintaining fluidity to prevent predictable patterns.  \n\n**Methodology:**  \n- **Final Round (Round 9):** Allocate **10 units to Field A** and **5 units each to B and C**. This targets Beta’s historically underprioritized Field A, while still respecting their focus on B and C. The imbalance in A gives a high chance of winning that field, potentially flipping the score.  \n- **Long-Term Strategy:** Throughout the game, avoid overcommitting to any single field. Use **adaptive allocation** to shift focus between A, B, and C based on Beta’s tendencies, but never fully align with their pattern.  \n- **Counter-Strategy:** Since Beta consistently underallocates to A, use **surprise allocations** to A in key rounds to exploit their weakness.  \n- **Avoid Predictability:** Maintain **fluidity** by varying the distribution across rounds, ensuring Beta cannot lock in a counter-strategy.  \n\nThis approach balances exploitation of Beta’s known weaknesses with unpredictability, increasing the chance of a comeback in the final round.",
+      "reflection": "**Reflection:**  \nThe strategy suffered from inconsistent fluidity—early uniform allocations disrupted Beta’s focus, but later concentrated moves introduced predictability, allowing Beta to adapt. The key lesson is to maintain **true, consistent unpredictability** throughout the game, avoiding both uniformity and over-concentration, to prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, favoring **Field B** and **Field C** in most rounds, indicating a focus on securing high-value fields rather than spreading resources evenly.  \n2. **Field Preference**: They consistently allocated more units to **Field B** and **Field C**, especially when they won, suggesting these fields were prioritized.  \n3. **Response to Moves**: The opponent did **not consistently respond** to Alpha’s allocations, indicating a more **independent** strategy rather than adaptive.  \n4. **Exploitable Pattern**: Future games could exploit by **undercutting Fields B and C** and **overcommitting to Field A**, where the opponent was less dominant, to disrupt their strategy.",
+      "won": false,
+      "timestamp": "2025-10-25T02:00:26.098365"
+    },
+    {
+      "strategy": "**Intention:** To disrupt Commander Beta's adaptive, inconsistent strategy by maintaining fluidity and exploiting their under-allocated fields.  \n**Methodology:** Use an **adaptive, fluid allocation** that avoids predictability, with a focus on **Field C**—a historically under-allocated field for Beta. In the final round, apply a **concentrated-2** strategy on Fields B and C to counter Beta’s likely attempt to secure a decisive win. This approach balances unpredictability with targeted pressure on Beta’s weak points.",
+      "reflection": "**Reflection:**  \nThe strategy suffered from inconsistent fluidity—early uniform allocations disrupted Beta’s focus, but later concentrated moves introduced predictability, allowing Beta to adapt. The key lesson is to maintain **true, consistent unpredictability** throughout the game, avoiding both uniformity and over-concentration, to prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly shifting focus between fields in response to Alpha's moves.  \n2. **Field Preference**: They favored **Field B** early on, but later shifted focus to **Field C** in rounds 4 and 5, suggesting flexibility rather than a fixed preference.  \n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, especially in rounds 6–8, indicating strategic adaptation rather than independent play.  \n4. **Exploitable Pattern**: Targeting **Field C** in later rounds when the opponent overcommitted to B could be a weakness; future games could focus on **balancing pressure across fields** to disrupt their adaptability.",
+      "won": false,
+      "timestamp": "2025-10-25T02:51:10.071401"
+    },
+    {
+      "strategy": "Adaptive Fluidity with Targeted Disruption\n\n**Intention:** To maintain unpredictability while exploiting the opponent's inconsistent focus and adaptive tendencies, especially in the final round to maximize the chance of overturning the current score.\n\n**Methodology:**  \n- **Avoid Predictable Patterns:** Continue using a fluid strategy that avoids overcommitting to any single field or repeating allocation structures. This prevents the opponent from locking in a counter-strategy.  \n- **Target Under-Allocated Fields:** Based on past patterns, Field C has been under-allocated by Commander Beta in several rounds. Allocate a moderate number of units to Field C to disrupt their expected focus.  \n- **Counter Adaptive Behavior:** Since Beta responds to allocations, allocate a slightly higher number to Field A (their historical focus) but not excessively, to avoid overcommitment.  \n- **Final Round Pressure:** With the score at 2-4 and only one round left, prioritize a balanced yet slightly aggressive allocation that maximizes the chance of winning at least one field, ideally two, to close the gap or secure a draw.\n\n**Allocation:** A: 7, B: 6, C: 7  \nThis balances pressure across all fields, subtly targets Field C for disruption, and avoids overcommitting to any single field, maintaining fluidity and unpredictability.",
+      "reflection": "**Reflection:**  \nThe strategy showed promise in maintaining fluidity but suffered from inconsistent allocation patterns, allowing Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** throughout the game, avoiding both uniformity and over-concentration, to prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing units in fields where they previously lost (e.g., Field B in Round 5 and Field A in Round 8).  \n2. **Field Preference**: They **favored Fields A and B**, consistently allocating high units to these fields, especially when facing strong competition.  \n3. **Response to Moves**: The opponent **responded to your allocations**, shifting resources to counter your focus areas, such as increasing Field B units when you concentrated there.  \n4. **Exploitable Pattern**: Future games could exploit **under-allocation in Field C** by Commander Beta, as they consistently under-invested there despite its potential for high points.",
+      "won": false,
+      "timestamp": "2025-10-25T02:54:23.013757"
+    },
+    {
+      "strategy": "**Intention**: To maintain fluid, unpredictable allocation patterns that prevent Commander Beta from locking in effective counter-strategies, while exploiting their historical under-investment in Field C.  \n\n**Methodology**:  \n- **Early-Stage (Rounds 1–3)**: Use **Uniform** allocation (e.g., 6-7-7) to disrupt any potential focus and establish unpredictability.  \n- **Mid-Stage (Rounds 4–6)**: Shift to **Adaptive** strategy, subtly increasing Field C allocation (e.g., 5-7-8) to pressure the field Beta historically under-invested in.  \n- **Late-Stage (Rounds 7–9)**: Continue **Adaptive** with slight variations (e.g., 7-6-7, 8-5-7) to maintain unpredictability while ensuring Field C remains a consistent threat.  \n- **Final Move (Round 9)**: Use a **Concentrated-2** strategy (e.g., 8-7-5) to maximize battlefield control in high-value fields, leveraging Beta’s lack of consistent focus.  \n\nThis approach balances pressure on Field C, avoids predictable patterns, and exploits Beta’s historical weaknesses without overcommitting.",
+      "reflection": "**Reflection:**  \nThe strategy’s early uniformity disrupted Beta’s focus, but later concentrated moves introduced predictability, allowing Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** throughout the game, avoiding both uniformity and over-concentration, to prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing units in fields where they previously lost (e.g., Field A in Round 3 and Round 4).\n\n2. **Field Preference**: The opponent **favored Field A**, often allocating more units there, especially when they had an advantage or needed to counter your focus.\n\n3. **Response to Moves**: The opponent **responded to your allocations**, especially in Rounds 3, 4, and 8, where they adjusted their strategy to counter your moves, indicating a reactive approach.\n\n4. **Exploitable Pattern**: In future games, you could **focus on balancing your allocations** across all fields, especially C, and **avoid overcommitting to Field A**, as the opponent seems to have a strong reaction to it.",
+      "won": false,
+      "timestamp": "2025-10-25T04:07:04.633027"
+    },
+    {
+      "strategy": "Adaptive Fluidity with C-Focus\n\n**Intention:** To disrupt Beta's predictable A/B focus and exploit their under-allocation to Field C, while maintaining unpredictability to prevent Beta from locking in a counter-strategy.\n\n**Methodology:**  \n- **Prioritize Field C:** Allocate a significant portion of units to Field C to exploit Beta's historical under-investment there.  \n- **Maintain Unpredictability:** Avoid over-concentration in any single field, and vary allocations across rounds to prevent Beta from adapting effectively.  \n- **Counter Beta's A/B Focus:** While not fully committing to A or B, allocate enough to prevent Beta from securing a majority in those fields.  \n- **Adaptive Response:** Based on Beta's tendencies to respond to C when challenged, prepare to shift focus slightly if Beta reacts, but keep the core strategy centered on C.  \n\nThis approach balances pressure across all fields, exploits Beta's known weakness in C, and maintains the fluidity needed to prevent Beta from locking in a winning strategy.",
+      "reflection": "**Reflection:**  \nThe strategy showed promise in targeting Field C but suffered from inconsistent allocation patterns, swinging between uniformity and over-concentration, which allowed Beta to adapt. The key lesson is to maintain **true, consistent unpredictability** throughout the game, avoiding both uniformity and over-concentration, to prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Consistency**: The opponent used a **concentrated strategy**, heavily favoring fields A and B, with minimal allocation to field C.  \n2. **Field Preference**: They consistently allocated more units to **fields A and B**, suggesting a focus on dominating these fields.  \n3. **Response to Moves**: The opponent **did not significantly adapt** to Alpha's allocations, maintaining a consistent focus on A and B across rounds.  \n4. **Exploitable Pattern**: Future strategies could **undercut their concentration** by allocating more to field C and less to A/B, exploiting their lack of adaptability.",
+      "won": false,
+      "timestamp": "2025-10-25T04:10:22.383931"
+    },
+    {
+      "strategy": "Intention - Maintain Unpredictability; Methodology - Adaptive Fluidity\n\n**Intention:** To disrupt Commander Beta's lack of a clear strategy by maintaining **true, consistent unpredictability** across all rounds, preventing them from locking in effective counter-strategies.\n\n**Methodology:**  \n- **Early Stage (Rounds 1-3):** Use a **Uniform** allocation (e.g., 6-7-7) to disrupt any potential focus or pattern. This keeps Beta guessing and prevents them from establishing a dominant field.  \n- **Mid-Stage (Rounds 4-6):** Shift to a **Concentrated-2** strategy, but vary the fields (e.g., 0-10-10, then 10-0-10, then 10-10-0) to prevent predictability. This forces Beta to react without a clear target.  \n- **Late Stage (Rounds 7-9):** Employ an **Adaptive** approach, mirroring or slightly countering Beta's previous moves in the final rounds. Since Beta is unpredictable, this keeps them off-balance and increases the chance of breaking the 1-1 tie.  \n\nBy maintaining fluidity and avoiding both uniformity and over-concentration, I aim to exploit Beta's lack of a fixed strategy and secure a win in the final round.",
+      "reflection": "**Reflection:**  \nThe strategy’s early uniformity disrupted Beta’s focus, but later concentrated and repetitive moves introduced predictability, allowing Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** throughout the game, avoiding both uniformity and over-concentration, to prevent the opponent from locking in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations in response to Alpha's moves, particularly in Rounds 1, 4, and 6.  \n2. **Field Preference**: They showed a **preference for Field B**, often allocating more units there, especially when Alpha focused on other fields.  \n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, shifting resources to counteract Alpha's strengths.  \n4. **Exploitable Pattern**: Focus on **overcommitting to Field B** and **underallocating to Field C** could be exploited by concentrating more on C and disrupting their B advantage.",
+      "won": false,
+      "timestamp": "2025-10-25T04:13:39.830099"
+    },
+    {
+      "strategy": "**Intention:** To maintain consistent unpredictability while exploiting the opponent's adaptive tendencies and field preferences.  \n**Methodology:** Use a **Balanced Adaptive Strategy**—allocate units in a way that keeps the opponent guessing, while subtly pressuring their preferred fields (B and C) and under-committing to A, where they react most strongly. In this final round, focus on **Field C** to disrupt their focus and secure a win by securing at least two fields.  \n\n**Allocation:** A: 5, B: 5, C: 10",
+      "reflection": "1. **Allocation patterns** worked well in the early rounds with a uniform distribution, but later shifts toward concentration in Field C and inconsistent adjustments led to predictability and allowed the opponent to adapt effectively.  \n2. The strategy was too **concentrated** in certain rounds and **too uniform** in others, lacking the **consistent unpredictability** needed to keep the opponent guessing.  \n3. Predictions of opponent moves were **inconsistent**, with Beta successfully adapting to the shifting focus on Field C and reacting strongly to under-commitment in Field A.  \n4. To improve, focus on maintaining **true, consistent unpredictability** by balancing pressure across fields while subtly targeting the opponent’s preferences, avoiding over-concentration or uniformity in allocation.  \n\n**Key Lesson:** Maintain **true, consistent unpredictability** throughout the game by avoiding both uniformity and over-concentration, ensuring the opponent cannot lock in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Consistency**: The opponent used a **concentrated** strategy, favoring fields **A and B** in most rounds, with a notable shift to **C** in some rounds, suggesting **some adaptability** but not a fully consistent or uniform approach.\n\n2. **Field Preference**: The opponent **strongly favored fields A and B**, allocating significant units to these fields across multiple rounds, indicating a strategic emphasis on these areas.\n\n3. **Response to Moves**: The opponent **did not consistently respond to Alpha’s allocations**, as their strategy remained largely focused on A and B regardless of Alpha’s distribution, suggesting **independent play** rather than reactive adjustments.\n\n4. **Exploitable Pattern**: Future games could exploit the opponent’s **overcommitment to A and B** by **underallocating to these fields** and **targeting C more aggressively**, disrupting their expected advantage.",
+      "won": false,
+      "timestamp": "2025-10-25T05:03:33.381488"
+    },
+    {
+      "strategy": "**Intention**: To maintain consistent unpredictability while subtly exploiting Commander Beta's overcommitment to Field A and underinvestment in Field C.  \n\n**Methodology**:  \n- **Early-Stage (Rounds 1-3)**: Use a **Uniform** strategy (e.g., [A:7, B:7, C:6]) to disrupt Beta’s focus and gather data on their tendencies.  \n- **Mid-Stage (Rounds 4-6)**: Shift to a **Concentrated-2** strategy, focusing on Fields B and C (e.g., [A:3, B:8, C:9]) to pressure Beta’s underinvested C and counter their A focus.  \n- **Late-Stage (Rounds 7-9)**: Employ an **Adaptive** strategy, adjusting based on Beta’s recent moves. If they continue to overcommit to A, underallocate to A and boost C. If they shift focus, mirror their new emphasis but always leave C as a surprise.  \n\nThis approach balances pressure across fields, avoids predictability, and exploits Beta’s known weaknesses while keeping them guessing.",
+      "reflection": "**Reflection:**  \nThe strategy showed promise in early rounds with uniform allocation but failed due to inconsistent shifts toward concentration and predictability, allowing Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by balancing pressure across fields without over-concentrating or falling into uniform patterns, ensuring the opponent cannot lock in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing units in Field A when Alpha focused on B and C.  \n2. **Field Preference**: The opponent **favored Field A** in several rounds, especially when Alpha concentrated on B and C, suggesting a strategic focus on countering or securing A.  \n3. **Response to Moves**: The opponent **responded to Alpha’s allocations**, shifting resources to counter perceived weaknesses, particularly in Round 1 and Round 8.  \n4. **Exploitable Pattern**: Future games could benefit from **consistently allocating more to Field A** to counter the opponent’s focus, while balancing B and C to avoid predictable patterns.",
+      "won": false,
+      "timestamp": "2025-10-25T05:23:22.208302"
+    },
+    {
+      "strategy": "**Intention:** To maintain **true, consistent unpredictability** while subtly pressuring the opponent’s known preferences (Fields A and B) and exploiting their under-allocation in Field C.  \n\n**Methodology:**  \n- **Use a Concentrated-2 Strategy** on Fields A and B to pressure the opponent’s known focus, while **under-allocating to Field C** to force them into a reactive position.  \n- **Avoid uniformity** to prevent the opponent from locking in a counter-strategy.  \n- **Predict their adaptive tendencies** by targeting their historically favored fields, knowing they may shift to counter, but not enough to fully disrupt the pressure on A and B.  \n- **Final round focus:** Prioritize securing a **majority of battlefields** by ensuring at least two fields are won, even if it means slightly favoring A and B, given the opponent’s historical preference and the high stakes of the final round.  \n\nThis approach balances **pressure, unpredictability, and exploitation** of the opponent’s known tendencies, maximizing the chance to secure a win in the final round.",
+      "reflection": "**Reflection:**  \nThe strategy initially showed promise with balanced allocations but later became too concentrated in certain fields and too inconsistent, allowing the opponent to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by avoiding both over-concentration and uniformity, ensuring the opponent cannot lock in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on Commander Alpha's moves, particularly increasing allocations in fields where Alpha had strong presence (e.g., A and B) and exploiting weaker fields (e.g., C).  \n\n2. **Field Preference**: The opponent **favored fields A and B**, often allocating high units there, especially when Alpha focused on those fields, suggesting a strategic emphasis on key areas.  \n\n3. **Response to Moves**: The opponent **responded to Alpha’s allocations**, shifting resources to counter strong Alpha deployments, particularly in rounds where Alpha concentrated forces.  \n\n4. **Exploitable Pattern**: In future games, **targeting field C** could be a strategic advantage, as the opponent often underallocated there, possibly due to overcommitment elsewhere.",
+      "won": false,
+      "timestamp": "2025-10-25T05:26:54.974505"
+    },
+    {
+      "strategy": "**Intention:** Disrupt Beta's predictable focus on Fields A and B by exploiting their underinvestment in Field C, while maintaining consistent unpredictability to prevent adaptation.  \n\n**Methodology:**  \n- **Concentrated-2 with a twist**: Allocate 10 units to Field A (to mirror Beta's focus and avoid tipping them off) and 10 units to Field C (to exploit their underinvestment).  \n- **Avoid uniformity or over-concentration**: This split keeps pressure on both A and C, forcing Beta to respond in a way that may reveal new patterns.  \n- **Final round aggression**: By underinvesting in B (0 units), we force Beta to either overcommit to A (risking loss in C) or split resources, which weakens their overall position.  \n- **Long-term unpredictability**: This allocation avoids the pitfalls of past strategies by balancing pressure across fields without overcommitting, keeping Beta guessing and limiting their ability to adapt effectively.",
+      "reflection": "**Reflection:**  \nThe strategy initially showed promise with balanced allocations but later became too concentrated in Field C and inconsistent, allowing Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by balancing pressure across fields without over-concentration or uniformity, ensuring the opponent cannot lock in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, heavily favoring Fields A and B in most rounds, with minimal or zero allocation to Field C.  \n2. **Field Preference**: The opponent consistently prioritized **Fields A and B**, suggesting a focus on dominating these fields over C.  \n3. **Response to Moves**: The opponent did **not adapt** significantly to Alpha's allocations, maintaining a consistent focus on A and B across all rounds.  \n4. **Exploitable Pattern**: Future strategies could **allocate more units to Field C** to exploit the opponent's neglect, while balancing A and B to avoid overcommitting.",
+      "won": false,
+      "timestamp": "2025-10-25T07:00:27.568809"
+    },
+    {
+      "strategy": "**Intention:** To maintain true, consistent unpredictability across all rounds, avoiding over-concentration in any single field and preventing the opponent from locking in effective counter-strategies. The goal is to disrupt Beta’s inconsistent and adaptive tendencies by balancing pressure across all fields while subtly targeting their historical preferences.\n\n**Methodology:**  \n- **Early Stage (Rounds 1–3):** Use a **Uniform** allocation (e.g., 6–7 units per field) to disrupt Beta’s potential focus and establish a baseline of unpredictability.  \n- **Mid-Stage (Rounds 4–6):** Shift to a **Concentrated-2** strategy, focusing on Fields A and C (e.g., 8 in A, 7 in C, 5 in B), based on Beta’s historical preference for A and under-allocation to C. This pressures their known weaknesses while keeping B balanced.  \n- **Late Stage (Rounds 7–9):** Return to a **Uniform** or **Adaptive** strategy, adjusting based on Beta’s recent moves. If Beta has focused on A or C, under-commit to those fields and over-commit to B or the under-allocated field. This forces them to react unpredictably and prevents them from locking in a dominant strategy.  \n\nBy maintaining a mix of pressure and unpredictability, the strategy exploits Beta’s lack of a clear pattern while keeping them off-balance.",
+      "reflection": "**Reflection:**  \nThe strategy showed promise in early rounds with uniform allocation but failed due to inconsistent shifts toward concentration and predictability, allowing Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by balancing pressure across fields without over-concentration or falling into uniform patterns, ensuring the opponent cannot lock in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations in response to Alpha's moves, particularly in rounds where Alpha shifted focus (e.g., Round 3, 4, 7, 8).  \n2. **Field Preference**: The opponent showed a **preference for Field C**, often allocating significant units there, especially when Alpha undercommitted.  \n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, especially when Alpha concentrated forces in one field, suggesting they were trying to counterbalance.  \n4. **Exploitable Pattern**: Future games could exploit the opponent's **overcommitment to Field C** by **underallocating there** and **distributing forces more evenly** to disrupt their strategy.",
+      "won": false,
+      "timestamp": "2025-10-25T10:50:50.620449"
+    },
+    {
+      "strategy": "**Intention:** To maintain true, consistent unpredictability across all rounds, avoiding over-concentration or uniformity, while subtly targeting the opponent's adaptive tendencies and field preferences.  \n\n**Methodology:**  \n- **Early Stage (Rounds 1–3):** Use a **Uniform** strategy to disrupt the opponent’s potential focus, forcing them to react without locking in a clear pattern.  \n- **Mid-Stage (Rounds 4–6):** Shift to **Adaptive** play, responding to the opponent’s allocations by concentrating on fields they have previously undercommitted (e.g., C), while balancing pressure across A and B to prevent predictability.  \n- **Final Stage (Rounds 7–9):** Employ a **Concentrated-2** strategy, targeting the opponent’s historically favored fields (A and B) to disrupt their dominance, while ensuring a strong presence in C to exploit their neglect.  \n\nThis approach balances pressure, counters the opponent’s adaptability, and avoids the pitfalls of over-concentration or uniformity, keeping them guessing and maximizing the chance of securing a majority in the final round.",
+      "reflection": "1. **Allocation Patterns:** The uniform strategy in the early rounds disrupted Beta’s focus, but the shift to concentrated play in later rounds became predictable and allowed Beta to adapt effectively. The inconsistent shifts between uniform, adaptive, and concentrated strategies weakened overall unpredictability.\n\n2. **Uniformity vs. Concentration:** The strategy oscillated between too uniform (early rounds) and too concentrated (final rounds), failing to maintain consistent unpredictability. This inconsistency allowed Beta to anticipate and counter moves effectively.\n\n3. **Prediction of Opponent Moves:** The strategy did not consistently predict Beta’s tendencies, especially in the mid and late stages, where Beta adapted to the shifting focus, particularly in Fields A and B.\n\n4. **Strategy Adjustments:** To improve win rate, maintain a more fluid and balanced approach that blends subtle concentration with consistent unpredictability, avoiding clear patterns while still applying pressure to Beta’s historically favored fields.\n\n**Reflection:** The key lesson is to maintain **true, consistent unpredictability** by balancing pressure across fields without over-concentration or falling into uniform patterns, ensuring the opponent cannot lock in effective counter-strategies.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations in response to Alpha's moves, particularly increasing units in fields where Alpha had strong presence (e.g., A and C) and reducing in fields where Alpha was weak (e.g., B).\n\n2. **Field Preference**: The opponent **favored Field A** in several rounds and showed a tendency to **underinvest in Field B**, suggesting a possible weakness or strategic focus on A.\n\n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, especially in rounds 4–8, where they shifted resources to counter Alpha's stronger deployments, indicating a reactive strategy.\n\n4. **Exploitable Pattern**: Future games could exploit the opponent's **overcommitment to Field A** and **underinvestment in Field B**, by **concentrating forces in B** and **balancing A** to disrupt their strategy.",
+      "won": false,
+      "timestamp": "2025-10-25T12:02:14.950816"
+    },
+    {
+      "strategy": "**Intention:** Maintain true, consistent unpredictability by balancing pressure across all fields while subtly targeting the opponent’s historically favored areas (A and B), and exploiting their underinvestment in C.  \n\n**Methodology:**  \n- **Early Stage (Rounds 1–3):** Use a **Uniform** allocation (e.g., 6-6-8) to disrupt Beta’s potential focus and establish a balanced baseline.  \n- **Mid-Stage (Rounds 4–6):** Shift to a **Concentrated-2** strategy, focusing on **Fields A and C** (e.g., 8-6-6). This pressures Beta’s favored A while exploiting their underinvestment in C.  \n- **Late Stage (Rounds 7–9):** Employ an **Adaptive** approach, adjusting based on Beta’s previous moves. If Beta focuses on A, slightly undercommit to A and overcommit to B or C. If Beta shifts to C, mirror that focus but with a slight edge in B to disrupt their strategy.  \n\nThis approach avoids predictability, keeps pressure on Beta’s key fields, and exploits their inconsistencies while maintaining a fluid, responsive strategy.",
+      "reflection": "**Reflection:**  \nThe strategy oscillated between uniform and concentrated allocations, creating predictability that allowed Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by blending subtle pressure across all fields while avoiding clear patterns or over-concentration, ensuring the opponent cannot reliably counter your strategy.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous outcomes, particularly favoring fields where they had prior success or could disrupt Alpha's distribution.\n\n2. **Field Preference**: The opponent showed a **preference for fields A and B**, often allocating more units there, especially when Alpha focused on C, suggesting a strategic emphasis on key fields.\n\n3. **Response to Moves**: The opponent **responded to Alpha's allocations**, shifting resources to counterbalance Alpha's strengths, particularly in rounds where Alpha concentrated forces on one field.\n\n4. **Exploitable Pattern**: In future games, Alpha could **consistently allocate more to field C** to disrupt the opponent's expected focus on A and B, potentially gaining an advantage in those rounds.",
+      "won": false,
+      "timestamp": "2025-10-25T12:05:37.426155"
+    },
+    {
+      "strategy": "**Intention:** To disrupt Beta's adaptive and unpredictable tendencies by maintaining consistent, subtle pressure across all fields while exploiting their historical overcommitment to B and C.  \n\n**Methodology:**  \n- **Early Stage (Rounds 1–3):** Use a **Uniform** strategy to establish unpredictability and prevent Beta from locking in a pattern.  \n- **Mid-Stage (Rounds 4–6):** Shift to a **Concentrated-2** strategy, focusing on **A and C** to counter Beta’s preference for B and C, while keeping A under-allocated to exploit their potential overcommitment.  \n- **Late Stage (Rounds 7–9):** Employ an **Adaptive** strategy, mirroring Beta’s recent focus on B and C but with a slight edge in **C** to disrupt their balance, while maintaining a small presence in A to prevent them from fully committing to B.  \n\nThis approach balances unpredictability with strategic pressure, aiming to exploit Beta’s reactive tendencies and historical field preferences.",
+      "reflection": "**Reflection:**  \nThe strategy oscillated between uniform and concentrated allocations, creating predictability that allowed Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by blending subtle pressure across all fields while avoiding clear patterns or over-concentration, ensuring the opponent cannot reliably counter your strategy.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, focusing heavily on fields B and C in most rounds, especially in the early rounds.  \n2. **Field Preference**: They consistently favored **fields B and C**, often allocating the majority of their units there, while underinvesting in field A.  \n3. **Response to Moves**: The opponent did **not consistently adapt** to Alpha’s allocations, suggesting a more rigid or pre-planned strategy rather than reactive.  \n4. **Exploitable Pattern**: Future games could exploit the opponent’s **overcommitment to B and C** by **underinvesting in those fields** and **increasing presence in field A**, where they were weaker.",
+      "won": false,
+      "timestamp": "2025-10-25T12:41:26.460706"
     }
   ],
   "trial_history": [
@@ -4829,11 +4969,301 @@
       "final_score": 3,
       "opponent_score": 4,
       "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_18PM/game_log.json"
+    },
+    {
+      "trial_id": 284,
+      "timestamp": "2025-10-24T21:26:55.368225",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-9_23PM/game_log.json"
+    },
+    {
+      "trial_id": 285,
+      "timestamp": "2025-10-24T21:39:20.676772",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-9_36PM/game_log.json"
+    },
+    {
+      "trial_id": 286,
+      "timestamp": "2025-10-24T22:42:06.819094",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 1,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-10_37PM/game_log.json"
+    },
+    {
+      "trial_id": 287,
+      "timestamp": "2025-10-24T22:47:43.292335",
+      "won": false,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-10_42PM/game_log.json"
+    },
+    {
+      "trial_id": 288,
+      "timestamp": "2025-10-24T23:05:14.758272",
+      "won": false,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_00PM/game_log.json"
+    },
+    {
+      "trial_id": 289,
+      "timestamp": "2025-10-24T23:22:26.627336",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_18PM/game_log.json"
+    },
+    {
+      "trial_id": 290,
+      "timestamp": "2025-10-24T23:55:25.013464",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_52PM/game_log.json"
+    },
+    {
+      "trial_id": 291,
+      "timestamp": "2025-10-25T00:07:30.766127",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_05AM/game_log.json"
+    },
+    {
+      "trial_id": 292,
+      "timestamp": "2025-10-25T01:13:01.730765",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-1_09AM/game_log.json"
+    },
+    {
+      "trial_id": 293,
+      "timestamp": "2025-10-25T02:00:26.106697",
+      "won": false,
+      "rounds_won": 0,
+      "total_rounds": 9,
+      "final_score": 0,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-1_57AM/game_log.json"
+    },
+    {
+      "trial_id": 294,
+      "timestamp": "2025-10-25T02:51:10.079804",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-2_47AM/game_log.json"
+    },
+    {
+      "trial_id": 295,
+      "timestamp": "2025-10-25T02:54:23.024941",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-2_51AM/game_log.json"
+    },
+    {
+      "trial_id": 296,
+      "timestamp": "2025-10-25T03:55:34.905502",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-3_52AM/game_log.json"
+    },
+    {
+      "trial_id": 297,
+      "timestamp": "2025-10-25T04:07:04.641137",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_03AM/game_log.json"
+    },
+    {
+      "trial_id": 298,
+      "timestamp": "2025-10-25T04:10:22.396376",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_07AM/game_log.json"
+    },
+    {
+      "trial_id": 299,
+      "timestamp": "2025-10-25T04:13:39.839740",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 1,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_10AM/game_log.json"
+    },
+    {
+      "trial_id": 300,
+      "timestamp": "2025-10-25T04:16:55.359170",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_13AM/game_log.json"
+    },
+    {
+      "trial_id": 301,
+      "timestamp": "2025-10-25T05:03:33.390201",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-5_00AM/game_log.json"
+    },
+    {
+      "trial_id": 302,
+      "timestamp": "2025-10-25T05:23:22.216434",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-5_19AM/game_log.json"
+    },
+    {
+      "trial_id": 303,
+      "timestamp": "2025-10-25T05:26:54.983304",
+      "won": false,
+      "rounds_won": 3,
+      "total_rounds": 9,
+      "final_score": 3,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-5_23AM/game_log.json"
+    },
+    {
+      "trial_id": 304,
+      "timestamp": "2025-10-25T05:29:51.840392",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-5_26AM/game_log.json"
+    },
+    {
+      "trial_id": 305,
+      "timestamp": "2025-10-25T07:00:27.577102",
+      "won": false,
+      "rounds_won": 3,
+      "total_rounds": 9,
+      "final_score": 3,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-6_57AM/game_log.json"
+    },
+    {
+      "trial_id": 306,
+      "timestamp": "2025-10-25T09:23:53.564582",
+      "won": true,
+      "rounds_won": 4,
+      "total_rounds": 9,
+      "final_score": 4,
+      "opponent_score": 0,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-9_21AM/game_log.json"
+    },
+    {
+      "trial_id": 307,
+      "timestamp": "2025-10-25T10:00:52.276570",
+      "won": true,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-9_57AM/game_log.json"
+    },
+    {
+      "trial_id": 308,
+      "timestamp": "2025-10-25T10:50:50.629061",
+      "won": false,
+      "rounds_won": 3,
+      "total_rounds": 9,
+      "final_score": 3,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-10_47AM/game_log.json"
+    },
+    {
+      "trial_id": 309,
+      "timestamp": "2025-10-25T11:58:44.447098",
+      "won": true,
+      "rounds_won": 3,
+      "total_rounds": 9,
+      "final_score": 3,
+      "opponent_score": 2,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_55AM/game_log.json"
+    },
+    {
+      "trial_id": 310,
+      "timestamp": "2025-10-25T12:02:14.959163",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_58AM/game_log.json"
+    },
+    {
+      "trial_id": 311,
+      "timestamp": "2025-10-25T12:05:37.435634",
+      "won": false,
+      "rounds_won": 3,
+      "total_rounds": 9,
+      "final_score": 3,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_02PM/game_log.json"
+    },
+    {
+      "trial_id": 312,
+      "timestamp": "2025-10-25T12:41:26.472045",
+      "won": false,
+      "rounds_won": 1,
+      "total_rounds": 9,
+      "final_score": 1,
+      "opponent_score": 4,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_37PM/game_log.json"
     }
   ],
   "metadata": {
     "created_at": "2025-10-24T01:41:34.903930",
-    "last_updated": "2025-10-24T15:22:16.507997",
-    "total_trials": 284
+    "last_updated": "2025-10-25T12:41:26.472055",
+    "total_trials": 313
   }
 }

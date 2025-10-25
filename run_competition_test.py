@@ -22,8 +22,8 @@ SMALL_CATEGORY = True
 # Game environments for Track 2
 TRACK2_GAMES = [
     "Codenames-v0-train",
-    # "ColonelBlotto-v0-train",
-    # "ThreePlayerIPD-v0-train"
+    "ColonelBlotto-v0-train",
+    "ThreePlayerIPD-v0-train"
 ]
 
 # Number of NPCs for each game
