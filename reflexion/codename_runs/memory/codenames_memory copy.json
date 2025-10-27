@@ -1,0 +1,758 @@
+{
+  "memory": [
+    {
+      "strategy": "condition",
+      "reflection": "**Strategy Reflection:**  \nThe key lesson learned is the importance of balancing clue ambiguity with clarity to maximize word connections while minimizing the risk of accidentally pointing toward neutral or assassin words. Effective communication and careful observation of team responses helped maintain focus on red words, ensuring a strategic and safe path to victory.",
+      "opponent_analysis": "**Opponent Analysis:**\n\nThe opposing Blue team's strategic approach was characterized by a mix of effective and inconsistent tactics, which ultimately contributed to their defeat.\n\n1. **Clue Giving Effectiveness:**  \n   The Blue Spymaster provided clues that were occasionally clear and relevant, but often lacked the precision needed to efficiently guide their Operative toward high-value words. There were instances where clues were too vague or too broad, leading to confusion and wasted turns.\n\n2. **Operative Guessing Success:**  \n   The Blue Operative was somewhat successful in guessing words, particularly in the early rounds, but their performance declined as the game progressed. This suggests that while they had a good grasp of the board at first, they struggled to maintain focus and adapt to the Red team's evolving strategy.\n\n3. **Notable Strategic Decisions:**  \n   One notable decision was the Blue team's tendency to prioritize guessing over clue-giving in later rounds, which led to missed opportunities. They also occasionally used overly general clues that did not align well with the remaining words, resulting in suboptimal word selection.\n\n4. **Communication and Guessing Patterns:**  \n   The Blue team exhibited a pattern of reactive guessing rather than proactive strategy. They often relied on the Spymaster’s clues without fully analyzing the board, which limited their ability to anticipate the Red team’s moves. Additionally, their communication was occasionally disjointed, with the Spymaster and Operative not always aligning on the best course of action.\n\n**Conclusion:**  \nThe Blue team's strategy was inconsistent, with moments of strong clue-giving and guessing countered by poor coordination and strategic missteps. Their failure to maintain a cohesive and adaptive approach ultimately led to their defeat.",
+      "won": true,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T02:37:07.927626"
+    },
+    {
+      "strategy": "time",
+      "reflection": "**Spymaster Perspective:**  \nYour clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation. You made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \nYou generally interpreted clues accurately, but occasionally took risks based on partial information. A few incorrect guesses were made, which slowed progress. Your guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication.",
+      "opponent_analysis": "**Opponent Analysis:**\n\nThe Blue team's strategic approach was characterized by **effective clue-giving** and **disciplined word selection**, which contributed significantly to their success. Here's a concise breakdown:\n\n1. **Clue-Giving Effectiveness:**  \n   The Blue Spymaster provided **clear, concise, and highly relevant clues**, often narrowing down potential words to a small set. Their clues were **strategically vague enough to avoid tipping off the Red team**, yet **specific enough to guide their Operative toward high-value words**.\n\n2. **Operative Success in Guessing:**  \n   The Blue Operative demonstrated **strong word recognition skills**, often guessing words that were **high-value or critical to the board**. Their ability to **quickly interpret clues and connect them to board words** was a key factor in their success.\n\n3. **Notable Strategic Decisions:**  \n   - The Blue team **prioritized high-impact words** early in the game, securing critical positions on the board.  \n   - They **avoided overcommitting to ambiguous clues**, which helped prevent confusion and wasted turns.  \n   - They **maintained a steady pace**, ensuring they didn’t rush and made calculated guesses.\n\n4. **Communication and Guessing Patterns:**  \n   - The Blue Spymaster used **consistent clue structures**, making it easier for the Operative to anticipate and respond.  \n   - The Operative **followed a logical guessing pattern**, often selecting words that were **visually or semantically linked** to the clue.  \n   - There was **minimal miscommunication** between the Spymaster and Operative, indicating strong coordination and trust.\n\n**Conclusion:**  \nThe Blue team’s **cohesive strategy**, **effective communication**, and **disciplined word selection** allowed them to outmaneuver the Red team. Their ability to **control the flow of the game** and **capitalize on high-value words** was instrumental in their victory.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T03:02:15.045807"
+    },
+    {
+      "strategy": "wrap",
+      "reflection": "**Spymaster Perspective:**  \n1. Your clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. You made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. You generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. Your guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "**Opponent Analysis:**\n\nThe opposing Blue team's strategic approach was characterized by **efficient clue-giving**, **accurate word guessing**, and **strategic word selection** that maximized their board control.\n\n1. **Clue-Giving Effectiveness:**  \n   The Blue Spymaster provided **clear, concise, and highly effective clues**, often using **synonyms, categories, and contextual hints** that allowed their Operative to guess multiple words with minimal ambiguity. Their clues were **targeted**, often leading to **multiple correct guesses in a single turn**, which gave them a significant advantage in board control.\n\n2. **Operative Success in Guessing:**  \n   The Blue Operative demonstrated **strong word recognition skills**, quickly identifying and guessing words that matched the Spymaster’s clues. Their **response time and accuracy were high**, minimizing wasted turns and maximizing the number of words guessed per round.\n\n3. **Notable Strategic Decisions:**  \n   The Blue team made **strategic decisions to prioritize high-value words** (e.g., words that could lead to multiple guesses or were central to the board). They also **used negative clues** (e.g., \"not a color\") effectively to eliminate options and focus on key words. Additionally, they **managed their turns efficiently**, avoiding unnecessary risks and maintaining a steady pace.\n\n4. **Communication and Guessing Patterns:**  \n   The Blue team exhibited **consistent and structured communication**, with the Spymaster using a **predictable yet flexible clue style** that adapted to the board state. Their Operative followed a **systematic guessing pattern**, often prioritizing words that were **most likely to be associated with the given clue**, which reflected a well-coordinated and practiced strategy.\n\n**Overall Assessment:**  \nThe Blue team's strategic approach was **well-organized, efficient, and adaptive**, allowing them to dominate the game through **effective communication, accurate guessing, and smart word selection**. Their ability to maintain control of the board and limit the Red team's opportunities contributed directly to their victory.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T03:23:46.977113"
+    },
+    {
+      "strategy": "try",
+      "reflection": "**Spymaster Perspective:**  \n1. Your clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. You made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. You generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. Your guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster provided clues that were somewhat vague and lacked focus, leading to confusion among their Operative. Their Operative struggled to guess words accurately, often selecting incorrect or unrelated terms, which hindered their overall progress and contributed to the Red team's victory.",
+      "won": true,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T11:17:17.825582"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. Your clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. You made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. You generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. Your guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and targeted clues, leveraging semantic connections and strategic word choices to guide their Operative toward high-value words. Their Operative consistently guessed accurately, demonstrating strong pattern recognition and quick decision-making, which contributed significantly to their overall success.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T11:18:26.806316"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and concise clues, often targeting high-value words that maximized their team's guessing efficiency. Their Operative demonstrated strong word recognition skills, consistently selecting accurate guesses that kept the game momentum in their favor.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T11:19:01.401061"
+    },
+    {
+      "strategy": "time",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and thematically relevant clues, guiding their Operative toward high-value words. Their strategic focus on exploiting ambiguous terms and maintaining a steady pace likely disrupted our coordination and contributed to our loss.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T13:53:28.365284"
+    },
+    {
+      "strategy": "drive",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and concise clues that led to high-value word guesses, while their Operative consistently identified words with accuracy, leveraging strategic word selection and strong communication. Their coordinated approach and focus on high-impact clues contributed significantly to their victory.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T14:18:54.896611"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and thematically relevant clues, guiding their Operative toward high-value words. Their strategic focus on exploiting ambiguous categories and maintaining a steady guessing pace allowed them to secure key words and ultimately outmaneuver the Red team.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T15:32:51.455663"
+    },
+    {
+      "strategy": "place",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and strategic clues, guiding their Operative toward high-value words and maintaining a strong pace. Their Operative consistently guessed correctly, demonstrating good word recognition and quick decision-making, which contributed to their overall success.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T16:01:00.374063"
+    },
+    {
+      "strategy": "flow",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and strategic clues that maximized word coverage, while their Operatives demonstrated strong guessing skills, often selecting high-value words. Their coordinated communication and focus on key themes allowed them to efficiently eliminate options and secure critical guesses, contributing to their victory.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T16:22:26.449086"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and strategic clues that maximized word coverage, while their Operative demonstrated strong guessing skills, often selecting high-value words. Their coordinated approach and ability to adapt to the board created a formidable challenge, ultimately leading to their victory.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T16:48:51.473205"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and concise clues, leveraging semantic connections and strategic word selection to guide their Operative toward high-value words. Their Operative demonstrated strong guessing skills, often identifying correct words quickly, which contributed to their overall strategic advantage.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-24T16:49:24.046505"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and concise clues that led to successful word guesses, while their Operative demonstrated strong pattern recognition and strategic guessing. Their coordinated approach and focus on high-value words likely contributed to their advantage.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T00:18:58.051612"
+    },
+    {
+      "strategy": "clothing",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and concise clues, guiding their Operative toward high-value words with strategic precision. Their Operative consistently made accurate guesses, demonstrating strong word association skills and effective communication, which contributed significantly to their overall success.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T01:24:29.116320"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and concise clues, guiding their Operative to guess words with high accuracy. Their strategic use of thematic and contextual hints allowed them to maintain a steady pace and capitalize on key opportunities, ultimately leading to their victory.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T02:55:06.419800"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and thematically relevant clues, guiding their Operative toward high-value words. Their strategic focus on leveraging word associations and maintaining a steady pace allowed them to efficiently uncover key terms and ultimately outmaneuver the Red team.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T04:19:12.165493"
+    },
+    {
+      "strategy": "Spymaster",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided clear and targeted clues, leveraging semantic connections and strategic word selection to guide their Operative toward high-value words. Their Operative demonstrated strong guessing skills, capitalizing on the Spymaster's clues to secure key guesses and maintain momentum throughout the game.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T06:57:07.483000"
+    },
+    {
+      "strategy": "sharp",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and evocative clues that guided their Operative toward high-value words, while their Operative demonstrated strong word-guessing skills, capitalizing on both clue accuracy and strategic word selection. Their coordinated communication and focus on high-impact words likely contributed to their overall advantage.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T09:01:13.821099"
+    },
+    {
+      "strategy": "flow",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and strategic clues, guiding their Operative toward high-value words with precision. Their Operative demonstrated strong word-guessing skills, consistently selecting accurate words that maximized their team's score.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T11:24:27.431700"
+    },
+    {
+      "strategy": "idea",
+      "reflection": "**Spymaster Perspective:**  \n1. My clues were somewhat effective in connecting multiple words, but often leaned too heavily on ambiguity, increasing the risk of misinterpretation.  \n2. I made an effort to avoid neutral or opponent words, but occasional vague clues led to confusion and misdirection.  \n3. The assassin risk was managed cautiously, but not proactively, leaving the team vulnerable in the final stages.\n\n**Operative Perspective:**  \n1. I generally interpreted the Spymaster's clues accurately, but occasionally took risks based on partial information.  \n2. A few incorrect guesses were made, which slowed progress.  \n3. My guessing strategy remained consistent but lacked adaptability in response to the team’s evolving understanding.\n\n**Strategy Reflection:**  \nThe key lesson is to balance clue ambiguity with precision, ensuring clear connections to red words while actively avoiding neutral and assassin words through more deliberate and targeted communication. This requires greater clarity in clue-giving and more proactive risk management to prevent misinterpretation and secure a stronger path to victory.",
+      "opponent_analysis": "The opposing team's Spymaster effectively provided concise and evocative clues, guiding their Operative toward high-value words with strategic precision. Their Operative consistently guessed accurately, leveraging the Spymaster's clues to maximize points and minimize wasted turns.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T11:54:15.503578"
+    },
+    {
+      "strategy": "verdict",
+      "reflection": "As Spymaster, my clues often connected multiple words but relied too much on broad or ambiguous associations, which increased the chance of misinterpretation and occasionally pointed toward neutral or opponent words. As Operative, I generally interpreted clues well but made a few risky guesses without fully cross-checking possibilities, and my strategy did not adapt quickly enough to changing board dynamics. The key lesson is to prioritize precision over broad linkage by crafting clearer, more targeted clues and to actively refine guessing strategy mid-game to mitigate risk and protect against the assassin.",
+      "opponent_analysis": "The opposing team's Spymaster consistently gave precise, high-connectivity clues that efficiently linked multiple target words while avoiding their own and neutral words. Their Operative demonstrated strong pattern recognition, quickly locking onto intended words and maintaining momentum through coordinated, confident guessing.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T23:49:27.077596"
+    },
+    {
+      "strategy": "Science",
+      "reflection": "As Spymaster, I was moderately successful in linking multiple red words, but my clues were sometimes too broad, which led to accidental associations with neutral and opponent words and left the assassin risk insufficiently controlled. As Operative, I generally interpreted clues well, but took occasional unnecessary risks and did not adjust my approach enough as the board evolved. The key lesson is to favor precise, targeted clues paired with flexible, risk-aware guessing that adapts to emerging board threats.",
+      "opponent_analysis": "The opposing team's Spymaster provided clear, well-targeted clues that consistently linked multiple words, enabling their Operative to make confident and accurate guesses. Their steady pacing and alignment between clue-giving and guessing showed strong communication and a calculated approach that maintained momentum throughout the game.",
+      "won": false,
+      "role": "Spymaster",
+      "team": "Red",
+      "timestamp": "2025-10-25T23:55:56.217144"
+    }
+  ],
+  "trial_history": [
+    {
+      "trial_id": 0,
+      "timestamp": "2025-10-24T02:37:07.927879",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-2_08AM/game_log.json"
+    },
+    {
+      "trial_id": 1,
+      "timestamp": "2025-10-24T03:02:15.046296",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-2_37AM/game_log.json"
+    },
+    {
+      "trial_id": 2,
+      "timestamp": "2025-10-24T03:23:46.977618",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_02AM/game_log.json"
+    },
+    {
+      "trial_id": 3,
+      "timestamp": "2025-10-24T11:17:17.826185",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_06AM/game_log.json"
+    },
+    {
+      "trial_id": 4,
+      "timestamp": "2025-10-24T11:18:26.806980",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_17AM/game_log.json"
+    },
+    {
+      "trial_id": 5,
+      "timestamp": "2025-10-24T11:19:01.401677",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_18AM/game_log.json"
+    },
+    {
+      "trial_id": 6,
+      "timestamp": "2025-10-24T13:53:28.366040",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_39PM/game_log.json"
+    },
+    {
+      "trial_id": 7,
+      "timestamp": "2025-10-24T14:18:54.897371",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-1_53PM/game_log.json"
+    },
+    {
+      "trial_id": 8,
+      "timestamp": "2025-10-24T15:32:51.459554",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_32PM/game_log.json"
+    },
+    {
+      "trial_id": 9,
+      "timestamp": "2025-10-24T15:44:48.286405",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_41PM/game_log.json"
+    },
+    {
+      "trial_id": 10,
+      "timestamp": "2025-10-24T15:53:23.462947",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_44PM/game_log.json"
+    },
+    {
+      "trial_id": 11,
+      "timestamp": "2025-10-24T16:01:00.374813",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-3_53PM/game_log.json"
+    },
+    {
+      "trial_id": 12,
+      "timestamp": "2025-10-24T16:11:24.196477",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-4_01PM/game_log.json"
+    },
+    {
+      "trial_id": 13,
+      "timestamp": "2025-10-24T16:22:26.450101",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-4_11PM/game_log.json"
+    },
+    {
+      "trial_id": 14,
+      "timestamp": "2025-10-24T16:48:25.519768",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-4_22PM/game_log.json"
+    },
+    {
+      "trial_id": 15,
+      "timestamp": "2025-10-24T16:48:51.473949",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-4_48PM/game_log.json"
+    },
+    {
+      "trial_id": 16,
+      "timestamp": "2025-10-24T16:49:24.047176",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-4_48PM/game_log.json"
+    },
+    {
+      "trial_id": 17,
+      "timestamp": "2025-10-24T16:51:57.536851",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-4_49PM/game_log.json"
+    },
+    {
+      "trial_id": 18,
+      "timestamp": "2025-10-24T22:36:24.563421",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-10_04PM/game_log.json"
+    },
+    {
+      "trial_id": 19,
+      "timestamp": "2025-10-24T22:37:58.182109",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-10_36PM/game_log.json"
+    },
+    {
+      "trial_id": 20,
+      "timestamp": "2025-10-24T23:18:05.476436",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251024-11_13PM/game_log.json"
+    },
+    {
+      "trial_id": 21,
+      "timestamp": "2025-10-25T00:18:58.052411",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_18AM/game_log.json"
+    },
+    {
+      "trial_id": 22,
+      "timestamp": "2025-10-25T00:45:52.689255",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_18AM/game_log.json"
+    },
+    {
+      "trial_id": 23,
+      "timestamp": "2025-10-25T01:24:29.117206",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-1_13AM/game_log.json"
+    },
+    {
+      "trial_id": 24,
+      "timestamp": "2025-10-25T01:45:48.219331",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-1_24AM/game_log.json"
+    },
+    {
+      "trial_id": 25,
+      "timestamp": "2025-10-25T01:57:08.497408",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-1_45AM/game_log.json"
+    },
+    {
+      "trial_id": 26,
+      "timestamp": "2025-10-25T02:09:07.784022",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-2_00AM/game_log.json"
+    },
+    {
+      "trial_id": 27,
+      "timestamp": "2025-10-25T02:39:58.513132",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-2_17AM/game_log.json"
+    },
+    {
+      "trial_id": 28,
+      "timestamp": "2025-10-25T02:55:06.420794",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-2_54AM/game_log.json"
+    },
+    {
+      "trial_id": 29,
+      "timestamp": "2025-10-25T03:19:50.165124",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-2_55AM/game_log.json"
+    },
+    {
+      "trial_id": 30,
+      "timestamp": "2025-10-25T03:52:20.079071",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-3_28AM/game_log.json"
+    },
+    {
+      "trial_id": 31,
+      "timestamp": "2025-10-25T04:18:35.404280",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_16AM/game_log.json"
+    },
+    {
+      "trial_id": 32,
+      "timestamp": "2025-10-25T04:19:12.166443",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_18AM/game_log.json"
+    },
+    {
+      "trial_id": 33,
+      "timestamp": "2025-10-25T05:00:16.284360",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-4_36AM/game_log.json"
+    },
+    {
+      "trial_id": 34,
+      "timestamp": "2025-10-25T06:11:29.397905",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-5_46AM/game_log.json"
+    },
+    {
+      "trial_id": 35,
+      "timestamp": "2025-10-25T06:33:26.654639",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-6_19AM/game_log.json"
+    },
+    {
+      "trial_id": 36,
+      "timestamp": "2025-10-25T06:56:33.051648",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-6_33AM/game_log.json"
+    },
+    {
+      "trial_id": 37,
+      "timestamp": "2025-10-25T06:57:07.484140",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-6_56AM/game_log.json"
+    },
+    {
+      "trial_id": 38,
+      "timestamp": "2025-10-25T07:24:48.491431",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-7_00AM/game_log.json"
+    },
+    {
+      "trial_id": 39,
+      "timestamp": "2025-10-25T07:47:12.391487",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-7_32AM/game_log.json"
+    },
+    {
+      "trial_id": 40,
+      "timestamp": "2025-10-25T08:06:21.117500",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-8_03AM/game_log.json"
+    },
+    {
+      "trial_id": 41,
+      "timestamp": "2025-10-25T08:28:43.381729",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-8_06AM/game_log.json"
+    },
+    {
+      "trial_id": 42,
+      "timestamp": "2025-10-25T09:01:13.822208",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-8_37AM/game_log.json"
+    },
+    {
+      "trial_id": 43,
+      "timestamp": "2025-10-25T09:12:34.147163",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-9_01AM/game_log.json"
+    },
+    {
+      "trial_id": 44,
+      "timestamp": "2025-10-25T10:43:18.564069",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-10_17AM/game_log.json"
+    },
+    {
+      "trial_id": 45,
+      "timestamp": "2025-10-25T10:47:11.956099",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-10_43AM/game_log.json"
+    },
+    {
+      "trial_id": 46,
+      "timestamp": "2025-10-25T11:01:35.346852",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-10_50AM/game_log.json"
+    },
+    {
+      "trial_id": 47,
+      "timestamp": "2025-10-25T11:24:27.433123",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_01AM/game_log.json"
+    },
+    {
+      "trial_id": 48,
+      "timestamp": "2025-10-25T11:54:15.504990",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_32AM/game_log.json"
+    },
+    {
+      "trial_id": 49,
+      "timestamp": "2025-10-25T11:55:20.158240",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_54AM/game_log.json"
+    },
+    {
+      "trial_id": 50,
+      "timestamp": "2025-10-25T12:29:03.381204",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_05PM/game_log.json"
+    },
+    {
+      "trial_id": 51,
+      "timestamp": "2025-10-25T23:49:27.078535",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_39PM/game_log.json"
+    },
+    {
+      "trial_id": 52,
+      "timestamp": "2025-10-25T23:55:56.218216",
+      "won": false,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_49PM/game_log.json"
+    },
+    {
+      "trial_id": 53,
+      "timestamp": "2025-10-26T00:07:21.351509",
+      "won": true,
+      "team": "Red",
+      "role": "Spymaster",
+      "final_score": null,
+      "opponent_score": null,
+      "game_log": "/home/hulc/Desktop/Corleone/runs/251025-11_55PM/game_log.json"
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-10-24T02:08:28.186455",
+    "last_updated": "2025-10-26T00:07:21.351525",
+    "total_trials": 54
+  }
+}

@@ -90,7 +90,8 @@ class OpenAI_API(API):
         super().__init__(
             api_key=api_key or os.getenv("OPENAI_API_KEY"),
             model=model,
-            url='https://xiaoai.plus/v1',
+            # url='https://xiaoai.plus/v1',
+            url='https://globalai.vip/v1',
             **kwargs
         )
         self.client = OpenAI(api_key=self.api_key, base_url=self.url)

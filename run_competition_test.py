@@ -8,7 +8,7 @@ import textarena as ta
 from reflexion.track2_router import create_track2_agent
 
 # Default configuration
-DEFAULT_MODEL = "qwen3-8b"
+DEFAULT_MODEL = "gpt-5-chat-2025-08-07"
 DEFAULT_TEAM_HASH = "MG25-F5C82328D3"
 
 # DEFAULT_MODEL_NAME = "VitoTrack2-Adv-ds_v31"
@@ -21,9 +21,9 @@ SMALL_CATEGORY = True
 
 # Game environments for Track 2
 TRACK2_GAMES = [
-    "Codenames-v0-train",
+    # "Codenames-v0-train",
     "ColonelBlotto-v0-train",
-    "ThreePlayerIPD-v0-train"
+    # "ThreePlayerIPD-v0-train"
 ]
 
 # Number of NPCs for each game
