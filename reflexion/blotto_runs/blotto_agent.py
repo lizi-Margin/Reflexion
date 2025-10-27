@@ -334,7 +334,12 @@ class BlottoAgent(Agent):
 
     def _prompt_analysis(self) -> str:
         """Prompt for analysis phase"""
-        prompt = (
+
+        prompt = ""
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
+        prompt += (
             f"As Commander {self.commander_role}, you need to analyze the current game state "
             f"and your opponent's past behavior.\n\n"
 
@@ -361,6 +366,7 @@ class BlottoAgent(Agent):
 
             f"You can briefly anayze the opponent's behavior in Past rounds, Now round, Future predictions (it is okay to say unpredictable or random)\n"
             f"State the status briefly and clearly, DO NOT suggest any strategy since they will be considered later.\n\n"
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
         )
 
         prompt += "Begin your analysis and start with a symbol: '#ANALYSIS:'"
@@ -368,7 +374,12 @@ class BlottoAgent(Agent):
 
     def _prompt_strategy(self, analysis) -> str:
         """Prompt for strategy selection phase"""
-        prompt = (
+
+        prompt = ""
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
+        prompt += (
             f"Based on your analysis:\n\n{analysis}\n\n"
 
             f"Now, persist or refine your overall strategy (multi-round, early-stage, mid-stage, and final-stage) for this game. Consider:\n"
@@ -402,6 +413,7 @@ class BlottoAgent(Agent):
         prompt += (
             f"Determine your overall approach and reasoning. Make it brief but show the clear intention.\n\n"
             f"To state your strategy clearly, you can discribe it in Intention-Methodology structure.\n\n"
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
             f"Begin your strategy and start with a symbol: '#STRATEGY:'"
         )
 

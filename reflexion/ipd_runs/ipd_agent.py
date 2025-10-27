@@ -1,4 +1,4 @@
-import re, random
+import re, random, traceback
 import json
 import uuid
 from datetime import datetime
@@ -153,15 +153,22 @@ class IPDAgent(Agent):
         if not self.memory:
             return
         
-        if rewards[0] == rewards[1] == rewards[2]:
-            won = False  # draw
-            my_rank = 1
-        else:
-            rewards_list = list(rewards.values())
-            rewards_list.sort(reverse=True)
-            # won = rewards[self.player_id] >= max(rewards_list)
-            won = rewards[self.player_id] > 0
-            my_rank = rewards_list.index(rewards[self.player_id]) + 1
+        try:
+            if rewards[self.player_id] <= 0:
+                won = False 
+                my_rank = 2
+            elif rewards[self.player_id] > 0:
+                won = True 
+                my_rank = 1
+            elif rewards[self.player_id] < 0:
+                won = False 
+                my_rank = 3
+        except KeyError:
+            traceback.print_exc()
+            print(rewards)
+            print(game_info)
+            won = False 
+            my_rank = 2
 
         # # Determine rank
         rankings = self._get_player_rankings()
@@ -568,6 +575,7 @@ class IPDAgent(Agent):
             f"4. What is each player's likely strategy based on their behavior?\n"
             f"5. Who appears most deceptive and who seems trustworthy? REMEMBER: Actions speak louder than words.\n\n"
 
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
             f"Your analysis should be brief but contains analysis of each opponent's behavior.\n"
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
@@ -593,6 +601,10 @@ class IPDAgent(Agent):
                         if p2 in self.decision_history[round_num].get(p1, {}):
                             prompt += f"- Player {p1} vs Player {p2}: {self.decision_history[round_num][p1][p2]} vs {self.decision_history[round_num][p2][p1]}\n"
             prompt += "\n"
+
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
         
         if self.strategy is None:
             assert self.current_round == 1, f"current_round should be 1, but got {self.current_round}"
@@ -623,6 +635,7 @@ class IPDAgent(Agent):
                 f"- You cooperate, they defect: {self.S} points for you\n\n"
                 f"So in the last round, there may be a optimal decesion choice based on the theory of games.\n"
 
+                f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
                 f"Now is conversation turn. What overall approach will you take in this conversation and the whole game (overall strategy) to improve your chances of winning?\n\n"
 
             )

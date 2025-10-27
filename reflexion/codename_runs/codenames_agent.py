@@ -499,7 +499,12 @@ class CodenamesAgent(Agent):
 
     def _prompt_spymaster_analysis(self, team_words, opponent_words, neutral_words, assassin_word, guessed_words) -> str:
         """Prompt for Spymaster analysis phase"""
-        prompt = (
+
+        prompt = ""
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
+        prompt += (
             f"As the {self.team} team Spymaster, you need to analyze the current game state "
             f"and find connections between your team's words.\n\n"
 
@@ -525,6 +530,7 @@ class CodenamesAgent(Agent):
             f"2. Word clusters that could be connected with a single clue\n"
             f"3. Potential high-risk words that could be confused with the assassin or opponent words\n\n"
 
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
 
@@ -538,7 +544,11 @@ class CodenamesAgent(Agent):
             memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
             memory_guidance = f"\n\nPrevious Strategic Lessons:\n{memory_guidance}"
 
-        prompt = (
+        prompt = ""
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
+        prompt += (
             f"Based on your analysis:\n\n{analysis}\n\n"
 
             f"Now, generate 3-5 candidate clue words that could connect multiple words from your team.\n"
@@ -561,6 +571,7 @@ class CodenamesAgent(Agent):
 
             f"{memory_guidance}\n\n"
 
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
             f"Begin your candidate list and start with a symbol: '#CANDIDATES:'"
         )
 
@@ -588,7 +599,12 @@ class CodenamesAgent(Agent):
 
     def _prompt_operative_analysis(self, clue, clue_number, available_words, guessed_words) -> str:
         """Prompt for Operative analysis phase"""
-        prompt = (
+
+        prompt = ""
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
+        prompt += (
             f"As the {self.team} team Operative, you've received a clue from your Spymaster:\n"
             f"Clue: '{clue}' Number: {clue_number}\n\n"
 
@@ -603,6 +619,7 @@ class CodenamesAgent(Agent):
             f"2. What semantic connections exist between the clue and available words?\n"
             f"3. Consider synonyms, categories, associations, and other relationships\n\n"
 
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
             f"Begin your analysis and start with a symbol: '#ANALYSIS:'"
         )
 
@@ -616,7 +633,11 @@ class CodenamesAgent(Agent):
             memory_guidance = self.memory.get_guidance(max_reflections=self.max_reflections)
             memory_guidance = f"\n\nPrevious Strategic Lessons:\n{memory_guidance}"
 
-        prompt = (
+        prompt = ""
+        prompt += f"----------------------- Current observation -------------------------\n"
+        prompt += self.observation_history[-1]
+        prompt += f"---------------------------------------------------------------------\n"
+        prompt += (
             f"Based on your analysis of the clue '{clue}' with number {clue_number}:\n\n{analysis}\n\n"
 
             f"Now, rank the top {min(5, len(available_words))} words from the board that you believe best match this clue.\n"
@@ -631,6 +652,7 @@ class CodenamesAgent(Agent):
 
             f"{memory_guidance}\n\n"
 
+            f"Since you are a PLAYER of the game, focus on the game. DO NOT try to interact with user like: Do you want me to proceed to the optimal first clue suggestion for “apple, rice, cook”?"
             f"Begin your ranking and start with a symbol: '#RANKING:'"
         )
 
