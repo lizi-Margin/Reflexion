@@ -351,6 +351,14 @@
       "trial_rank": 2,
       "won": false,
       "timestamp": "2025-10-25T12:50:12.023560"
+    },
+    {
+      "strategy": "**Overall Intention:** Secure the final round by exploiting Player 1's inconsistency and Player 2's predictable defection tendencies, while maintaining a cooperative image to avoid retaliation from Player 2 and encourage Player 1 to continue cooperating. The goal is to maximize my score in the final round and ensure I finish with the highest total, securing victory.\n\n**Conversation Strategy:**  \nMaintain a cooperative and trustworthy public image by expressing a willingness to cooperate with both opponents. This will encourage Player 2 to continue cooperating with me, while also making Player 1 more predictable and less likely to retaliate against my calculated moves. I will subtly signal my reliability and fairness in conversation to foster trust, while keeping Player 1's behavior under observation for potential exploitation.\n\n**Decision Strategy:**  \nIn Round 5, I will **defect against Player 1** to maximize my score, as they have shown inconsistency and may not retaliate. I will **continue to cooperate with Player 2**, as their consistent behavior suggests they will not retaliate, allowing me to gain 5 points from them in the final round if they cooperate. This will ensure I secure the highest possible score in the final round and win the game.\n\n**Short-Term Advantage:**  \nBuilding trust with Player 2 ensures mutual cooperation in the early rounds, which yields higher points for both of us. This creates a stable base for long-term gains.\n\n**Long-Term Advantage:**  \nBy exploiting Player 1's inconsistency, I can secure more points in later rounds, especially in the final round where defection is optimal. I will ensure that Player 2 remains cooperative, while Player 1's unpredictable behavior will either lead to their own losses or allow me to take advantage of their mistakes.\n\n**Counter-Strategy Consideration:**  \nPlayer 1 may attempt to retaliate or defect if they perceive me as a threat, but my consistent cooperation with Player 2 will make it difficult for them to form a strong alliance. Player 2, being reliable, is unlikely to betray me, which gives me a strategic edge. I will remain adaptable and ready to adjust my strategy based on their responses.",
+      "reflection": "**Reflection:**  \nThe key lesson is that in a three-player Iterated Prisoner's Dilemma, maintaining a cooperative image with a reliable partner while exploiting an inconsistent opponent can be effective, but failing to fully defect in the final round—when the opportunity to maximize payoff is greatest—costs the win. A more decisive and opportunistic approach in the final round is critical to securing victory.",
+      "opponent_analysis": "**Analysis:**\n\n1. **Player 1:**\n   - Mostly cooperated, but showed some strategic shifts, especially in later rounds, indicating a mix of cooperation and self-interest.\n\n2. **Player 2:**\n   - Consistently cooperated throughout the game, showing a strong preference for mutual benefit and trust-building.\n\n3. **Player 1:**\n   - Generally truthful in conversation, aligning actions with stated intentions, though showed some deviation in later rounds.\n\n4. **Player 2:**\n   - Truthful in conversation, consistently acted in line with stated cooperative intentions.\n\n5. **Player 1:**\n   - Defected in the last round, which aligns with an optimum strategy to maximize individual gain in the final round of an iterated game.\n\n6. **Player 2:**\n   - Cooperated in the last round, indicating a preference for long-term cooperation over short-term gain.",
+      "trial_rank": 2,
+      "won": false,
+      "timestamp": "2025-10-27T11:35:55.156070"
     }
   ],
   "trial_history": [
@@ -1120,11 +1128,37 @@
       "won": false,
       "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_41PM/game_log.json",
       "m_rounds": 5
+    },
+    {
+      "trial_id": 59,
+      "timestamp": "2025-10-27T11:35:55.158376",
+      "rank": 2,
+      "score": 21,
+      "opponent_scores": {
+        "1": 16,
+        "2": 28
+      },
+      "won": false,
+      "game_log": "/home/hulc/Desktop/Corleone-limited/runs/251027-11_24AM/game_log.json",
+      "m_rounds": 5
+    },
+    {
+      "trial_id": 60,
+      "timestamp": "2025-10-27T11:45:45.243075",
+      "rank": 1,
+      "score": 15,
+      "opponent_scores": {
+        "1": 16,
+        "2": 15
+      },
+      "won": true,
+      "game_log": "/home/hulc/Desktop/Corleone-limited/runs/251027-11_35AM/game_log.json",
+      "m_rounds": 5
     }
   ],
   "metadata": {
     "created_at": "2025-10-22T17:51:40.527439",
-    "last_updated": "2025-10-25T12:50:12.026066",
-    "total_trials": 59
+    "last_updated": "2025-10-27T11:45:45.243089",
+    "total_trials": 61
   }
 }

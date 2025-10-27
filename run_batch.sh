@@ -3,5 +3,5 @@
 # Batch run competition
 for i in {1..15}
 do
-    python run_competition.py 
+    python run_competition_test.py 
 done

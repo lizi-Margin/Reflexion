@@ -2127,6 +2127,20 @@
       "opponent_analysis": "1. **Strategy Type**: The opponent used a **concentrated** strategy, focusing heavily on fields B and C in most rounds, especially in the early rounds.  \n2. **Field Preference**: They consistently favored **fields B and C**, often allocating the majority of their units there, while underinvesting in field A.  \n3. **Response to Moves**: The opponent did **not consistently adapt** to Alpha’s allocations, suggesting a more rigid or pre-planned strategy rather than reactive.  \n4. **Exploitable Pattern**: Future games could exploit the opponent’s **overcommitment to B and C** by **underinvesting in those fields** and **increasing presence in field A**, where they were weaker.",
       "won": false,
       "timestamp": "2025-10-25T12:41:26.460706"
+    },
+    {
+      "strategy": "Adaptive Pressure with Field C Focus\n\n**Intention:** To exploit Beta's historical underinvestment in Field C while maintaining enough unpredictability to prevent Beta from locking in a consistent counter-strategy.\n\n**Methodology:**  \n- **Concentrate 6 units in Field C** to exploit Beta's tendency to neglect it, as seen in Rounds 1, 2, 4, 7, and 8.  \n- **Distribute remaining 14 units between A and B** in a way that prevents Beta from easily predicting or countering. A 7-7 split is safe, but slight variations (e.g., 8-6 or 6-8) can add unpredictability.  \n- **Avoid over-concentration** in any single field to prevent Beta from adapting to a predictable pattern.  \n- **Maintain pressure on A and B** to prevent Beta from shifting all resources to C, which could be a risk if Beta starts to prioritize it more.  \n\nThis strategy balances targeted exploitation of a known weakness with enough flexibility to counter Beta's adaptive tendencies.",
+      "reflection": "**Reflection:**  \nThe strategy oscillated between uniform and concentrated allocations, creating predictability that allowed Beta to adapt effectively. The key lesson is to maintain **true, consistent unpredictability** by blending subtle pressure across all fields while avoiding clear patterns or over-concentration, ensuring the opponent cannot reliably counter your strategy.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, especially in later rounds where they shifted focus to field C after Alpha's strong performance there.  \n2. **Field Preference**: The opponent **favored field C** in later rounds, suggesting it was a high-value or high-risk target, and also showed interest in field A early on.  \n3. **Response to Moves**: The opponent **responded to Alpha’s allocations**, particularly in rounds 5–8, where they adjusted to counter Alpha’s focus on field C.  \n4. **Exploitable Pattern**: In future games, **targeting field C early and mid-game** could disrupt the opponent’s strategy, while maintaining balance across fields may prevent them from concentrating too much on a single area.",
+      "won": false,
+      "timestamp": "2025-10-27T11:16:23.820866"
+    },
+    {
+      "strategy": "Intention - Disrupt Opponent's Predictability, Methodology - Balanced Pressure with Strategic Focus on C\n\n**Intention:** To exploit Beta's inconsistent focus and prevent them from securing a decisive win in the final round.\n\n**Methodology:**  \n- **Balance Across Fields:** Maintain a consistent, unpredictable distribution across A, B, and C to avoid falling into uniform or overly concentrated patterns.  \n- **Target Field C:** Given Beta's historical underinvestment in C, allocate more units to C to disrupt their strategy and secure a win in this critical round.  \n- **Adapt to Beta's Tendencies:** Since Beta has shown a tendency to focus on A and B, but with inconsistent results, avoid overcommitting to those fields.  \n- **Secure Majority:** Allocate in a way that ensures at least two fields are won, leveraging the final round to close the score gap.\n\n**Allocation:** [A:6 B:6 C:8]",
+      "reflection": "**Reflection:**\n\nThe allocation patterns showed inconsistency, oscillating between balanced and concentrated distributions, which allowed Beta to adapt and exploit predictability. The strategy was too adaptive without sufficient consistency, leading to missed opportunities in securing key fields. **Key lesson learned:** Maintain **consistent, subtle unpredictability** across all fields while strategically pressuring high-value areas like C, ensuring the opponent cannot reliably counter your strategy.",
+      "opponent_analysis": "1. **Strategy Type**: The opponent used an **adaptive** strategy, adjusting allocations based on previous rounds, particularly increasing resources in fields where they previously lost or where Alpha concentrated forces.  \n2. **Field Preference**: The opponent showed a **preference for Fields A and C**, often allocating more units there, especially when Alpha focused on Field B.  \n3. **Response to Moves**: They **responded to Alpha's allocations**, shifting resources to counteract Alpha's focus areas, particularly in Rounds 3, 6, and 8.  \n4. **Exploitable Pattern**: Future games could benefit from **consistently underallocating Fields A and C** and **overallocating Field B**, where the opponent struggled to maintain dominance.",
+      "won": false,
+      "timestamp": "2025-10-27T11:20:14.227809"
     }
   ],
   "trial_history": [
@@ -5259,11 +5273,31 @@
       "final_score": 1,
       "opponent_score": 4,
       "game_log": "/home/hulc/Desktop/Corleone/runs/251025-12_37PM/game_log.json"
+    },
+    {
+      "trial_id": 313,
+      "timestamp": "2025-10-27T11:16:23.832389",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone-limited/runs/251027-11_13AM/game_log.json"
+    },
+    {
+      "trial_id": 314,
+      "timestamp": "2025-10-27T11:20:14.235900",
+      "won": false,
+      "rounds_won": 2,
+      "total_rounds": 9,
+      "final_score": 2,
+      "opponent_score": 3,
+      "game_log": "/home/hulc/Desktop/Corleone-limited/runs/251027-11_16AM/game_log.json"
     }
   ],
   "metadata": {
     "created_at": "2025-10-24T01:41:34.903930",
-    "last_updated": "2025-10-25T12:41:26.472055",
-    "total_trials": 313
+    "last_updated": "2025-10-27T11:20:14.235911",
+    "total_trials": 315
   }
 }
